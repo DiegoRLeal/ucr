@@ -1,0 +1,73 @@
+ <%= render "shared/navbar" %>
+
+ <main class="main-content">
+    <div class="card-container">
+        <div class="card">
+            <img src="https://res.cloudinary.com/ddxlnxcu5/image/upload/v1726181928/IMG_1729_qdaqz5.jpg" alt="Piloto 1" class="card-image">
+            <div class="card-body">
+                <h2 class="card-title">D. Leal</h2>
+                <p class="card-description">Descrição do Piloto 1.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://res.cloudinary.com/ddxlnxcu5/image/upload/v1726181928/IMG_6027_qn3kh9.jpg" alt="Piloto 2" class="card-image">
+            <div class="card-body">
+                <h2 class="card-title">I. Leal</h2>
+                <p class="card-description">Descrição do Piloto 2.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="images/piloto3.jpg" alt="Piloto 3" class="card-image">
+            <div class="card-body">
+                <h2 class="card-title">A. Crepaldi</h2>
+                <p class="card-description">Descrição do Piloto 3.</p>
+            </div>
+        </div>
+        <!-- Adicione mais cards conforme necessário -->
+    </div>
+</main>
+
+<%= render "shared/footer" %>
+
+<style>
+.main-content {
+    padding: 20px;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 100px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    width: 300px;
+    text-align: center;
+}
+
+.card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-title {
+    font-size: 1.5em;
+    margin: 10px 0;
+}
+
+.card-description {
+    font-size: 1em;
+    color: #555;
+}
+</style>
