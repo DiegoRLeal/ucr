@@ -9,35 +9,13 @@
     background-size: cover;"
 >
        <div class="heading-page" style="text-align: center; margin-bottom: 100px;">
-          <h1 class="text-1">Bem-vindo à <br> Under Control Racing</h1>
+          <h1 class="text-1">Bem-vindo à <%= @name %><br> Under Control <span class="highlight">Racing</span></h1>
           <p class="mb-5">Acompanhe e gerencie o desempenho da nossa equipe de corrida virtual. <br> Patrocine nossa equipe e exponha sua marca.</p>
       </div>
-
-      <style>
-        .heading-page {
-          width: auto;
-        }
-
-        .heading-page p {
-          font-size: 10px;
-          letter-spacing: 3px;
-        }
-
-        .heading-page h1 {
-          color: #d7d5dd;
-          font-size: 50px;
-        }
-      </style>
 
     <div class="container" style="display: flex; justify-content: center;">
         <div class="row" style="width: 70%; display: flex; justify-content: center;">
             <div class="col-xs-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
-                <%# <div class="page-title home text-center"> %>
-                    <%# <span class="heading-page">Bem-vindo à Under Control Racing</span>
-                          </span>
-                            <p class="mt20">Acompanhe e gerencie o desempenho da nossa equipe de corrida virtual. Patrocine nossa equipe e exponha sua marca.</p> %>
-                        <%# </div> %>
-
                         <div class="hexagon-menu clear">
                             <div class="hexagon-item">
                                 <div class="hex-item">
@@ -230,6 +208,24 @@ body {
     text-align: center;
     width: auto;
 }
+.heading-page {
+  width: auto;
+}
+
+.heading-page p {
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+.heading-page h1 {
+  color: #d7d5dd;
+  font-size: 50px;
+}
+
+.highlight {
+  color: red;
+}
+
 a {
   color: inherit;
   -webkit-transition: all 0.3s ease 0s;
@@ -729,7 +725,7 @@ font-family: monospace;
 @media (min-width: 1200px)
 {
 .col-lg-offset-2 {
-    margin-left: 16.66666667%;
+    margin-left: 150px;
 }
 }
 
