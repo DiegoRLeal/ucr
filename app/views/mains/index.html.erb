@@ -8,8 +8,12 @@
     background-position: center;
     background-size: cover;"
 >
+      <div class="logo" style="display: flex; justify-content: center; margin-bottom: 20px; margin-top: -10px;">
+        <img src="https://res.cloudinary.com/ddxlnxcu5/image/upload/v1726264301/UCR/logo_hwhzun.jpg" alt="image" width="150px">
+      </div>
+
        <div class="heading-page" style="text-align: center; margin-bottom: 100px;">
-          <h1 class="text-1">Bem-vindo à <%= @name %><br> Under Control <span class="highlight">Racing</span></h1>
+          <h1 class="text-1">Bem-vindo à <%= @name %><br> Under Control <span class="highlight" id="racingText"></span></h1>
           <p class="mb-5">Acompanhe e gerencie o desempenho da nossa equipe de corrida virtual. <br> Patrocine nossa equipe e exponha sua marca.</p>
       </div>
 
@@ -789,10 +793,6 @@ font-family: monospace;
   }
 }
 
-
-
-
-
 @media only screen and (max-width: 767px)
 {
 .hexagon-item {
@@ -813,6 +813,44 @@ font-family: monospace;
 
 }
 
+#racingText {
+  border-right: 2px solid #000;
+  display: inline-block;
+  padding-right: 5px;
+  animation: blink-cursor 0.7s steps(40) infinite normal;
+}
 
-
+@keyframes blink-cursor {
+  50% {
+    border-color: transparent;
+  }
+}
 </style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var text = "Racing"; // O texto a ser exibido
+    var index = 0; // Índice inicial
+    var speed = 150; // Velocidade da animação (em milissegundos)
+    var targetElement = document.getElementById("racingText"); // Span onde o texto será inserido
+
+    // Função para escrever letra por letra
+    function typeWriter() {
+      if (index < text.length) {
+        targetElement.innerHTML += text.charAt(index); // Adiciona a letra ao span
+        index++;
+        setTimeout(typeWriter, speed); // Chama novamente após o tempo definido
+      } else {
+        // Quando o texto estiver completo, reinicia após 2 segundos
+        setTimeout(function() {
+          targetElement.innerHTML = ""; // Limpa o texto
+          index = 0; // Reinicia o índice
+          typeWriter(); // Reinicia a animação
+        }, 1000); // Espera 2 segundos antes de reiniciar
+      }
+    }
+
+    // Inicia a animação ao carregar a página
+    typeWriter();
+  });
+</script>

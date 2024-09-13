@@ -1,6 +1,6 @@
 class MainsController < ApplicationController
   def index
-    @name = User.first.email
+    # @name = User.first.email
   end
 
   def new
