@@ -9,49 +9,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
     <%= yield %>
-    <%= render 'shared/footer' %>
-
-  <script>
-    (function () {
-        window.onload = function () {
-            const whatsappButton = document.createElement('a');
-            whatsappButton.href = 'https://api.whatsapp.com/send?phone=SEU_NUMERO&text=Olá!';
-            whatsappButton.target = '_blank'; // Abre o WhatsApp em uma nova aba
-            whatsappButton.style.position = 'fixed';
-            whatsappButton.style.bottom = '20px';
-            whatsappButton.style.right = '20px';
-            whatsappButton.style.width = '30px';
-            whatsappButton.style.backgroundColor = '#25D366'; // Cor do botão WhatsApp
-            whatsappButton.style.borderRadius = '50%';
-            whatsappButton.style.padding = '15px';
-            whatsappButton.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)';
-
-            // Adicionando ícone do WhatsApp usando Font Awesome
-            const whatsappIcon = document.createElement('i');
-            whatsappIcon.className = 'fab fa-whatsapp';
-            whatsappIcon.style.color = 'white';
-            whatsappIcon.style.fontSize = '24px';
-
-            whatsappButton.appendChild(whatsappIcon);
-            document.body.appendChild(whatsappButton);
-        }
-    })();
-</script>
-
-<style>
- .fa-whatsapp:before {
-    content: "\f232";
-    position: relative;
-    left: 5px;
-    top: 5px;
-}
-</style>
+    <%= render 'shared/plus' %>
 
   </body>
 </html>
