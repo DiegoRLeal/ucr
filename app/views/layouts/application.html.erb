@@ -15,8 +15,9 @@
 
   <body>
     <%= yield %>
+    <%= render 'shared/footer' %>
 
-    <script>
+  <script>
     (function () {
         window.onload = function () {
             const whatsappButton = document.createElement('a');
@@ -25,6 +26,7 @@
             whatsappButton.style.position = 'fixed';
             whatsappButton.style.bottom = '20px';
             whatsappButton.style.right = '20px';
+            whatsappButton.style.width = '30px';
             whatsappButton.style.backgroundColor = '#25D366'; // Cor do botão WhatsApp
             whatsappButton.style.borderRadius = '50%';
             whatsappButton.style.padding = '15px';
@@ -41,6 +43,15 @@
         }
     })();
 </script>
+
+<style>
+ .fa-whatsapp:before {
+    content: "\f232";
+    position: relative;
+    left: 5px;
+    top: 5px;
+}
+</style>
 
   </body>
 </html>

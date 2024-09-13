@@ -8,10 +8,11 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "mains#index"
 
-  get "sobre_nos", to: 'mains#sobre_nos', as: 'sobre_nos'
-  get "pilotos", to: 'mains#pilotos', as: 'pilotos'
+  get "resultados", to: 'mains#resultados', as: 'resultados'
   get "campeonatos", to: 'mains#campeonatos', as: 'campeonatos'
-  get "fale_conosco", to: 'mains#fale_conosco', as: 'fale_conosco'
-  get "patrocinadores", to: 'mains#patrocinadores', as: 'patrocinadores'
-  get "results", to: 'mains#results', as: 'results'
+  get "pilotos", to: 'mains#pilotos', as: 'pilotos'
+  get "carros", to: 'mains#carros', as: 'carros'
+  get "patrocinio", to: 'mains#patrocinio', as: 'patrocinio'
+  get "setups", to: 'mains#setups', as: 'setups'
+  get "contato", to: 'mains#contato', as: 'contato'
 end
