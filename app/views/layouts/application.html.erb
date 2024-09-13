@@ -15,5 +15,32 @@
 
   <body>
     <%= yield %>
+
+    <script>
+    (function () {
+        window.onload = function () {
+            const whatsappButton = document.createElement('a');
+            whatsappButton.href = 'https://api.whatsapp.com/send?phone=SEU_NUMERO&text=Olá!';
+            whatsappButton.target = '_blank'; // Abre o WhatsApp em uma nova aba
+            whatsappButton.style.position = 'fixed';
+            whatsappButton.style.bottom = '20px';
+            whatsappButton.style.right = '20px';
+            whatsappButton.style.backgroundColor = '#25D366'; // Cor do botão WhatsApp
+            whatsappButton.style.borderRadius = '50%';
+            whatsappButton.style.padding = '15px';
+            whatsappButton.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)';
+
+            // Adicionando ícone do WhatsApp usando Font Awesome
+            const whatsappIcon = document.createElement('i');
+            whatsappIcon.className = 'fab fa-whatsapp';
+            whatsappIcon.style.color = 'white';
+            whatsappIcon.style.fontSize = '24px';
+
+            whatsappButton.appendChild(whatsappIcon);
+            document.body.appendChild(whatsappButton);
+        }
+    })();
+</script>
+
   </body>
 </html>
