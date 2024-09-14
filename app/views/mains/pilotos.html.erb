@@ -175,7 +175,7 @@
     background-color: #212121 !important;
     display: flex;
     align-items: center;
-    justify-content: center; /* Centraliza o container na tela */
+    justify-content: center;
   }
 
   .name {
@@ -185,9 +185,9 @@
  .row {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* Centraliza os cards na linha */
+    justify-content: center;
     gap: 30px;
-        margin-top: 200px;
+    margin-top: 200px;
   }
 
  .container {
@@ -214,36 +214,6 @@
   width: 250px;
   border-radius: 10px;
 }
-
-/* Limitando a quantidade de colunas para no máximo 5 em telas grandes */
-  @media (min-width: 1200px) {
-    .col-lg-2-4 {
-      flex: 0 0 19%; /* 5 cards por linha */
-      max-width: 19%;
-    }
-  }
-
-  /* Responsividade para garantir que caiba em dispositivos menores */
-  @media (min-width: 992px) and (max-width: 1199px) {
-    .col-md-3 {
-      flex: 0 0 24%; /* 4 cards por linha */
-      max-width: 24%;
-    }
-  }
-
-  @media (min-width: 768px) and (max-width: 991px) {
-    .col-sm-4 {
-      flex: 0 0 32%; /* 3 cards por linha */
-      max-width: 32%;
-    }
-  }
-
-  @media (max-width: 767px) {
-    .col-6 {
-      flex: 0 0 48%; /* 2 cards por linha */
-      max-width: 48%;
-    }
-  }
 
 .our-team .picture {
   display: inline-block;
@@ -300,7 +270,7 @@
 
 .our-team .title {
   display: block;
-  font-size: 15px;
+  font-size: 19px;
   color: #4e5052;
   text-transform: capitalize;
 }
@@ -337,5 +307,36 @@
   color: #f83534;
   background-color: #f7f5ec;
 }
+
+
+/* Limitando a quantidade de colunas para no máximo 5 em telas grandes */
+  @media (min-width: 1200px) {
+    .col-lg-2-4 {
+      flex: 0 0 19%; /* 5 cards por linha */
+      max-width: 19%;
+    }
+  }
+
+  /* Responsividade para garantir que caiba em dispositivos menores */
+  @media (min-width: 992px) and (max-width: 1199px) {
+    .col-md-3 {
+      flex: 0 0 24%; /* 4 cards por linha */
+      max-width: 24%;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 991px) {
+    .col-sm-4 {
+      flex: 0 0 32%; /* 3 cards por linha */
+      max-width: 32%;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .col-6 {
+      flex: 0 0 48%; /* 2 cards por linha */
+      max-width: 48%;
+    }
+  }
 
 </style>
