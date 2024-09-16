@@ -1,0 +1,40 @@
+<h2>Editar Perfil</h2>
+
+<%= form_for @user, url: update_profile_path, html: { multipart: true } do |f| %>
+  <div>
+    <%= f.label :full_name %>
+    <%= f.text_field :full_name %>
+  </div>
+
+  <div>
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+  </div>
+
+  <div>
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+    <p>(Deixe em branco se não quiser alterar a senha)</p>
+  </div>
+
+  <div>
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+
+  <div>
+    <%= f.label :avatar, "Foto de Perfil" %>
+    <%= f.file_field :avatar %>
+  </div>
+
+<% if @user.persisted? && @user.avatar.attached? %>
+  <div>
+    <%= image_tag current_user.avatar.variant(resize_to_limit: [150, 150]), class: "user-avatar menu-item" %>
+  </div>
+<% end %>
+
+
+  <div>
+    <%= f.submit "Salvar Alterações" %>
+  </div>
+<% end %>

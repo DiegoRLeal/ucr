@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users
 
+  get 'profile/edit', to: 'users#edit', as: :edit_profile
+  patch 'profile', to: 'users#update', as: :update_profile
+
   authenticate :user, ->(user) { user.admin? } do
     mount Blazer::Engine, at: "blazer"
   end
