@@ -8,13 +8,25 @@
     <a href="https://discord.com/invite/DnevxdbDgy" class="menu-item fab fa-discord" target="_black" title="Discord"></a>
     <a href="https://www.instagram.com/undercontrolracingbr/" class="menu-item fab fa-instagram" target="_black" title="Instagram"></a>
     <a href="<%= new_user_registration_path %>" class="menu-item fas fa-user-plus" target="_black" title="Registre-se"></a>
-    <a href="<%= new_user_session_path %>" class="menu-item fas fa-sign-in-alt" target="_black" title="Login"></a>
+    <% if user_signed_in? %>
+      <%= button_to destroy_user_session_path, method: :delete, class: "menu-item fas fa-sign-out-alt", title: "Logout", id: "logout" do %>
+      <% end %>
+    <% else %>
+      <%= link_to new_user_session_path, class: "menu-item fas fa-sign-in-alt", title: "Login" do %>
+      <% end %>
+    <% end %>
   </menu>
 
 </div>
 
 <style>
-  body {
+#logout {
+    left: -52px;
+    top: 119px;
+    border-color: transparent;
+}
+
+body {
   background-color: #EDEDED;
 }
 .circular-menu {

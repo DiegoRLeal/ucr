@@ -1,3 +1,5 @@
+require 'roo'
+
 class MainsController < ApplicationController
   def index
     # @name = User.first.email

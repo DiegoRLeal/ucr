@@ -68,3 +68,7 @@ end
 
 
 gem "devise"
+gem "blazer"
+gem "rails_admin", "3.0"
+gem "sassc-rails"
+gem 'roo'

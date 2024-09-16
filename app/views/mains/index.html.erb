@@ -74,6 +74,27 @@
                                     <div></div>
                                     <div></div>
                                 </div>
+                                <%= link_to carros_path, class: 'hex-content' do %>
+                                    <span class="hex-content-inner">
+                                        <span class="icon">
+                                            <i class="fa fa-car"></i>
+                                        </span>
+                                        <span class="title">Quem somos</span>
+                                    </span>
+                                    <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
+                                <% end %>
+                            </div>
+                            <div class="hexagon-item">
+                                <div class="hex-item">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                                <div class="hex-item">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
                                 <%= link_to pilotos_path, class: 'hex-content' do %>
                                     <span class="hex-content-inner">
                                         <span class="icon">
@@ -101,27 +122,6 @@
                                             <i class="fa fa-car"></i>
                                         </span>
                                         <span class="title">Carros</span>
-                                    </span>
-                                    <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
-                                <% end %>
-                            </div>
-                            <div class="hexagon-item">
-                                <div class="hex-item">
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                </div>
-                                <div class="hex-item">
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                </div>
-                                <%= link_to setups_path, class: 'hex-content' do %>
-                                    <span class="hex-content-inner">
-                                        <span class="icon">
-                                            <i class="fa fa-wrench"></i>
-                                        </span>
-                                        <span class="title">Setups</span>
                                     </span>
                                     <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
                                 <% end %>
@@ -217,8 +217,9 @@ body {
 }
 
 .heading-page p {
-  font-size: 10px;
+  font-size: 13px;
   letter-spacing: 3px;
+    padding: 10px 40px 0 40px;
 }
 
 .heading-page h1 {
@@ -818,32 +819,50 @@ font-family: monospace;
     border-color: transparent;
   }
 }
+
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    var text = "Racing"; // O texto a ser exibido
+ document.addEventListener("DOMContentLoaded", function() {
+  var text = "Racing"; // O texto a ser exibido
+  var targetElement = document.getElementById("racingText"); // Span onde o texto será inserido
+
+  // Função para verificar o tamanho da tela
+  function isMobile() {
+    return window.innerWidth <= 767; // Verifica se a largura da tela é menor ou igual a 767px
+  }
+
+  // Função para escrever letra por letra
+  function typeWriter() {
     var index = 0; // Índice inicial
     var speed = 150; // Velocidade da animação (em milissegundos)
-    var targetElement = document.getElementById("racingText"); // Span onde o texto será inserido
 
-    // Função para escrever letra por letra
-    function typeWriter() {
+    function writeLetter() {
       if (index < text.length) {
         targetElement.innerHTML += text.charAt(index); // Adiciona a letra ao span
         index++;
-        setTimeout(typeWriter, speed); // Chama novamente após o tempo definido
+        setTimeout(writeLetter, speed); // Chama novamente após o tempo definido
       } else {
         // Quando o texto estiver completo, reinicia após 2 segundos
         setTimeout(function() {
           targetElement.innerHTML = ""; // Limpa o texto
           index = 0; // Reinicia o índice
-          typeWriter(); // Reinicia a animação
+          writeLetter(); // Reinicia a animação
         }, 1000); // Espera 2 segundos antes de reiniciar
       }
     }
 
-    // Inicia a animação ao carregar a página
+    writeLetter(); // Inicia a animação
+  }
+
+  // Verifica se é um dispositivo móvel
+  if (isMobile()) {
+    // Em dispositivos móveis, apenas exibe o texto diretamente
+    targetElement.innerHTML = text;
+  } else {
+    // Em telas maiores, aplica a animação
     typeWriter();
-  });
+  }
+});
+
 </script>
