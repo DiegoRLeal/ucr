@@ -1,23 +1,39 @@
 require 'roo'
 
 class MainsController < ApplicationController
-  def index
-    # @name = User.first.email
-  end
+  require 'net/sftp'
+  require 'roo' # para leitura do Excel
 
-  def new
+  # Definir credenciais de ambiente para o SFTP no Heroku
+  sftp_host = ENV['SFTP_HOST']
+  sftp_user = ENV['SFTP_USER']
+  sftp_password = ENV['SFTP_PASSWORD']
+  sftp_directory = "/path/to/excel/files"
 
-  end
+  # Conectar ao servidor SFTP
+  Net::SFTP.start(sftp_host, sftp_user, password: sftp_password) do |sftp|
+    # Listar arquivos no diretório
+    sftp.dir.foreach(sftp_directory) do |entry|
+      next if entry.name == '.' || entry.name == '..'
 
-  def sobre_nos
-  end
+      file_path = "#{sftp_directory}/#{entry.name}"
 
-  def pilotos
-  end
+      # Baixar arquivo XLS
+      sftp.download!(file_path, "/tmp/#{entry.name}")
 
-  def campeonatos
-  end
+      # Ler o arquivo XLS com a gem 'roo'
+      xlsx = Roo::Excelx.new("/tmp/#{entry.name}")
 
-  def fale_conosco
+      # Processar o arquivo e salvar no banco de dados
+      xlsx.each_row_streaming(offset: 1) do |row|
+        # Aqui você pode ajustar conforme o seu modelo no banco
+        Customer.create(
+          name: row[0].cell_value,
+          email: row[1].cell_value
+        )
+      end
+
+      puts "Arquivo #{entry.name} processado."
+    end
   end
 end
