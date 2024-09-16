@@ -6,7 +6,7 @@
       <h2 class="title">Premium</h2>
       <h1 class="price">R$ 10,00</h1>
     </header>
-    <p class="desc">10 slots</p>
+    <p id="slots" class="desc">10 slots</p>
     <p class="desc">* O período de contrato de patrocínio tem vigência de 6 meses. Como estamos em lançamento, serão 7 meses para os primeiros patrocinadores, com 20% de desconto para as renovações.</p>
     <ul class="lists">
       <li class="list">
@@ -80,7 +80,9 @@
         <p>Anúncio nos nossos cards</p>
       </li>
     </ul>
-    <button class="action" type="button">Solicite</button>
+    <button class="action" type="button">
+      <i class="fa-solid fa-flag-checkered"></i> Solicite
+    </button>
   </section>
 
   <section class="card">
@@ -88,7 +90,7 @@
       <h2 class="title">Master</h2>
       <h1 class="price">R$ 50,00</h1>
     </header>
-    <p class="desc">4 slots</p>
+    <p id="slots" class="desc">4 slots</p>
     <p class="desc">* O período de contrato de patrocínio tem vigência de 6 meses. Como estamos em lançamento, serão 7 meses para os primeiros patrocinadores, com 20% de desconto para as renovações.</p>
     <ul class="lists">
       <li class="list">
@@ -162,7 +164,9 @@
         <p>Anúncio nos nossos cards</p>
       </li>
     </ul>
-    <button class="action" type="button">Solicite</button>
+    <button class="action" type="button">
+      <i class="fa-solid fa-flag-checkered"></i> Solicite
+    </button>
   </section>
 
   <section class="card">
@@ -170,7 +174,7 @@
       <h2 class="title">Gold</h2>
       <h1 class="price">R$ 100,00</h1>
     </header>
-    <p class="desc">2 slots</p>
+    <p id="slots" class="desc">2 slots</p>
     <p class="desc">* O período de contrato de patrocínio tem vigência de 6 meses. Como estamos em lançamento, serão 7 meses para os primeiros patrocinadores, com 20% de desconto para as renovações.</p>
     <ul class="lists">
       <li class="list">
@@ -244,7 +248,9 @@
         <p>Anúncio nos nossos cards</p>
       </li>
     </ul>
-    <button class="action" type="button">Solicite</button>
+    <button class="action" type="button">
+      <i class="fa-solid fa-flag-checkered"></i> Solicite
+    </button>
   </section>
 
   <section class="card">
@@ -252,7 +258,7 @@
       <h2 class="title">Diamond</h2>
       <h1 class="price">R$ 200,00</h1>
     </header>
-    <p class="desc">1 slots</p>
+    <p id="slots" class="desc">1 slots</p>
     <p class="desc">* O período de contrato de patrocínio tem vigência de 6 meses. Como estamos em lançamento, serão 7 meses para os primeiros patrocinadores, com 20% de desconto para as renovações.</p>
     <ul class="lists">
       <li class="list">
@@ -326,11 +332,21 @@
         <p>Anúncio nos nossos cards</p>
       </li>
     </ul>
-    <button class="action" type="button">Solicite</button>
+    <button class="action" type="button">
+      <i class="fa-solid fa-flag-checkered"></i> Solicite
+    </button>
   </section>
 </div>
 
 <style>
+body {
+  background-color: #212121bd !important;
+}
+
+.action i {
+  margin-right: 8px; /* Ajusta o espaçamento entre o ícone e o texto */
+}
+
 :root {
   --primary-color: #0ea5e9;
   --secondary-color: #f8fafc;
@@ -392,6 +408,10 @@ header {
   font-size: larger;
 }
 
+#slots {
+  font-size: 25px;
+}
+
 .lists {
   margin-bottom: 1.5rem;
   flex: 1 1 0%;
@@ -432,6 +452,7 @@ header {
 }
 
 .action:hover {
-  background-color: #fe352f;
+  background-color: white;
+  color: #fe352f;
 }
 </style>
