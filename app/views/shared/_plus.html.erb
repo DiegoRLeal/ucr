@@ -57,6 +57,11 @@ body {
   right: 1em;
 }
 
+.circular-menu .floating-btn:hover {
+  background-color: white;
+  color: red;
+}
+
 .circular-menu .floating-btn {
   display: block;
   width: 3.5em;
@@ -69,6 +74,7 @@ body {
   line-height: 3.9;
   cursor: pointer;
   outline: 0;
+  transition: background-color 0.5s ease;
 }
 
 .circular-menu.active .floating-btn {
@@ -207,4 +213,43 @@ body {
 .circular-menu.circular-menu-left.active .menu-item:nth-child(4) {
   transform: translate3d(7em,1em,0);
 }
+
+/* Definindo a animação de pulsação */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Aplicando a animação na bolinha */
+.circular-menu .floating-btn {
+  display: block;
+  width: 3.5em;
+  height: 3.5em;
+  border-radius: 50%;
+  background-color: #f83534;
+  box-shadow: 0 2px 5px 0 hsla(0, 0%, 0%, .26);
+  color: hsl(0, 0%, 100%);
+  text-align: center;
+  line-height: 3.9;
+  cursor: pointer;
+  outline: 0;
+  transition: background-color 0.5s ease;
+  
+  /* Animação de pulsação */
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Quando o menu está ativo, remove a pulsação */
+.circular-menu.active .floating-btn {
+  animation: none; /* Remove a animação após o clique */
+  box-shadow: inset 0 0 3px hsla(0, 0%, 0%, .3);
+}
+
 </style>
