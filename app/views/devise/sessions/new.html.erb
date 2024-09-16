@@ -1,380 +1,139 @@
-<div class="form">
-  <div class="form-toggle"></div>
-  <div class="form-panel one">
-    <div class="form-header">
-      <h1>Account Login</h1>
-    </div>
-    <div class="form-content">
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { method: :post, id: 'login_user_form' }) do |f| %> <!-- Mudança no id -->
-        <div class="form-group">
-          <%= f.label :email, "Email" %>
-          <%= f.email_field :email, autofocus: true, required: true, class: 'form-control', id: 'email_login' %> <!-- Mudança no id -->
-        </div>
-        <div class="form-group">
-          <%= f.label :password, "Password" %>
-          <%= f.password_field :password, autocomplete: "current-password", required: true, class: 'form-control', id: 'password_login' %> <!-- Mudança no id -->
-        </div>
-        <div class="form-group">
-          <div class="form-remember" style="display: flex;">
-            <%= f.check_box :remember_me, class: 'form-control' %>
-            <%= f.label :remember_me, "Remember Me" %>
-          </div>
-            <a class="form-recovery" href="<%= new_password_path(resource_name) %>">Forgot Password?</a>
-        </div>
-        <div class="form-group">
-          <%= f.submit "LOG IN", class: 'btn btn-primary' %>
-        </div>
-      <% end %>
-    </div>
+<div class="main">
+  <input type="checkbox" id="chk" aria-hidden="true">
+
+  <!-- Formulário de Registro -->
+  <div class="signup">
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), data: { turbo: :false }) do |f| %>
+      <label for="chk" aria-hidden="true">Sign up</label>
+      <%= f.error_notification %>
+
+      <%= f.input :email, required: true, autofocus: true, label_html: { style: "font-size: 20px;" }, input_html: { id: 'email', autocomplete: "email" } %>
+      <%= f.input :password, label: "Password", required: true, label_html: { style: "font-size: 20px;" }, input_html: { id: 'password', autocomplete: "new-password" } %>
+      <%= f.input :password_confirmation, label: "Confirm Password", required: true, label_html: { style: "font-size: 20px;" }, input_html: { id: 'password_confirmation', autocomplete: "new-password" } %>
+
+      <%= f.button :submit, class: "btn btn-secondary" %>
+    <% end %>
   </div>
 
-  <div class="form-panel two">
-    <div class="form-header1">
-      <h1>Register Account</h1>
-    </div>
-    <div class="form-content">
-      <%= form_for(resource, as: resource_name, url: user_registration_path, html: { method: :post, id: 'register_user_form' }) do |f| %>
-        <div class="form-group">
-          <%= f.label :email, "Email Address" %>
-          <%= f.email_field :email, autofocus: true, required: true, class: 'form-control', id: 'email_register' %> <!-- Mudança no id -->
-        </div>
-        <div class="form-group">
-          <%= f.label :password, "Password" %>
-          <%= f.password_field :password, autocomplete: "new-password", required: true, class: 'form-control', id: 'password_register' %> <!-- Mudança no id -->
-        </div>
-        <div class="form-group">
-          <%= f.label :password_confirmation, "Confirm Password" %>
-          <%= f.password_field :password_confirmation, required: true, class: 'form-control', id: 'cpassword_register' %> <!-- Mudança no id -->
-        </div>
-        <div class="form-group">
-          <%= f.submit "REGISTER", class: 'btn' %>
-        </div>
-      <% end %>
-    </div>
+  <!-- Formulário de Login -->
+  <div class="login">
+    <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <label for="chk" aria-hidden="true">Login</label>
+      <%= f.input :email, required: false, autofocus: true, input_html: { autocomplete: "email" } %>
+      <%= f.input :password, label: "Password", required: false, input_html: { autocomplete: "current-password" } %>
+      <%= f.button :submit, class: "btn btn-primary" %>
+    <% end %>
   </div>
 </div>
 
-
 <style>
-label[for="user_email"],
-label[for="user_password"],
-label[for="user_password_confirmation"] {
-  color: white !important;
+  body{
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	font-family: 'Jost', sans-serif;
+	background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
 }
 
-.btn {
-  background-color: white !important;
-  color: #f83534 !important;
-  font-weight: bold !important;
+
+#signup {
+  font-size: 25px;
+  margin-bottom: -50px;
 }
 
-.btn-primary {
-  background-color: #f83534 !important;
-  color: white !important;
-}
-/* Font Family */
-body {
-  font-family: "Roboto", sans-serif;
-  background-color: #212121 !important;
+label #email {
+  font-size: 25px;
 }
 
-/* Font Weights */
-.thin { font-weight: 100; }
-.light { font-weight: 300; }
-.regular { font-weight: 400; }
-.semibold { font-weight: 500; }
-.bold { font-weight: 700; }
-.ultra { font-weight: 800; }
-
-/* Base Font */
-html, body {
-  font-size: 14px;
-  line-height: 1.6em;
-  color: rgba(0, 0, 0, 0.6);
+#email,
+#password,
+#password_confirmation {
+  margin-top: -50px;
+   font-size: 10px;
 }
 
-/* Colors */
-:root {
-  --black: #000000;
-  --dark-gray: rgba(0, 0, 0, 0.8);
-  --gray: rgba(0, 0, 0, 0.6);
-  --light-gray: rgba(0, 0, 0, 0.4);
-  --lighter-gray: rgba(0, 0, 0, 0.2);
-  --white: #FFFFFF;
-  --accent: #4285F4;
+.main{
+	width: 350px;
+	height: 500px;
+	background: red;
+	overflow: hidden;
+	background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/ cover;
+	border-radius: 10px;
+	box-shadow: 5px 20px 50px #000;
+}
+#chk{
+	display: none;
+}
+.signup{
+	position: relative;
+	width:100%;
+	height: 100%;
+}
+label{
+	color: #fff;
+	font-size: 2.3em;
+	justify-content: center;
+	display: flex;
+	margin: 50px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: .5s ease-in-out;
+}
+input{
+	width: 60%;
+	height: 10px;
+	background: #e0dede;
+	justify-content: center;
+	display: flex;
+	margin: 20px auto;
+	padding: 12px;
+	border: none;
+	outline: none;
+	border-radius: 5px;
+}
+button{
+	width: 60%;
+	height: 40px;
+	margin: 10px auto;
+	justify-content: center;
+	display: block;
+	color: #fff;
+	background: #573b8a;
+	font-size: 1em;
+	font-weight: bold;
+	margin-top: 30px;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	transition: .2s ease-in;
+	cursor: pointer;
+}
+button:hover{
+	background: #6d44b8;
+}
+.login{
+	height: 460px;
+	background: #eee;
+	border-radius: 60% / 10%;
+	transform: translateY(-180px);
+	transition: .8s ease-in-out;
+}
+.login label{
+	color: #573b8a;
+	transform: scale(.6);
 }
 
-/* Form Settings */
-.form {
-  z-index: 15;
-  position: relative;
-  background: var(--white);
-  width: 600px;
-  border-radius: 4px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-  margin: 100px auto 10px;
-  overflow: hidden;
+#chk:checked ~ .login{
+	transform: translateY(-500px);
 }
-
-.form-toggle {
-  z-index: 10;
-  position: absolute;
-  top: 60px;
-  right: 60px;
-  background: var(--white);
-  width: 60px;
-  height: 60px;
-  border-radius: 100%;
-  transform-origin: center;
-  transform: translate(0, -25%) scale(0);
-  opacity: 0;
-  cursor: pointer;
-  transition: all 0.3s ease;
+#chk:checked ~ .login label{
+	transform: scale(1);
 }
-
-.form-toggle:before,
-.form-toggle:after {
-  content: '';
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 30px;
-  height: 4px;
-  background: var(--accent);
-  transform: translate(-50%, -50%);
-}
-
-.form-toggle:before {
-  transform: translate(-50%, -50%) rotate(45deg);
-}
-
-.form-toggle:after {
-  transform: translate(-50%, -50%) rotate(-45deg);
-}
-
-.form-toggle.visible {
-  transform: translate(0, -25%) scale(1);
-  opacity: 1;
-}
-
-.form-group {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin: 0 0 20px;
-}
-
-.form-group:last-child {
-  margin: 0;
-}
-
-.form-toggle:before, .form-toggle:after {
-  background: #f83534;
-}
-
-.form-group label {
-  display: block;
-  color: var(--gray);
-  font-size: 12px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: .2em;
-}
-
-.form-group input {
-  outline: none;
-  display: block;
-  background: rgba(0, 0, 0, 0.1);
-  width: 100%;
-  border: 0;
-  border-radius: 4px;
-  box-sizing: border-box;
-  padding: 12px 20px;
-  color: var(--gray);
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: 500;
-  line-height: inherit;
-  transition: 0.3s ease;
-}
-
-.form-group input:focus {
-  color: var(--dark-gray);
-}
-
-.form-group button {
-  outline: none;
-  background: var(--accent);
-  width: 100%;
-  border: 0;
-  border-radius: 4px;
-  padding: 12px 20px;
-  color: var(--white);
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: 500;
-  line-height: inherit;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.form-remember {
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 0;
-}
-
-.form-remember input[type='checkbox'] {
-  display: inline-block;
-  width: auto;
-  margin: 0 10px 0 0;
-}
-
-.form-recovery {
-  color: #f83534;
-  font-size: 12px;
-  text-decoration: none;
-}
-
-.form-panel {
-  padding: 60px calc(5% + 60px) 60px 60px;
-  box-sizing: border-box;
-}
-
-.form-panel.one {
-  position: relative;
-}
-
-.form-panel.two {
-  z-index: 5;
-  position: absolute;
-  top: 0;
-  left: 95%;
-  background: #f83534;
-  width: 100%;
-  min-height: 100%;
-  padding: 60px calc(10% + 60px) 60px 60px;
-  transition: 0.3s ease;
-  cursor: pointer;
-}
-
-.form-panel.two:hover {
-  left: 93%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-.form-panel.two.active {
-  left: 10%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  cursor: default;
-}
-
-.form-header {
-  margin: 0 0 40px;
-}
-
-.form-header h1 {
-  padding: 4px 0;
-  color: #f83534;
-  font-size: 24px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.form-header1 {
-  margin: 0 0 40px;
-}
-
-.form-header1 h1 {
-  padding: 4px 0;
-  color: white;
-  font-size: 24px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-user_email {
-  color: white;
-}
-
-.pen-footer {
-  display: flex;
-  justify-content: space-between;
-  width: 600px;
-  margin: 20px auto 100px;
-}
-
-.pen-footer a {
-  color: var(--white);
-  font-size: 12px;
-  text-decoration: none;
-  text-shadow: 1px 2px 0 rgba(0, 0, 0, 0.1);
-}
-
-.pen-footer a .material-icons {
-  width: 12px;
-  margin: 0 5px;
-  vertical-align: middle;
-  font-size: 12px;
+#chk:checked ~ .signup label{
+	transform: scale(.6);
 }
 
 </style>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script>
-$(document).ready(function() {
-  // Função para expandir o painel de registro
-  $('.form-panel.two').on('click', function(e) {
-    e.preventDefault();
-
-    // Verifica se o painel já está ativo
-    if (!$(this).hasClass('active')) {
-      var panelTwoHeight = $('.form-panel.two')[0].scrollHeight;
-
-      // Mostra o botão de voltar (toggle)
-      $('.form-toggle').addClass('visible');
-
-      // Esconde o painel de login e ativa o painel de registro
-      $('.form-panel.one').addClass('hidden');
-      $('.form-panel.two').addClass('active');
-
-      // Ajusta a altura do container do formulário para acomodar o conteúdo do painel dois
-      $('.form').animate({
-        'height': panelTwoHeight
-      }, 200);
-    }
-  });
-
-  // Função para voltar ao painel de login
-  $('.form-toggle').on('click', function(e) {
-    e.preventDefault();
-
-    // Oculta o botão de voltar (toggle)
-    $(this).removeClass('visible');
-
-    // Mostra o painel de login e esconde o painel de registro
-    $('.form-panel.one').removeClass('hidden');
-    $('.form-panel.two').removeClass('active');
-
-    // Recalcula a altura do painel de login e ajusta o container do formulário
-    var panelOneHeight = $('.form-panel.one')[0].scrollHeight;
-
-    // Animação para voltar ao tamanho original
-    $('.form').animate({
-      'height': panelOneHeight
-    }, 200);
-  });
-
-  // Garante que o formulário de registro seja submetido corretamente
-  $('#register_user_form').on('submit', function(e) {
-    if ($(this).find('input:invalid').length) {
-      alert('Preencha todos os campos corretamente!');
-      e.preventDefault();  // Bloqueia o envio se houver campos inválidos
-    }
-  });
-});
-
-</script>
