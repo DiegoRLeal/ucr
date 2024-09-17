@@ -77,3 +77,5 @@ gem "dotenv-rails"
 gem 'image_processing', '~> 1.2'
 
 gem 'simple_form'
+
+gem 'webpacker', '~> 5.0'

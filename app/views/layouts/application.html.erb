@@ -2,17 +2,19 @@
 <html>
   <head>
     <title>Under Control Racing</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <!-- Manifest JSON & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="<%= asset_path 'manifest.json' %>">
+    <%= render 'shared/pwa_icons' %>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
@@ -20,7 +22,90 @@
 
   <body>
     <%= yield %>
-    <%= render 'shared/plus' %>
 
+    <!-- Modal simples de instalação -->
+    <div id="install-prompt" style="display:none; position: fixed; top: 20px; right: 20px; background-color: white; border: 1px solid #ccc; padding: 10px; z-index: 1000;">
+      <p>Instale o app para uma melhor experiência.</p>
+      <button id="accept-install">Instalar</button>
+      <button id="deny-install">Não, obrigado</button>
+    </div>
+
+    <style>
+      #install-prompt {
+        display: block;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: black !important;
+        border: 1px solid red !important;
+        padding: 10px;
+        z-index: 1000;
+        color: white;
+        font-family: "Libre Baskerville", serif !important;
+      }
+
+      #install-prompt p{
+        text-align: center;
+        font-family: "Libre Baskerville", serif !important;
+        font-size: 15px;
+      }
+
+      #accept-install,
+      #deny-install {
+        width: 150px;
+        height: 30px;
+        font-size: 15px;
+        font-family: "Libre Baskerville", serif !important;
+      }
+    </style>
+
+    <script type="module">
+      import "@hotwired/turbo-rails"
+      import "controllers"
+
+      let deferredPrompt;
+
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOM completamente carregado');
+
+        window.addEventListener('beforeinstallprompt', (event) => {
+          console.log('Evento `beforeinstallprompt` capturado');
+          event.preventDefault();
+          deferredPrompt = event;
+
+          const installPrompt = document.getElementById('install-prompt');
+          if (installPrompt) {
+            installPrompt.style.display = 'block';
+          } else {
+            console.error('Elemento de modal de instalação não encontrado');
+          }
+
+          const acceptButton = document.getElementById('accept-install');
+          acceptButton.addEventListener('click', () => {
+            console.log('Usuário clicou em "Instalar"');
+            installPrompt.style.display = 'none';
+            deferredPrompt.prompt();
+
+            deferredPrompt.userChoice.then((choiceResult) => {
+              if (choiceResult.outcome === 'accepted') {
+                console.log('Usuário aceitou a instalação da PWA');
+              } else {
+                console.log('Usuário rejeitou a instalação da PWA');
+              }
+              deferredPrompt = null;
+            });
+          });
+
+          const denyButton = document.getElementById('deny-install');
+          denyButton.addEventListener('click', () => {
+            console.log('Usuário clicou em "Não, obrigado"');
+            installPrompt.style.display = 'none';
+          });
+        });
+      });
+    </script>
+
+
+    <%= render 'shared/plus' %>
   </body>
 </html>

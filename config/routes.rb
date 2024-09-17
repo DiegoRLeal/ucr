@@ -24,4 +24,7 @@ Rails.application.routes.draw do
   get "patrocinio", to: 'mains#patrocinio', as: 'patrocinio'
   get "setups", to: 'mains#setups', as: 'setups'
   get "contato", to: 'mains#contato', as: 'contato'
+
+  get '/offline', to: 'pagess#offline', as: :offline
+  get '/service-worker.js' => 'service_workers#service_worker'
 end
