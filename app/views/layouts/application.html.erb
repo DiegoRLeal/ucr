@@ -20,6 +20,7 @@
     <%= javascript_include_tag "controllers/application" %>
     <%= javascript_include_tag "controllers/hello_controller" %>
     <%= asset_path 'controllers/application.js' %>
+
     <%= javascript_importmap_tags %>
   </head>
 
@@ -62,10 +63,7 @@
       }
     </style>
 
-    <script type="module" defer>
-      import "@hotwired/turbo-rails"
-      import "controllers"
-
+    <script>
       let deferredPrompt;
 
       document.addEventListener('DOMContentLoaded', () => {
