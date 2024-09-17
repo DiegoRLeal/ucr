@@ -1,34 +1,21 @@
 const OFFLINE_VERSION = 1;
 const CACHE_NAME = `offline-v${OFFLINE_VERSION}`;
-const OFFLINE_URL = '/offline.html.erb'; // Verifique o caminho correto
-const OFFLINE_IMG = '/apple-icon.png'; // Verifique o caminho correto
+const OFFLINE_URL = '/offline.html';  // Verifique se este arquivo está acessível
+const OFFLINE_IMG = '/assets/icons/apple-icon.png';  // Verifique se este arquivo está acessível
 
-self.addEventListener('install', function(event) {
-  console.log('Service Worker installing...');
+self.addEventListener('install', (event) => {
+  console.log('Service Worker instalando...');
 
   event.waitUntil((async () => {
+    const cache = await caches.open(CACHE_NAME);
     try {
-      const cache = await caches.open(CACHE_NAME);
-      console.log('Cache aberto durante a instalação:', CACHE_NAME);
-
-      // Verifique se os arquivos realmente estão acessíveis antes de adicionar ao cache
-      const filesToCache = [OFFLINE_URL, OFFLINE_IMG];
-
-      await Promise.all(filesToCache.map(async (file) => {
-        const response = await fetch(file);
-        if (!response || response.status !== 200) {
-          throw new Error(`Falha ao buscar o arquivo: ${file}, status: ${response ? response.status : 'sem resposta'}`);
-        }
-        console.log(`Adicionando ao cache: ${file}`);
-        await cache.put(file, response);
-      }));
-
-      console.log('Todos os arquivos foram armazenados em cache.');
+      await cache.addAll([OFFLINE_URL, OFFLINE_IMG]);
     } catch (error) {
       console.error('Erro ao adicionar arquivos ao cache:', error);
     }
   })());
 });
+
 
 self.addEventListener('activate', function(event) {
   console.log('Service Worker activated.');
