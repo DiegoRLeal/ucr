@@ -1,40 +1,31 @@
 <h2>Editar Perfil</h2>
 
-<%= form_for @user, url: update_profile_path, html: { multipart: true } do |f| %>
+<%= simple_form_for @user, url: update_profile_path, html: { multipart: true } do |f| %>
   <div>
-    <%= f.label :full_name %>
-    <%= f.text_field :full_name %>
+    <%= f.input :full_name, label: "Nome completo" %>
   </div>
-
   <div>
-    <%= f.label :email %>
-    <%= f.email_field :email %>
+    <%= f.input :email, label: "Email" %>
   </div>
-
   <div>
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-    <p>(Deixe em branco se não quiser alterar a senha)</p>
+    <%= f.input :password, label: "Senha", hint: "Deixe em branco se não quiser alterar a senha" %>
   </div>
-
   <div>
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
+    <%= f.input :password_confirmation, label: "Confirmação de senha" %>
   </div>
-
   <div>
-    <%= f.label :avatar, "Foto de Perfil" %>
-    <%= f.file_field :avatar %>
+    <%= f.input :avatar, as: :file, label: "Foto de perfil" %>
   </div>
-
-<% if @user.persisted? && @user.avatar.attached? %>
+  <% if @user.persisted? && @user.avatar.attached? %>
+    <div>
+      <%= image_tag current_user.avatar.variant(resize_to_limit: [150, 150]), class: "user-avatar1 menu-item" %>
+    </div>
+  <% end %>
   <div>
-    <%= image_tag current_user.avatar.variant(resize_to_limit: [150, 150]), class: "user-avatar menu-item" %>
+    <%= f.button :submit, "Salvar alterações" %>
   </div>
 <% end %>
-
-
-  <div>
-    <%= f.submit "Salvar Alterações" %>
-  </div>
-<% end %>
+<!-- Botão de Logout -->
+<div>
+  <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn btn-danger', id: 'logout' %>
+</div>

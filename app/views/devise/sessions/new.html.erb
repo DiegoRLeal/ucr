@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <div class="main">
   <input type="checkbox" id="chk" aria-hidden="true">
 
@@ -14,38 +13,6 @@
 
       <%= f.button :submit, class: "btn btn-secondary" %>
     <% end %>
-=======
-<%= render 'shared/navbar' %>
-
-<div class="form">
-  <div class="form-toggle"></div>
-  <div class="form-panel one">
-    <div class="form-header">
-      <h1>Account Login</h1>
-    </div>
-    <div class="form-content">
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { method: :post, id: 'login_user_form' }) do |f| %> <!-- Mudança no id -->
-        <div class="form-group">
-          <%= f.label :email, "Email" %>
-          <%= f.email_field :email, autofocus: true, required: true, class: 'form-control', id: 'email_login' %> <!-- Mudança no id -->
-        </div>
-        <div class="form-group">
-          <%= f.label :password, "Password" %>
-          <%= f.password_field :password, autocomplete: "current-password", required: true, class: 'form-control', id: 'password_login' %> <!-- Mudança no id -->
-        </div>
-        <div class="form-group">
-          <div class="form-remember" style="display: flex;">
-            <%= f.check_box :remember_me, class: 'form-control' %>
-            <%= f.label :remember_me, "Remember Me" %>
-          </div>
-            <a class="form-recovery" href="<%= new_password_path(resource_name) %>">Forgot Password?</a>
-        </div>
-        <div class="form-group">
-          <%= f.submit "LOG IN", class: 'btn btn-primary' %>
-        </div>
-      <% end %>
-    </div>
->>>>>>> c0bbc29 (menu mais)
   </div>
 
   <!-- Formulário de Login -->
@@ -71,25 +38,13 @@
 	background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
 }
 
-
 #signup {
   font-size: 25px;
   margin-bottom: -50px;
 }
 
-<<<<<<< HEAD
 label #email {
   font-size: 25px;
-=======
-.btn-primary {
-  background-color: #f83534 !important;
-  color: white !important;
-}
-/* Font Family */
-body {
-  font-family: "Roboto", sans-serif;
-  background-color: #212121bd !important;
->>>>>>> c0bbc29 (menu mais)
 }
 
 #email,
@@ -170,22 +125,8 @@ button:hover{
 	transform: scale(.6);
 }
 
-<<<<<<< HEAD
 #chk:checked ~ .login{
 	transform: translateY(-500px);
-=======
-/* Form Settings */
-.form {
-  z-index: 15;
-  position: relative;
-  background: var(--white);
-  width: 600px;
-  border-radius: 4px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-  margin: 200px auto 10px;
-  overflow: hidden;
->>>>>>> c0bbc29 (menu mais)
 }
 #chk:checked ~ .login label{
 	transform: scale(1);
@@ -193,5 +134,4 @@ button:hover{
 #chk:checked ~ .signup label{
 	transform: scale(.6);
 }
-
 </style>
