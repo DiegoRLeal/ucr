@@ -5,7 +5,7 @@ import askPushNotifications from '../plugins/push_notifications';
 
 window.addEventListener('load', () => {
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register('/service-worker.js').then(registration => {
+    navigator.serviceWorker.register('/service_workers/service-worker.js').then(registration => {
       console.log('ServiceWorker registered: ', registration);
 
       let serviceWorker;
