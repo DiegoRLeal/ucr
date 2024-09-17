@@ -24,38 +24,104 @@
     <%= yield %>
 
     <!-- Modal simples de instalação -->
-    <div id="install-prompt" style="display:none; position: fixed; top: 20px; right: 20px; background-color: white; border: 1px solid #ccc; padding: 10px; z-index: 1000;">
-      <p>Instale o app para uma melhor experiência.</p>
-      <button id="accept-install">Instalar</button>
-      <button id="deny-install">Não, obrigado</button>
+    <div id="install-prompt" class="modal hidden">
+      <div class="modal-content">
+        <p>Instale o app para uma melhor experiência.</p>
+        <div class="btn-group">
+          <button id="accept-install" class="install-btn">Instalar</button>
+          <button id="deny-install" class="cancel-btn">Não, obrigado</button>
+        </div>
+      </div>
     </div>
 
     <style>
-      #install-prompt {
-        display: block;
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #EDEDED;
+        margin: 0;
+        padding: 0;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Estilos do Modal */
+      .modal {
         position: fixed;
-        top: 20px;
-        right: 20px;
-        background-color: black !important;
-        border: 1px solid red !important;
-        padding: 10px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
         z-index: 1000;
-        color: white;
-        font-family: "Libre Baskerville", serif !important;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
       }
 
-      #install-prompt p{
+      .modal.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal-content {
+        background-color: white;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         text-align: center;
-        font-family: "Libre Baskerville", serif !important;
-        font-size: 15px;
+        position: relative;
+        max-width: 350px;
+        width: 100%;
       }
 
-      #accept-install,
-      #deny-install {
-        width: 150px;
-        height: 30px;
+      .modal-content p {
+        font-size: 16px;
+        margin-bottom: 15px;
+      }
+
+      /* Botões alinhados lado a lado */
+      .btn-group {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .install-btn, .cancel-btn {
+        padding: 8px 15px;
+        margin: 5px;
+        border: none;
+        border-radius: 5px;
         font-size: 15px;
-        font-family: "Libre Baskerville", serif !important;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 48%; /* Largura ajustada para caberem lado a lado */
+      }
+
+      .install-btn {
+        background-color: #f83534;
+        color: white;
+      }
+
+      .cancel-btn {
+        background-color: #ccc;
+        color: #333;
+      }
+
+      .install-btn:hover {
+        background-color: #cc2c2b;
+      }
+
+      .cancel-btn:hover {
+        background-color: #bbb;
+      }
+
+      /* Responsivo */
+      @media (max-width: 600px) {
+        .modal-content {
+          width: 90%;
+        }
       }
     </style>
 
@@ -66,24 +132,16 @@
       let deferredPrompt;
 
       document.addEventListener('DOMContentLoaded', () => {
-        console.log('DOM completamente carregado');
+        const installPrompt = document.getElementById('install-prompt');
 
         window.addEventListener('beforeinstallprompt', (event) => {
-          console.log('Evento `beforeinstallprompt` capturado');
           event.preventDefault();
           deferredPrompt = event;
-
-          const installPrompt = document.getElementById('install-prompt');
-          if (installPrompt) {
-            installPrompt.style.display = 'block';
-          } else {
-            console.error('Elemento de modal de instalação não encontrado');
-          }
+          installPrompt.classList.add('active');
 
           const acceptButton = document.getElementById('accept-install');
           acceptButton.addEventListener('click', () => {
-            console.log('Usuário clicou em "Instalar"');
-            installPrompt.style.display = 'none';
+            installPrompt.classList.remove('active');
             deferredPrompt.prompt();
 
             deferredPrompt.userChoice.then((choiceResult) => {
@@ -98,13 +156,11 @@
 
           const denyButton = document.getElementById('deny-install');
           denyButton.addEventListener('click', () => {
-            console.log('Usuário clicou em "Não, obrigado"');
-            installPrompt.style.display = 'none';
+            installPrompt.classList.remove('active');
           });
         });
       });
     </script>
-
 
     <%= render 'shared/plus' %>
   </body>
