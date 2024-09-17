@@ -1,3 +1,4 @@
+<%= render 'shared/navbar' %>
 <div class="main">
   <input type="checkbox" id="chk" aria-hidden="true">
 
@@ -7,9 +8,9 @@
       <label for="chk" aria-hidden="true">Sign up</label>
       <%= f.error_notification %>
 
-      <%= f.input :email, required: true, autofocus: true, label_html: { style: "font-size: 20px;" }, input_html: { id: 'email', autocomplete: "email" } %>
-      <%= f.input :password, label: "Password", required: true, label_html: { style: "font-size: 20px;" }, input_html: { id: 'password', autocomplete: "new-password" } %>
-      <%= f.input :password_confirmation, label: "Confirm Password", required: true, label_html: { style: "font-size: 20px;" }, input_html: { id: 'password_confirmation', autocomplete: "new-password" } %>
+      <%= f.input :email, required: true, autofocus: true, label: false, label_html: { style: "font-size: 20px;" }, input_html: { id: 'email', autocomplete: "email", placeholder: "Email" } %>
+      <%= f.input :password, label: "Password", required: true, label: false, label_html: { style: "font-size: 20px;" }, input_html: { id: 'password', autocomplete: "new-password", placeholder: "Password" } %>
+      <%= f.input :password_confirmation, label: "Confirm Password", required: true, label: false, label_html: { style: "font-size: 20px;" }, input_html: { id: 'password_confirmation', autocomplete: "new-password", placeholder: "Confirm Password" } %>
 
       <%= f.button :submit, class: "btn btn-secondary" %>
     <% end %>
@@ -19,8 +20,8 @@
   <div class="login">
     <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <label for="chk" aria-hidden="true">Login</label>
-      <%= f.input :email, required: false, autofocus: true, input_html: { autocomplete: "email" } %>
-      <%= f.input :password, label: "Password", required: false, input_html: { autocomplete: "current-password" } %>
+      <%= f.input :email, required: false, autofocus: true, label: false, input_html: { autocomplete: "email", placeholder: "Email" } %>
+      <%= f.input :password, label: "Password", required: false, label: false, input_html: { autocomplete: "current-password", placeholder: "Password" } %>
       <%= f.button :submit, class: "btn btn-primary" %>
     <% end %>
   </div>
@@ -35,8 +36,39 @@
 	align-items: center;
 	min-height: 100vh;
 	font-family: 'Jost', sans-serif;
-	background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+	background: linear-gradient(to bottom, #290c0c, #632b2b, #3e2424);
 }
+
+.btn.btn-primary, 
+.btn.btn-secondary {
+	width: 60%;
+	height: 40px;
+	margin: 10px auto;
+	justify-content: center;
+	display: block;
+	color: #fff;
+	background: #8a3b3b;
+	font-size: 1em;
+	font-weight: bold;
+	margin-top: 30px;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	transition: .2s ease-in;
+	cursor: pointer;
+}
+
+.btn.btn-primary:hover,
+.btn.btn-secondary:hover{
+	background: #b84444;
+}
+
+::placeholder {
+  font-size: 13px; /* Aumenta o tamanho da fonte do placeholder */
+  color: #6c757d; /* Cor do placeholder (opcional) */
+  opacity: 1; /* Define a opacidade do placeholder */
+}
+
 
 #signup {
   font-size: 25px;
@@ -50,7 +82,7 @@ label #email {
 #email,
 #password,
 #password_confirmation {
-  margin-top: -50px;
+  margin-top: 0px;
    font-size: 10px;
 }
 
@@ -83,7 +115,7 @@ label{
 }
 input{
 	width: 60%;
-	height: 10px;
+	height: 35px;
 	background: #e0dede;
 	justify-content: center;
 	display: flex;
@@ -121,8 +153,9 @@ button:hover{
 	transition: .8s ease-in-out;
 }
 .login label{
-	color: #573b8a;
+	color: #8a3b3b;
 	transform: scale(.6);
+	padding-top: 25px;
 }
 
 #chk:checked ~ .login{
