@@ -14,7 +14,7 @@
     <%= f.input :password_confirmation, label: "Confirmação de senha" %>
   </div>
   <div>
-    <%= f.input :avatar, as: :file, label: "Foto de perfil" %>
+    <%= f.input :avatar_url, as: :file, label: "Foto de perfil" %>
   </div>
   <% if @user.persisted? && @user.avatar.attached? %>
     <div>

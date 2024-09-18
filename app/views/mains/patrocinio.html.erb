@@ -343,7 +343,8 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%; /* Garantir que o body ocupe pelo menos 100% da altura */
-  overflow-x: hidden; /* Prevenir rolagem lateral */
+  overflow-x: hidden; /* Isso é para evitar rolagem horizontal, mas não afeta a vertical */
+  overflow-y: auto;
 }
 
 body {

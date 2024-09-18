@@ -9,9 +9,9 @@
 
     <% if user_signed_in? %>
       <div class="user-menu">
-        <%= link_to edit_profile_path do %>
+        <%= link_to edit_user_registration_path do %>
           <% if current_user.avatar.attached? %>
-            <%= image_tag current_user.avatar.variant(resize_to_limit: [150, 150]), class: "user-avatar menu-item", id: "avatar" %>
+            <%= image_tag current_user.avatar.variant(resize_to_limit: [150, 150]), class: "user-avatar", id: "avatar" %>
           <% else %>
             <i class="menu-item fas fa-user-plus"></i>
           <% end %>
@@ -231,7 +231,7 @@ body {
   cursor: pointer;
   outline: 0;
   transition: background-color 0.5s ease;
-  
+
   /* Animação de pulsação */
   animation: pulse 1.5s infinite ease-in-out;
 }

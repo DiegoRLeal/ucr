@@ -12,7 +12,7 @@
       <%= f.input :password, label: "Password", required: true, label: false, label_html: { style: "font-size: 20px;" }, input_html: { id: 'password', autocomplete: "new-password", placeholder: "Password" } %>
       <%= f.input :password_confirmation, label: "Confirm Password", required: true, label: false, label_html: { style: "font-size: 20px;" }, input_html: { id: 'password_confirmation', autocomplete: "new-password", placeholder: "Confirm Password" } %>
 
-      <%= f.button :submit, class: "btn btn-secondary" %>
+      <%= f.button :submit, 'Create', class: "btn btn-secondary" %>
     <% end %>
   </div>
 
@@ -22,13 +22,13 @@
       <label for="chk" aria-hidden="true">Login</label>
       <%= f.input :email, required: false, autofocus: true, label: false, input_html: { autocomplete: "email", placeholder: "Email" } %>
       <%= f.input :password, label: "Password", required: false, label: false, input_html: { autocomplete: "current-password", placeholder: "Password" } %>
-      <%= f.button :submit, class: "btn btn-primary" %>
+      <%= f.button :submit, 'Entrar', class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>
 
 <style>
-  body{
+body{
 	margin: 0;
 	padding: 0;
 	display: flex;
@@ -39,7 +39,7 @@
 	background: linear-gradient(to bottom, #290c0c, #632b2b, #3e2424);
 }
 
-.btn.btn-primary, 
+.btn.btn-primary,
 .btn.btn-secondary {
 	width: 60%;
 	height: 40px;
