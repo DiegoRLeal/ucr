@@ -77,3 +77,6 @@ gem 'roo'
 gem "dotenv-rails"
 gem 'image_processing', '~> 1.2'
 gem 'simple_form'
+
+gem 'google-api-client', '~> 0.53'
+gem 'charlock_holmes'
