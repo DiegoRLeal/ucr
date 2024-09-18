@@ -1,97 +1,13 @@
 <%= render 'shared/navbar' %>
 
 <div class="planos">
-  <section class="card">
+  <section id="bronze" class="card">
     <header>
-      <h2 class="title">Premium</h2>
-      <h1 class="price">R$ 10,00</h1>
-    </header>
-    <p id="slots" class="desc">10 slots</p>
-    <p class="desc">* O período de contrato de patrocínio tem vigência de 6 meses. Como estamos em lançamento, serão 7 meses para os primeiros patrocinadores, com 20% de desconto para as renovações.</p>
-    <ul class="lists">
-      <li class="list">
-        <svg
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            clip-rule="evenodd"
-            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-            fill-rule="evenodd"
-          ></path>
-        </svg>
-        <p>Exposição da marca nos carros da equipe</p>
-      </li>
-      <li class="list">
-        <svg
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            clip-rule="evenodd"
-            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-            fill-rule="evenodd"
-          ></path>
-        </svg>
-        <p>Promoção em nossas redes sociais</p>
-      </li>
-      <li class="list">
-        <svg
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            clip-rule="evenodd"
-            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-            fill-rule="evenodd"
-          ></path>
-        </svg>
-        <p>Presença no nosso site</p>
-      </li>
-      <li class="list">
-        <svg
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            clip-rule="evenodd"
-            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-            fill-rule="evenodd"
-          ></path>
-        </svg>
-        <p>Menção nas transmissões ao vivo dos pilotos</p>
-      </li>
-      <li class="list">
-        <svg
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            clip-rule="evenodd"
-            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-            fill-rule="evenodd"
-          ></path>
-        </svg>
-        <p>Anúncio nos nossos cards</p>
-      </li>
-    </ul>
-    <button class="action" type="button">
-      <i class="fa-solid fa-flag-checkered"></i> Solicite
-    </button>
-  </section>
-
-  <section class="card">
-    <header>
-      <h2 class="title">Master</h2>
+      <h2 id="bronze-title" class="title">Bronze</h2>
       <h1 class="price">R$ 50,00</h1>
     </header>
-    <p id="slots" class="desc">4 slots</p>
-    <p class="desc">* O período de contrato de patrocínio tem vigência de 6 meses. Como estamos em lançamento, serão 7 meses para os primeiros patrocinadores, com 20% de desconto para as renovações.</p>
+    <%# <p id="slots" class="desc">10 slots</p> %>
+    <p class="desc">* O período de contrato de patrocínio tem vigência de 6 meses.</p>
     <ul class="lists">
       <li class="list">
         <svg
@@ -105,7 +21,7 @@
             fill-rule="evenodd"
           ></path>
         </svg>
-        <p>Exposição da marca nos carros da equipe</p>
+        <p>02 inserções de vídeo até 01 min</p>
       </li>
       <li class="list">
         <svg
@@ -119,7 +35,105 @@
             fill-rule="evenodd"
           ></path>
         </svg>
-        <p>Promoção em nossas redes sociais</p>
+        <p>Formato 16:9 fornecido pelo patrocionador</p>
+      </li>
+      <li class="list">
+        <svg
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+            fill-rule="evenodd"
+          ></path>
+        </svg>
+        <p>Inserção da marca nas midias de divulgação em todas as etapas</p>
+      </li>
+      <li class="list">
+        <svg
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+            fill-rule="evenodd"
+          ></path>
+        </svg>
+        <p>Prenseça em nosso site</p>
+      </li>
+      <%# <li class="list">
+        <svg
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+            fill-rule="evenodd"
+          ></path>
+        </svg>
+        <p>Anúncio nos nossos cards</p>
+      </li> %>
+    </ul>
+    <button class="action" type="button">
+      <i class="fa-solid fa-flag-checkered"></i> Solicite
+    </button>
+  </section>
+
+  <section id="prata" class="card">
+    <header>
+      <h2 id="prata-title" class="title">Prata</h2>
+      <h1 class="price">R$ 75,00</h1>
+    </header>
+    <%# <p id="slots" class="desc">4 slots</p> %>
+    <p class="desc">* O período de contrato de patrocínio tem vigência de 6 meses.</p>
+    <ul class="lists">
+      <li class="list">
+        <svg
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+            fill-rule="evenodd"
+          ></path>
+        </svg>
+        <p>04 inserções de vídeo até 01 min</p>
+      </li>
+      <li class="list">
+        <svg
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+            fill-rule="evenodd"
+          ></path>
+        </svg>
+        <p>Vídeo formato 16:9 fornecido pelo patrocionador</p>
+      </li>
+      <li class="list">
+        <svg
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+            fill-rule="evenodd"
+          ></path>
+        </svg>
+        <p>Inserção da marca nas midias de divulgação em todas as etapas</p>
       </li>
       <li class="list">
         <svg
@@ -135,21 +149,7 @@
         </svg>
         <p>Presença no nosso site</p>
       </li>
-      <li class="list">
-        <svg
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            clip-rule="evenodd"
-            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-            fill-rule="evenodd"
-          ></path>
-        </svg>
-        <p>Menção nas transmissões ao vivo dos pilotos</p>
-      </li>
-      <li class="list">
+      <%# <li class="list">
         <svg
           fill="currentColor"
           viewBox="0 0 20 20"
@@ -162,20 +162,20 @@
           ></path>
         </svg>
         <p>Anúncio nos nossos cards</p>
-      </li>
+      </li> %>
     </ul>
     <button class="action" type="button">
       <i class="fa-solid fa-flag-checkered"></i> Solicite
     </button>
   </section>
 
-  <section class="card">
+  <section id="gold" class="card">
     <header>
-      <h2 class="title">Gold</h2>
+      <h2 id="gold-title" class="title">Gold</h2>
       <h1 class="price">R$ 100,00</h1>
     </header>
-    <p id="slots" class="desc">2 slots</p>
-    <p class="desc">* O período de contrato de patrocínio tem vigência de 6 meses. Como estamos em lançamento, serão 7 meses para os primeiros patrocinadores, com 20% de desconto para as renovações.</p>
+    <%# <p id="slots" class="desc">2 slots</p> %>
+    <p class="desc">* O período de contrato de patrocínio tem vigência de 6 meses.</p>
     <ul class="lists">
       <li class="list">
         <svg
@@ -189,7 +189,7 @@
             fill-rule="evenodd"
           ></path>
         </svg>
-        <p>Exposição da marca nos carros da equipe</p>
+        <p>06 inserções de vídeo até 01 min exclusivo na etapa, não dividindo espaço com outros patrocinadores.</p>
       </li>
       <li class="list">
         <svg
@@ -203,7 +203,21 @@
             fill-rule="evenodd"
           ></path>
         </svg>
-        <p>Promoção em nossas redes sociais</p>
+        <p>Vídeo formato 16:9 fornecido pelo patrocionador</p>
+      </li>
+      <li class="list">
+        <svg
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+            fill-rule="evenodd"
+          ></path>
+        </svg>
+        <p>Inserção da marca nas midias de divulgação em todas as etapas</p>
       </li>
       <li class="list">
         <svg
@@ -219,21 +233,7 @@
         </svg>
         <p>Presença no nosso site</p>
       </li>
-      <li class="list">
-        <svg
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            clip-rule="evenodd"
-            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-            fill-rule="evenodd"
-          ></path>
-        </svg>
-        <p>Menção nas transmissões ao vivo dos pilotos</p>
-      </li>
-      <li class="list">
+      <%# <li class="list">
         <svg
           fill="currentColor"
           viewBox="0 0 20 20"
@@ -246,14 +246,14 @@
           ></path>
         </svg>
         <p>Anúncio nos nossos cards</p>
-      </li>
+      </li> %>
     </ul>
     <button class="action" type="button">
       <i class="fa-solid fa-flag-checkered"></i> Solicite
     </button>
   </section>
 
-  <section class="card">
+  <%# <section class="card">
     <header>
       <h2 class="title">Diamond</h2>
       <h1 class="price">R$ 200,00</h1>
@@ -335,7 +335,7 @@
     <button class="action" type="button">
       <i class="fa-solid fa-flag-checkered"></i> Solicite
     </button>
-  </section>
+  </section> %>
 </div>
 
 <style>
@@ -364,12 +364,12 @@ body {
 
 .list p {
   margin-top: 0;
-  font-size: larger;
+  font-size: 15px;
 }
 
 .planos {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   margin-top: 200px;
   flex-wrap: wrap;
   width: 100%; /* Certifica-se de que ocupa toda a largura da página */
@@ -389,7 +389,38 @@ body {
   background-color: var(--accent-color);
   padding: 1.5rem;
   font-family: Inter, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji" !important;
+  transition: box-shadow 0.3s ease-in-out; /* Adiciona uma transição suave */
+  border: 2px solid transparent; /* Borda invisível por padrão */
 }
+
+/* .card:hover {
+  border: 2px solid red;
+} */
+
+#bronze:hover {
+  box-shadow: 0 12px 24px rgba(205, 127, 50, 0.8);
+}
+
+#bronze-title {
+  color: rgba(205, 127, 50, 0.8);
+}
+
+#prata:hover {
+  box-shadow: 0 12px 24px rgba(192, 192, 192, 0.8);
+}
+
+#prata-title {
+  color: rgba(192, 192, 192, 0.8);
+}
+
+#gold:hover {
+  box-shadow: 0 8px 16px rgba(255, 215, 0, 0.6);
+}
+
+#gold-title {
+  color: rgba(255, 215, 0, 0.6);
+}
+
 
 /* Testar rolagem no container principal */
 #container {
@@ -422,7 +453,7 @@ header {
   line-height: 1.625;
   word-wrap: break-word;
   color: rgba(248, 250, 252, 0.9);
-  font-size: larger;
+  font-size: 10px;
 }
 
 #slots {
@@ -433,10 +464,11 @@ header {
   margin-bottom: 1.5rem;
   flex: 1 1 0%;
   color: rgba(248, 250, 252, 0.9);
+  margin-top: 40px;
 }
 
 .lists .list {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
   display: flex;
   margin-left: -0.5rem;
 }
@@ -472,4 +504,84 @@ header {
   background-color: white;
   color: #fe352f;
 }
+
+/* Reduzir proporcionalmente em telas menores */
+@media (max-width: 768px) {
+  .planos {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    width: 300px; /* Reduz a largura do card */
+    padding: 1rem; /* Diminui o padding interno do card */
+  }
+
+  .title {
+    font-size: 1rem; /* Reduz o tamanho do título */
+  }
+
+  .price {
+    font-size: 3rem; /* Reduz o tamanho da fonte do preço */
+  }
+
+  .desc, .list p {
+    font-size: 1rem; /* Diminui a descrição e a lista */
+  }
+
+  #slots {
+    font-size: 20px; /* Reduz o tamanho dos slots */
+  }
+
+  .action {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 1rem; /* Ajusta o tamanho do botão */
+  }
+
+  .lists .list svg {
+    height: 1.2rem; /* Reduz o ícone da lista */
+    width: 1.2rem;
+  }
+}
+
+/* Ajuste adicional para telas ainda menores */
+@media (max-width: 480px) {
+  .card {
+    width: 250px; /* Reduz mais a largura do card */
+    padding: 0.75rem; /* Diminui ainda mais o padding */
+  }
+
+  .title {
+    font-size: 0.9rem;
+  }
+
+  .price {
+    font-size: 2.5rem;
+  }
+
+  .desc, .list p {
+    font-size: 0.9rem;
+  }
+
+  #slots {
+    font-size: 18px;
+  }
+
+  .action {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .lists .list svg {
+    height: 1rem;
+    width: 1rem;
+  }
+}
+
 </style>
