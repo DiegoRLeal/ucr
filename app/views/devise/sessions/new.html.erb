@@ -7,12 +7,12 @@
     <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), data: { turbo: :false }) do |f| %>
       <label for="chk" aria-hidden="true">Sign up</label>
       <%= f.error_notification %>
-
+    <div class="dados">
       <%= f.input :full_name, required: true, label: false, input_html: { id: 'full_name', placeholder: "Full Name" } %>
       <%= f.input :email, required: true, autofocus: true, label: false, input_html: { id: 'email', autocomplete: "email", placeholder: "Email" } %>
       <%= f.input :password, required: true, label: false, input_html: { id: 'password', autocomplete: "new-password", placeholder: "Password" } %>
       <%= f.input :password_confirmation, required: true, label: false, input_html: { id: 'password_confirmation', autocomplete: "new-password", placeholder: "Confirm Password" } %>
-
+    </div>
       <%= f.button :submit, 'Sign up', class: "btn btn-secondary" %>
     <% end %>
   </div>
@@ -31,6 +31,10 @@
 
 
 <style>
+.dados {
+  margin-top: -30px;
+}
+
 body{
 	margin: 0;
 	padding: 0;
@@ -87,7 +91,7 @@ label #email {
 #password_confirmation,
 #full_name {
   margin-top: 0px;
-   font-size: 10px;
+  font-size: 15px;
 }
 
 .main{
@@ -109,7 +113,7 @@ label #email {
 	height: 100%;
 }
 label{
-	color: #fff;
+	color: black;
 	font-size: 2.3em;
 	justify-content: center;
 	display: flex;
@@ -152,13 +156,13 @@ button:hover{
 }
 .login{
 	height: 460px;
-	background: #eee;
+	background: black;
 	border-radius: 60% / 10%;
 	transform: translateY(-180px);
 	transition: .8s ease-in-out;
 }
 .login label{
-	color: #8a3b3b;
+	color: #ffffff;
 	transform: scale(.6);
 	padding-top: 25px;
 }
