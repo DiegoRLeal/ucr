@@ -11,7 +11,7 @@
 
     <% if user_signed_in? %>
       <div class="user-menu">
-        <%= link_to edit_user_registration_path, class: "menu-item", id: "user" do %>
+        <%= link_to sidebar_path, class: "menu-item", id: "user" do %>
             <i class="menu-item fas fa-user"></i>
           <% end %>
       </div>
