@@ -127,6 +127,60 @@
     </style>
 
     <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const installPrompt = document.getElementById('install-prompt');
+
+        // Verificar se é iOS
+        const isIos = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+        const isInStandaloneMode = ('standalone' in window.navigator) && (window.navigator.standalone);
+
+        if (isIos && !isInStandaloneMode) {
+          // Exibir instruções para adicionar à tela de início no iOS
+          installPrompt.classList.add('active');
+          installPrompt.innerHTML = `
+            <div class="modal-content">
+              <p>Para instalar o app, toque no ícone de compartilhamento <i class="fa fa-share-alt"></i> e selecione "Adicionar à Tela de Início".</p>
+              <button id="deny-install" class="cancel-btn">Fechar</button>
+            </div>
+          `;
+
+          const denyButton = document.getElementById('deny-install');
+          denyButton.addEventListener('click', () => {
+            installPrompt.classList.remove('active');
+          });
+        } else {
+          // Manter o comportamento normal para Android
+          window.addEventListener('beforeinstallprompt', (event) => {
+            event.preventDefault();
+            deferredPrompt = event;
+            installPrompt.classList.add('active');
+
+            const acceptButton = document.getElementById('accept-install');
+            acceptButton.addEventListener('click', () => {
+              installPrompt.classList.remove('active');
+              deferredPrompt.prompt();
+
+              deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                  console.log('Usuário aceitou a instalação da PWA');
+                } else {
+                  console.log('Usuário rejeitou a instalação da PWA');
+                }
+                deferredPrompt = null;
+              });
+            });
+
+            const denyButton = document.getElementById('deny-install');
+            denyButton.addEventListener('click', () => {
+              installPrompt.classList.remove('active');
+            });
+          });
+        }
+      });
+
+    </script>
+
+    <script>
       let deferredPrompt;
 
       document.addEventListener('DOMContentLoaded', () => {
