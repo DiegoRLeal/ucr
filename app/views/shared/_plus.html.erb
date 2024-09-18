@@ -10,25 +10,16 @@
     <a href="#" class="menu-item fab fa-youtube" target="_blank" title="YouTube"></a>
 
     <% if user_signed_in? %>
-      <!-- Usuário logado -->
       <div class="user-menu">
-        <%= link_to edit_user_registration_path, class: "menu-item edit" do %>
-          <% if current_user.avatar.attached? %>
-            <!-- Exibir avatar do usuário -->
-            <%# <%= image_tag current_user.avatar, class: "user-avatar", id: "avatar" %>
-            <%= image_tag current_user.avatar.variant(resize_to_limit: [150, 150]), class: "user-avatar", id: "avatar" %>
-          <% else %>
-            <!-- Exibir ícone genérico se não houver avatar -->
-            <i class="fas fa-user" id="avatar-icon"></i>
+        <%= link_to edit_user_registration_path, class: "menu-item", id: "user" do %>
+            <i class="menu-item fas fa-user"></i>
           <% end %>
-        <% end %>
       </div>
     <% else %>
-      <!-- Usuário não logado -->
+
       <div class="login-menu">
-        <%= link_to new_user_session_path, class: "menu-item login" do %>
-          <!-- Ícone de login -->
-          <i class="fas fa-sign-in-alt" id="login"></i>
+        <%= link_to new_user_session_path, class: "menu-item", id: "login" do %>
+          <i class="menu-item fas fa-sign-in-alt"></i>
         <% end %>
       </div>
     <% end %>
@@ -38,13 +29,28 @@
 
 
 <style>
-#login,
-#edit,
-#avatar-icon,
+
 #avatar {
   position: absolute;
-  top: 140px;
-  left: -124px;
+  top: 240px;
+  left: -147px;
+}
+#login {
+  position: absolute;
+  top: 240px;
+  left: -147px;
+}
+
+#user {
+  position: absolute;
+  top: 240px;
+  left: -147px;
+}
+
+#avatar-icon {
+  position: absolute;
+  top: 239px;
+  left: -148px;
 }
 
 #logout {
@@ -126,6 +132,11 @@ body {
 }
 
 .menu-item.fas.fa-user-plus:hover {
+  background-color: white;
+  color: black;
+}
+
+.menu-item.fas.fa-user:hover {
   background-color: white;
   color: black;
 }
