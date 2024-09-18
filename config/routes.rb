@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  devise_for :users
 
-  get 'profile/edit', to: 'users#edit', as: :edit_profile
-  patch 'profile', to: 'users#update', as: :update_profile
+  devise_for :users, controllers: { registrations: 'registrations' }
+
+  devise_scope :user do
+    get 'welcome', to: 'registrations#welcome', as: :welcome
+  end
 
   authenticate :user, ->(user) { user.admin? } do
     mount Blazer::Engine, at: "blazer"
@@ -24,6 +26,7 @@ Rails.application.routes.draw do
   get "patrocinio", to: 'mains#patrocinio', as: 'patrocinio'
   get "setups", to: 'mains#setups', as: 'setups'
   get "contato", to: 'mains#contato', as: 'contato'
+  get "sidebar", to: 'mains#sidebar', as: 'sidebar'
 
   get '/offline', to: 'pagess#offline', as: :offline
   get '/service-worker.js' => 'service_workers#service_worker'
