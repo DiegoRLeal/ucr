@@ -1,67 +1,109 @@
 const OFFLINE_VERSION = 1;
-const CACHE_NAME = `offline-v${OFFLINE_VERSION}`;
-const OFFLINE_URL = '/offline.html';  // Verifique se este arquivo está acessível
-const OFFLINE_IMG = '/assets/icons/apple-icon.png';  // Verifique se este arquivo está acessível
+const CACHE_NAME = `offline V${OFFLINE_VERSION}`;
+const OFFLINE_URL = 'offline';
+const OFFLINE_IMG = 'apple-icon.png';
 
-self.addEventListener('install', (event) => {
-  console.log('Service Worker instalando...');
+function urlB64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
 
+  const rawData = atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+
+  for (var i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+}
+
+self.addEventListener('install', function(event) {
+  console.log('Service Worker installing.');
+  self.skipWaiting();
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE_NAME);
-    try {
-      await cache.addAll([OFFLINE_URL, OFFLINE_IMG]);
-    } catch (error) {
-      console.error('Erro ao adicionar arquivos ao cache:', error);
-    }
+    // Setting {cache: 'reload'} in the new request will ensure that the response
+    // isn't fulfilled from the HTTP cache; i.e., it will be from the network.
+    // here the offline url and image are stored in the cache
+   await Promise.all([OFFLINE_URL, OFFLINE_IMG].map((path) => {
+      cache.add(new Request(path, {cache: 'reload'}));
+    }));
   })());
 });
 
-
-self.addEventListener('activate', function(event) {
+self.addEventListener('activate', async function(event) {
   console.log('Service Worker activated.');
+
+  // // Tell the active service worker to take control of the page immediately.
+  self.clients.claim();
+
+  let cacheWhitelist = [CACHE_NAME];
   event.waitUntil((async () => {
-    const cacheNames = await caches.keys();
-    await Promise.all(
-      cacheNames.map((cacheName) => {
-        if (cacheName !== CACHE_NAME) {
-          console.log('Deletando cache antigo:', cacheName);
-          return caches.delete(cacheName);
-        }
-      })
-    );
+    // Enable navigation preload if it's supported.
+    // See https://developers.google.com/web/updates/2017/02/navigation-preload
+    if ('navigationPreload' in self.registration) {
+      await self.registration.navigationPreload.enable();
+    }
+
+    // Delete old versions of CACHE_NAME
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.map(function(cacheName) {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
   })());
+
+  try {
+    const applicationServerKey = urlB64ToUint8Array('BBY3RqHYcUn-O13IGlLQq-Mh7_KTASUo5KJAkKi6VrreZdtEPYxCcljzatxERXooPIed32p6dB_7NnKZb3QBG58')
+    const options = { applicationServerKey, userVisibleOnly: true }
+    const subscription = await self.registration.pushManager.subscribe(options)
+    console.log(JSON.stringify(subscription))
+  } catch (err) {
+    console.log('Error', err)
+  }
 });
 
 self.addEventListener('fetch', function(event) {
-  console.log('Service Worker interceptando fetch para:', event.request.url);
-
+  console.log('Service Worker fetching.');
+  // We only want to call event.respondWith() if this is a navigation request
+  // for an HTML page.
   event.respondWith((async () => {
     try {
+      // First, try to use the navigation preload response if it's supported.
       const preloadResponse = await event.preloadResponse;
       if (preloadResponse) {
         return preloadResponse;
       }
 
-      const cachedResponse = await caches.match(event.request);
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-
-      return await fetch(event.request);
+      return await caches.match(event.request) || await fetch(event.request);
     } catch (error) {
-      console.error('Fetch falhou; retornando página offline:', error);
+      // catch is only triggered if an exception is thrown, which is likely
+      // due to a network error.
+      // If fetch() returns a valid HTTP response with a response code in
+      // the 4xx or 5xx range, the catch() will NOT be called.
+      console.log('Fetch failed; returning offline page instead.', error);
 
       const cache = await caches.open(CACHE_NAME);
-      const cachedOfflineResponse = await cache.match(OFFLINE_URL);
-
-      if (cachedOfflineResponse) {
-        return cachedOfflineResponse;
-      }
-
-      return new Response('Você está offline, e a página não está disponível no cache.', {
-        status: 503,
-        headers: { 'Content-Type': 'text/html' }
-      });
+      const cachedResponse = await cache.match(OFFLINE_URL);
+      return cachedResponse;
     }
   })());
+});
+
+// for the notification push
+self.addEventListener('push', function(event) {
+  console.log('[Service Worker] Push Received.');
+  console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
+
+  const title = 'Notification from PWA-test app';
+  const options = {
+    body: event.data.text(),
+    icon: OFFLINE_IMG,
+    badge: OFFLINE_IMG
+  };
+
+  event.waitUntil(self.registration.showNotification(title, options));
 });
