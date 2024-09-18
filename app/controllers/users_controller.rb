@@ -1,22 +1,23 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
 
-  def edit
-    @user = current_user
-  end
+  # def edit
+  #   @user = current_user
+  # end
 
-  def update
-    @user = current_user
-    if @user.update(user_params)
-      redirect_to root_path, notice: 'Perfil atualizado com sucesso.'
-    else
-      render :edit
-    end
-  end
+  # def update
+  #   raise
+  #   @user = current_user
+  #   if @user.update(user_params)
+  #     redirect_to root_path, notice: 'Perfil atualizado com sucesso.'
+  #   else
+  #     render :edit
+  #   end
+  # end
 
-  private
+  # private
 
-  def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :name, :avatar) # Adiciona :avatar aqui
-  end
+  # def user_params
+  #   params.require(:user).permit(:email, :password, :password_confirmation, :name, :avatar) # Adiciona :avatar aqui
+  # end
 end

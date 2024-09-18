@@ -4,38 +4,46 @@
   </a>
 
   <menu class="items-wrapper">
-    <a href="https://discord.com/invite/DnevxdbDgy" class="menu-item fab fa-discord" target="_black" title="Discord"></a>
-    <a href="https://www.instagram.com/undercontrolracingbr/" class="menu-item fab fa-instagram" target="_black" title="Instagram"></a>
-    <a href="" class="menu-item fab fa-youtube" target="_black" title="Youtube"></a>
+    <!-- Links para redes sociais -->
+    <a href="https://discord.com/invite/DnevxdbDgy" class="menu-item fab fa-discord" target="_blank" title="Discord"></a>
+    <a href="https://www.instagram.com/undercontrolracingbr/" class="menu-item fab fa-instagram" target="_blank" title="Instagram"></a>
+    <a href="#" class="menu-item fab fa-youtube" target="_blank" title="YouTube"></a>
 
     <% if user_signed_in? %>
+      <!-- Usuário logado -->
       <div class="user-menu">
-        <%= link_to edit_user_registration_path do %>
+        <%= link_to edit_user_registration_path, class: "menu-item edit" do %>
           <% if current_user.avatar.attached? %>
+            <!-- Exibir avatar do usuário -->
+            <%# <%= image_tag current_user.avatar, class: "user-avatar", id: "avatar" %>
             <%= image_tag current_user.avatar.variant(resize_to_limit: [150, 150]), class: "user-avatar", id: "avatar" %>
           <% else %>
-            <i class="menu-item fas fa-user-plus"></i>
+            <!-- Exibir ícone genérico se não houver avatar -->
+            <i class="fas fa-user" id="avatar-icon"></i>
           <% end %>
         <% end %>
       </div>
     <% else %>
-      <%= link_to new_user_session_path do %>
-        <i class="menu-item fas fa-sign-in-alt" id="login"></i>
-      <% end %>
+      <!-- Usuário não logado -->
+      <div class="login-menu">
+        <%= link_to new_user_session_path, class: "menu-item login" do %>
+          <!-- Ícone de login -->
+          <i class="fas fa-sign-in-alt" id="login"></i>
+        <% end %>
+      </div>
     <% end %>
+
   </menu>
 </div>
 
-<style>
-#login {
-  position: absolute;
-  top: 119px;
-  left: -124px;
-}
 
+<style>
+#login,
+#edit,
+#avatar-icon,
 #avatar {
   position: absolute;
-  top: 119px;
+  top: 140px;
   left: -124px;
 }
 
