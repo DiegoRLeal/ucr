@@ -6,6 +6,7 @@
   <menu class="items-wrapper">
     <a href="https://discord.com/invite/DnevxdbDgy" class="menu-item fab fa-discord" target="_black" title="Discord"></a>
     <a href="https://www.instagram.com/undercontrolracingbr/" class="menu-item fab fa-instagram" target="_black" title="Instagram"></a>
+    <a href="" class="menu-item fab fa-youtube" target="_black" title="Youtube"></a>
 
     <% if user_signed_in? %>
       <div class="user-menu">
@@ -94,8 +95,13 @@ body {
   top: 0;
   right: 0;
   z-index: -2;
-  background-color: #00000066;
+  background-color: #000000c4;
   transition: all .3s ease;
+}
+
+.circular-menu .floating-btn:hover {
+  background-color: white;
+  color: red;
 }
 
 .menu-item.fab.fa-discord:hover {
@@ -106,13 +112,19 @@ body {
   background-color: #f60757;
 }
 
+.menu-item.fab.fa-youtube:hover {
+  background-color: red;
+  color: white;
+}
+
 .menu-item.fas.fa-user-plus:hover {
   background-color: white;
   color: black;
 }
 
 .menu-item.fas.fa-sign-in-alt:hover {
-  background-color: red;
+  background-color: white;
+  color: black;
 }
 
 .circular-menu.active:after {
