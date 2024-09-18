@@ -1,6 +1,7 @@
 <!-- Navbar -->
 <nav id="navbar">
   <ul class="navbar-items flexbox-col">
+
     <li class="navbar-logo flexbox-left">
       <a class="navbar-item-inner flexbox">
         <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 1438.88 1819.54">
@@ -11,30 +12,33 @@
     </li>
 
     <li class="navbar-item flexbox-left">
-      <a id="user-link" class="navbar-item-inner flexbox-left" href="javascript:void(0);">
+      <a id="race" class="navbar-item-inner flexbox-left">
+        <div class="navbar-item-inner-icon-wrapper flexbox">
+          <i class="fa-solid fa-flag-checkered"></i>
+        </div>
+        <span class="link-text">Race Results</span>
+      </a>
+    </li>
+
+    <li class="navbar-item flexbox-left">
+      <a id="setups" class="navbar-item-inner flexbox-left" href="javascript:void(0);">
+        <div class="navbar-item-inner-icon-wrapper flexbox">
+          <i class="fa-solid fa-gear"></i>
+        </div>
+        <span class="link-text">Setup</span>
+      </a>
+    </li>
+
+    <li class="navbar-item flexbox-left">
+      <a id="profile" class="navbar-item-inner flexbox-left" href="javascript:void(0);">
         <div class="navbar-item-inner-icon-wrapper flexbox">
           <i class="fa-solid fa-user"></i>
         </div>
-        <span class="link-text">User</span>
+        <span class="link-text">Profile</span>
       </a>
     </li>
-    <li class="navbar-item flexbox-left">
-      <a class="navbar-item-inner flexbox-left">
-        <div class="navbar-item-inner-icon-wrapper flexbox">
-          <ion-icon name="home-outline"></ion-icon>
-        </div>
-        <span class="link-text">Home</span>
-      </a>
-    </li>
-    <li class="navbar-item flexbox-left">
-      <a class="navbar-item-inner flexbox-left">
-        <div class="navbar-item-inner-icon-wrapper flexbox">
-          <ion-icon name="folder-open-outline"></ion-icon>
-        </div>
-        <span class="link-text">Projects</span>
-      </a>
-    </li>
-    <li class="navbar-item flexbox-left">
+
+    <%# <li class="navbar-item flexbox-left">
       <a class="navbar-item-inner flexbox-left">
         <div class="navbar-item-inner-icon-wrapper flexbox">
           <ion-icon name="pie-chart-outline"></ion-icon>
@@ -42,6 +46,7 @@
         <span class="link-text">Dashboard</span>
       </a>
     </li>
+
     <li class="navbar-item flexbox-left">
       <a class="navbar-item-inner flexbox-left">
         <div class="navbar-item-inner-icon-wrapper flexbox">
@@ -50,6 +55,7 @@
         <span class="link-text">Team</span>
       </a>
     </li>
+
     <li class="navbar-item flexbox-left">
       <a class="navbar-item-inner flexbox-left">
         <div class="navbar-item-inner-icon-wrapper flexbox">
@@ -58,6 +64,7 @@
         <span class="link-text">Support</span>
       </a>
     </li>
+
     <li class="navbar-item flexbox-left">
       <a class="navbar-item-inner flexbox-left">
         <div class="navbar-item-inner-icon-wrapper flexbox">
@@ -65,7 +72,7 @@
         </div>
         <span class="link-text">Settings</span>
       </a>
-    </li>
+    </li> %>
   </ul>
 </nav>
 
@@ -99,25 +106,63 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+
 <script>
-  document.getElementById('user-link').addEventListener('click', function() {
-  // Faz o AJAX para carregar o conteúdo da página de edição do usuário
-  $.ajax({
-    url: "/users/edit", // Caminho da página de edição
-    type: 'GET',
-    dataType: 'html', // O retorno será HTML
-    success: function(data) {
-      // Insere o conteúdo carregado no div da área principal
-      document.getElementById('main-content').innerHTML = data;
-    },
-    error: function() {
-      // Caso ocorra algum erro no carregamento
-      document.getElementById('main-content').innerHTML = '<p>Failed to load user settings.</p>';
-    }
+  document.getElementById('race').addEventListener('click', function() {
+    // Faz o AJAX para carregar o conteúdo da página de edição do usuário
+    $.ajax({
+      url: "/resultados", // Caminho da página de edição
+      type: 'GET',
+      dataType: 'html', // O retorno será HTML
+      success: function(data) {
+        // Insere o conteúdo carregado no div da área principal
+        document.getElementById('main-content').innerHTML = data;
+      },
+      error: function() {
+        // Caso ocorra algum erro no carregamento
+        document.getElementById('main-content').innerHTML = '<p>Failed to load user settings.</p>';
+      }
+    });
   });
-});
 </script>
 
+<script>
+  document.getElementById('setups').addEventListener('click', function() {
+    // Faz o AJAX para carregar o conteúdo da página de edição do usuário
+    $.ajax({
+      url: "/setups", // Caminho da página de edição
+      type: 'GET',
+      dataType: 'html', // O retorno será HTML
+      success: function(data) {
+        // Insere o conteúdo carregado no div da área principal
+        document.getElementById('main-content').innerHTML = data;
+      },
+      error: function() {
+        // Caso ocorra algum erro no carregamento
+        document.getElementById('main-content').innerHTML = '<p>Failed to load user settings.</p>';
+      }
+    });
+  });
+</script>
+
+<script>
+  document.getElementById('profile').addEventListener('click', function() {
+    // Faz o AJAX para carregar o conteúdo da página de edição do usuário
+    $.ajax({
+      url: "/users/edit", // Caminho da página de edição
+      type: 'GET',
+      dataType: 'html', // O retorno será HTML
+      success: function(data) {
+        // Insere o conteúdo carregado no div da área principal
+        document.getElementById('main-content').innerHTML = data;
+      },
+      error: function() {
+        // Caso ocorra algum erro no carregamento
+        document.getElementById('main-content').innerHTML = '<p>Failed to load user settings.</p>';
+      }
+    });
+  });
+</script>
 
 <style>
   :root {
