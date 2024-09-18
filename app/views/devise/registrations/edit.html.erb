@@ -1,55 +1,227 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :full_name %><br />
-    <%= f.text_field :full_name, autofocus: true, autocomplete: "name" %>
+<div class="edit-profile-form-container">
+  <!-- Cabeçalho do formulário com gradiente -->
+  <div class="edit-profile-header">
+    <h2>Edit Your Profile</h2>
   </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "edit-profile-form" }) do |f| %>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
+    <!-- Full Name Field -->
+    <div class="input-group">
+      <%= f.text_field :full_name, placeholder: " ", class: "input-field" %>
+      <label class="input-label">Full Name</label>
+    </div>
 
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
-    <% end %>
-  </div>
+    <!-- Email Field -->
+    <div class="input-group">
+      <%= f.email_field :email, placeholder: " ", class: "input-field" %>
+      <label class="input-label">Email</label>
+    </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+    <!-- Password Field -->
+    <div class="input-group">
+      <%= f.password_field :password, placeholder: " ", class: "input-field" %>
+      <label class="input-label">New Password</label>
+    </div>
 
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
+    <!-- Password Confirmation Field -->
+    <div class="input-group">
+      <%= f.password_field :password_confirmation, placeholder: " ", class: "input-field" %>
+      <label class="input-label">Confirm New Password</label>
+    </div>
 
-  <div class="field">
-    <%= f.label :avatar, "Avatar" %><br />
-    <%= f.file_field :avatar, direct_upload: true %>
-  </div>
+    <!-- Current Password Field -->
+    <div class="input-group">
+      <%= f.password_field :current_password, placeholder: " ", class: "input-field" %>
+      <label class="input-label">Current Password</label>
+    </div>
 
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
+    <!-- Avatar Upload Field -->
+    <div class="input-group">
+      <%= f.file_field :avatar, direct_upload: true, class: "input-field" %>
+      <label class="input-label">Upload Avatar</label>
+    </div>
 
-<h3>Cancel my account</h3>
+    <div class="buttons">
+      <!-- Submit Button -->
+      <div class="action-group">
+        <%= f.submit "Update", class: "btn" %>
+      </div>
 
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
+      <% end %>
 
-<%= button_to "Logout", destroy_user_session_path, method: :delete, data: { confirm: "Are you sure you want to log out?" }, class: "btn btn-danger" %>
+      <!-- Logout Button -->
+      <div class="action-group">
+        <%= button_to "Logout", destroy_user_session_path, method: :delete, data: { confirm: "Are you sure you want to log out?" }, class: "btn btn-secondary" %>
+      </div>
 
-<%= link_to "Back", :back %>
+      <!-- Back Link -->
+      <div class="action-group">
+        <%= link_to "Back", :back, class: "btn btn-outline-secondary" %>
+      </div>
+
+      <!-- Cancel Account Section -->
+      <%# <h3 class="section-title mt-5">Danger Zone</h3> %>
+      <div class="alert">
+        <strong>Cancel Account:</strong> If you're unhappy, you can delete your account.
+        <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger mt-3 btn-gradient" %>
+
+      </div>
+    </div>
+</div>
+
+<style>
+  /* Container Principal */
+.edit-profile-form-container {
+  max-width: 1000px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0px 20px 25px rgba(0, 123, 255, 0.1);
+  overflow: hidden;
+  margin: 50px auto;
+  text-align: center;
+}
+
+/* Header com Gradiente */
+.edit-profile-header {
+  background: linear-gradient(135deg, #06b6d4, #0ea5e9);
+  padding: 2rem 1rem;
+  color: white;
+  box-shadow: 0 4px 20px rgba(6, 182, 212, 0.5);
+}
+
+.edit-profile-header h2 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Campos do Formulário */
+.input-group {
+  position: relative;
+  margin-top: 20px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: #4a5568;
+  background-color: transparent;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #0ea5e9;
+  box-shadow: 0 0 8px rgba(14, 165, 233, 0.2);
+}
+
+.input-field::placeholder {
+  color: #cbd5e0;
+}
+
+/* Label com Efeito */
+.input-label {
+  position: absolute;
+  top: -8px;
+  left: 12px;
+  font-size: 0.75rem;
+  background-color: white;
+  padding: 0 6px;
+  color: #4a5568;
+  transition: 0.3s;
+}
+
+.input-field:focus + .input-label {
+  color: #0ea5e9;
+}
+
+.input-field:not(:placeholder-shown) + .input-label {
+  color: #0ea5e9;
+}
+
+/* Botões de Ação */
+.action-group {
+  padding: 20px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  display: block;
+  width: 200px;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: white;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #06b6d4, #0ea5e9);
+  box-shadow: 0 4px 10px rgba(14, 165, 233, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  border: 2px solid hsl(var(--grooble));
+}
+
+.btn.btn-outline-secondary {
+  text-decoration: none;
+  color: white;
+}
+
+.btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 15px rgba(14, 165, 233, 0.5);
+  border: 0px solid hsl(var(--grooble));
+}
+
+.btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 4px 10px rgba(14, 165, 233, 0.3);
+}
+
+/* Estilo de Alertas */
+.alert {
+  background-color: #f1d1d1;
+  color: #600c0c;
+  border: 1px solid #ebbebe;
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: left;
+  gap: 10px;
+}
+
+.btn-gradient {
+  background: linear-gradient(139deg, #d40606, #e90e0e);
+  color: white; /* Ajuste a cor do texto para ficar visível */
+  border: none; /* Remova a borda, se necessário */
+  box-shadow: 0 4px 10px rgb(233 14 14 / 50%);
+}
+
+.btn-gradient:hover {
+  background: linear-gradient(139deg, #e90e0e, #d40606); /* Gradiente invertido no hover */
+  box-shadow: 0 4px 10px rgb(233 14 14 / 50%);
+}
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .edit-profile-form-container {
+    max-width: 100%;
+    padding: 20px;
+  }
+
+  .input-field {
+    padding: 0.75rem;
+  }
+
+  .btn {
+    font-size: 0.8rem;
+  }
+}
+</style>
