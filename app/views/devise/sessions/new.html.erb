@@ -8,6 +8,7 @@
       <label for="chk" aria-hidden="true">Sign up</label>
       <%= f.error_notification %>
 
+      <%= f.input :full_name, required: true, label: false, input_html: { id: 'full_name', placeholder: "Full Name" } %>
       <%= f.input :email, required: true, autofocus: true, label: false, input_html: { id: 'email', autocomplete: "email", placeholder: "Email" } %>
       <%= f.input :password, required: true, label: false, input_html: { id: 'password', autocomplete: "new-password", placeholder: "Password" } %>
       <%= f.input :password_confirmation, required: true, label: false, input_html: { id: 'password_confirmation', autocomplete: "new-password", placeholder: "Confirm Password" } %>
@@ -83,7 +84,8 @@ label #email {
 
 #email,
 #password,
-#password_confirmation {
+#password_confirmation,
+#full_name {
   margin-top: 0px;
    font-size: 10px;
 }
