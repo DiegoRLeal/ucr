@@ -1,0 +1,2 @@
+class Pilot < ApplicationRecord
+end

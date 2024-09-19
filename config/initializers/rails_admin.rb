@@ -20,6 +20,30 @@ RailsAdmin.config do |config|
       end
     end
 
+    config.model 'Pilot' do
+      list do
+        field :name
+        field :instagram
+        field :twitch
+        field :youtube
+      end
+
+      edit do
+        field :name
+        field :instagram
+        field :twitch
+        field :youtube
+        field :image_url
+      end
+
+      show do
+        field :name
+        field :instagram
+        field :twitch
+        field :youtube
+      end
+    end
+
     # config.included_models = [ "Seller", "Product", "User" ]
 
   ## == CancanCan ==

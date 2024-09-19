@@ -148,4 +148,7 @@ class MainsController < ApplicationController
     end
   end
 
+  def pilotos
+    @pilots = Pilot.all
+  end
 end

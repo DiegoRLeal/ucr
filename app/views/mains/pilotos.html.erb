@@ -1,62 +1,31 @@
-<%= render 'shared/navbar' %>
-
 <div class="container">
-  <div class="card card0">
-    <div class="border">
-      <h2>A. Crepaldi #26</h2>
-      <div class="icons">
-        <a href="https://www.instagram.com/seu_perfil" target="_blank" title="Instagram">
-          <i class="fab fa-instagram" aria-hidden="true"></i>
-        </a>
-        <a href="https://www.twitch.tv/seu_perfil" target="_blank" title="Twitch">
-          <i class="fab fa-twitch" aria-hidden="true"></i>
-        </a>
-        <a href="https://www.youtube.com/seu_perfil" target="_blank" title="YouTube">
-          <i class="fab fa-youtube" aria-hidden="true"></i>
-        </a>
+  <% @pilots.each_with_index do |pilot, index| %>
+    <div class="card card<%= index %>" style="background-image: url('<%= pilot.image_url %>');">
+      <div class="border">
+        <h2><%= pilot.name %></h2>
+        <div class="icons">
+          <a href="<%= pilot.instagram %>" target="_blank" title="Instagram">
+            <i class="fab fa-instagram" aria-hidden="true"></i>
+          </a>
+          <a href="<%= pilot.twitch %>" target="_blank" title="Twitch">
+            <i class="fab fa-twitch" aria-hidden="true"></i>
+          </a>
+          <a href="<%= pilot.youtube %>" target="_blank" title="YouTube">
+            <i class="fab fa-youtube" aria-hidden="true"></i>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="card card1">
-    <div class="border">
-      <h2>Ben Stiller</h2>
-      <div class="icons">
-        <a href="https://www.instagram.com/seu_perfil" target="_blank" title="Instagram">
-          <i class="fab fa-instagram" aria-hidden="true"></i>
-        </a>
-        <a href="https://www.twitch.tv/seu_perfil" target="_blank" title="Twitch">
-          <i class="fab fa-twitch" aria-hidden="true"></i>
-        </a>
-        <a href="https://www.youtube.com/seu_perfil" target="_blank" title="YouTube">
-          <i class="fab fa-youtube" aria-hidden="true"></i>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="card card2">
-    <div class="border">
-      <h2>Patrick Stewart</h2>
-      <div class="icons">
-        <a href="https://www.instagram.com/seu_perfil" target="_blank" title="Instagram">
-          <i class="fab fa-instagram" aria-hidden="true"></i>
-        </a>
-        <a href="https://www.twitch.tv/seu_perfil" target="_blank" title="Twitch">
-          <i class="fab fa-twitch" aria-hidden="true"></i>
-        </a>
-        <a href="https://www.youtube.com/seu_perfil" target="_blank" title="YouTube">
-          <i class="fab fa-youtube" aria-hidden="true"></i>
-        </a>
-      </div>
-    </div>
-  </div>
+  <% end %>
 </div>
 
+
 <style>
-body {
+  body {
   background: linear-gradient(to bottom, #485563, #29323c);
 }
 
- .container {
+.container {
   height: 100vh;
   width: 100vw;
   max-height: 800px;
@@ -97,33 +66,21 @@ body {
   position: relative;
 }
 
-.card0 {
-  background: url('https://res.cloudinary.com/ddxlnxcu5/image/upload/v1726670293/Clipboard02_kmwvwd.png') center center no-repeat;
+.card0, .card1, .card2 {
   background-size: 300px;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .card0:hover {
-  background: url('https://res.cloudinary.com/ddxlnxcu5/image/upload/v1726670293/Clipboard02_kmwvwd.png') left center no-repeat;
   background-size: 600px;
-}
-
-.card1 {
-  background: url('https://i.pinimg.com/originals/28/d2/e6/28d2e684e7859a0dd17fbd0cea00f8a9.jpg') center center no-repeat;
-  background-size: 300px;
 }
 
 .card1:hover {
-  background: url('https://i.pinimg.com/originals/28/d2/e6/28d2e684e7859a0dd17fbd0cea00f8a9.jpg') left center no-repeat;
   background-size: 600px;
 }
 
-.card2 {
-  background: url('https://i.pinimg.com/originals/ee/85/08/ee850842e68cfcf6e3943c048f45c6d1.jpg') center center no-repeat;
-  background-size: 300px;
-}
-
 .card2:hover {
-  background: url('https://i.pinimg.com/originals/ee/85/08/ee850842e68cfcf6e3943c048f45c6d1.jpg') left center no-repeat;
   background-size: 600px;
 }
 
@@ -169,4 +126,4 @@ h2 {
   justify-content: space-around;
 }
 
-  </style>
+</style>

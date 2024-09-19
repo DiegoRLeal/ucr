@@ -31,11 +31,8 @@ Rails.application.routes.draw do
   get '/offline', to: 'pages#offline', as: 'offline'
   get '/service-worker.js' => 'service_workers#service_worker'
 
-
   get '/oauth2callback', to: 'mains#oauth2callback'
 
   get 'job', to: 'mains#job'
-
   get '/show_specific_json', to: 'mains#show_specific_json'
-
 end
