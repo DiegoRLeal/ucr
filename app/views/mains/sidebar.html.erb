@@ -11,7 +11,7 @@
         </svg>
       </a>
     </li>
-
+  <% if current_user.admin? %>
     <li class="navbar-item flexbox-left">
       <a id="race" class="navbar-item-inner flexbox-left">
         <div class="navbar-item-inner-icon-wrapper flexbox">
@@ -29,7 +29,7 @@
         <span class="link-text">Setup</span>
       </a>
     </li>
-
+  <% end %>
     <li class="navbar-item flexbox-left">
       <a id="profile" class="navbar-item-inner flexbox-left" href="javascript:void(0);">
         <div class="navbar-item-inner-icon-wrapper flexbox">
