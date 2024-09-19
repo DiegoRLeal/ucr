@@ -72,11 +72,10 @@ gem "devise"
 gem "blazer"
 gem "rails_admin", "3.0"
 gem "sassc-rails"
-gem 'net-sftp'
-gem 'roo'
+# gem 'net-sftp'
+# gem 'roo'
 gem "dotenv-rails"
 gem 'image_processing', '~> 1.2'
 gem 'simple_form'
 
 gem 'google-api-client', '~> 0.53'
-gem 'charlock_holmes'
