@@ -102,7 +102,7 @@
       <!-- O conteúdo da página de edição de usuário será carregado aqui -->
     </div>
 
-    <style>
+<style>
  /* Import Google font - Poppins */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 * {
@@ -375,64 +375,83 @@ body {
 
 <script>
   document.getElementById('profile').addEventListener('click', function(event) {
-    event.preventDefault(); // Previne a ação padrão do link
+  event.preventDefault(); // Previne a ação padrão do link
 
-    // Faz o AJAX para carregar o conteúdo da página de edição do usuário
-    $.ajax({
-      url: "/users/edit", // Caminho da página de edição
-      type: 'GET',
-      dataType: 'html',
-      success: function(data) {
-        // Insere o conteúdo carregado no div da área principal sem remover a sidebar
-        document.getElementById('main-content').innerHTML = data;
+  // Faz o AJAX para carregar o conteúdo da página de edição do usuário
+  $.ajax({
+    url: "/users/edit", // Caminho da página de edição
+    type: 'GET',
+    dataType: 'html',
+    success: function(data) {
+      // Insere o conteúdo carregado no div da área principal sem remover a sidebar
+      document.getElementById('main-content').innerHTML = data;
 
-        // Após carregar o conteúdo, associamos o evento de submit do formulário via AJAX
-        var form = document.querySelector('.edit-profile-form');
-        form.addEventListener('submit', function(e) {
-          e.preventDefault(); // Previne o envio padrão do formulário
+      // Após carregar o conteúdo, associamos o evento de submit do formulário via AJAX
+      var form = document.querySelector('.edit-profile-form');
+      form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Previne o envio padrão do formulário
 
-          // Limpar mensagens de erro e sucesso anteriores
-          const existingMessages = document.querySelectorAll('.alert');
-          existingMessages.forEach(function(message) {
-            message.remove(); // Remove todas as mensagens antigas
-          });
-
-          var formData = new FormData(form);
-
-          $.ajax({
-            url: form.action,
-            type: 'PUT',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function(response) {
-              // Atualiza o conteúdo da página com o HTML que contém a imagem atualizada
-              document.getElementById('main-content').innerHTML = response.html;
-
-              // Exibe uma mensagem de sucesso (opcional)
-              var successMessage = document.createElement('div');
-              successMessage.classList.add('alert', 'alert-success');
-              successMessage.textContent = response.message;
-              document.getElementById('main-content').prepend(successMessage);
-            },
-            error: function(response) {
-              // Exibe os erros
-              var errorMessage = document.createElement('div');
-              errorMessage.classList.add('alert', 'alert-danger');
-              errorMessage.innerHTML = response.responseJSON.errors.join('<br>');
-              document.getElementById('main-content').prepend(errorMessage);
-            }
-          });
+        // Limpar mensagens de erro e sucesso anteriores
+        const existingMessages = document.querySelectorAll('.alert');
+        existingMessages.forEach(function(message) {
+          message.remove(); // Remove todas as mensagens antigas
         });
-      },
-      error: function() {
-        // Caso ocorra algum erro ao carregar a página de edição
-        document.getElementById('main-content').innerHTML = '<p>Failed to load user settings.</p>';
-      }
-    });
-  });
-</script>
 
+        var formData = new FormData(form);
+
+        $.ajax({
+          url: form.action,
+          type: 'PUT',
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function(response) {
+            // Atualiza o conteúdo da página com o HTML que contém a imagem atualizada
+            document.getElementById('main-content').innerHTML = response.html;
+
+            // Exibe uma mensagem de sucesso (opcional)
+            var successMessage = document.createElement('div');
+            successMessage.classList.add('alert', 'alert-success');
+            successMessage.textContent = response.message;
+            document.getElementById('main-content').prepend(successMessage);
+
+            // Ocultar a mensagem após 3 segundos
+            hideAlertAutomatically();
+          },
+          error: function(response) {
+            // Exibe os erros
+            var errorMessage = document.createElement('div');
+            errorMessage.classList.add('alert', 'alert-danger');
+            errorMessage.innerHTML = response.responseJSON.errors.join('<br>');
+            document.getElementById('main-content').prepend(errorMessage);
+
+            // Ocultar a mensagem de erro após 3 segundos
+            hideAlertAutomatically();
+          }
+        });
+      });
+    },
+    error: function() {
+      // Caso ocorra algum erro ao carregar a página de edição
+      document.getElementById('main-content').innerHTML = '<p>Failed to load user settings.</p>';
+    }
+  });
+});
+
+// Função para ocultar o alerta após 3 segundos
+function hideAlertAutomatically() {
+  var alertElement = document.querySelector('.alert');
+
+  if (alertElement) {
+    setTimeout(function() {
+      alertElement.style.opacity = '0'; // Faz o alerta desaparecer suavemente
+      setTimeout(function() {
+        alertElement.style.display = 'none'; // Remove o alerta do fluxo do layout após a transição
+      }, 500); // Aguarda o fim da transição (0.5 segundos)
+    }, 3000); // 3 segundos
+  }
+}
+</script>
 
 <script>
   // Selecting the sidebar and buttons
