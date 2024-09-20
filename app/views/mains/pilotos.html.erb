@@ -1,8 +1,8 @@
 <%= render 'shared/navbar' %>
 
 <div class="container">
-  <h3>PILOTOS PRO</h3>
   <div class="pro-category" style="display: flex; justify-content: center; gap: 30px;">
+    <h3>PILOTOS PRO</h3>
     <% @pilots.select { |pilot| pilot.categoria == 'PRO' }.each do |pilot| %>
       <div class="card" style="background-image: url('<%= pilot.image_url %>');">
         <div class="border">
@@ -26,8 +26,8 @@
     <% end %>
   </div>
 
+  <div class="silver-category" style="display: flex; justify-content: center; gap: 30px;">
     <h3>PILOTOS SILVER</h3>
-    <div class="silver-category" style="display: flex; justify-content: center; gap: 30px;">
     <% @pilots.select { |pilot| pilot.categoria == 'SILVER' }.each do |pilot| %>
       <div class="card" style="background-image: url('<%= pilot.image_url %>');">
         <div class="border">
@@ -51,8 +51,8 @@
     <% end %>
   </div>
 
+  <div class="am-category" style="display: flex; justify-content: center; gap: 30px;">
     <h3>PILOTOS AM</h3>
-    <div class="am-category" style="display: flex; justify-content: center; gap: 30px;">
     <% @pilots.select { |pilot| pilot.categoria == 'AM' }.each do |pilot| %>
       <div class="card" style="background-image: url('<%= pilot.image_url %>');">
         <div class="border">
