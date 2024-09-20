@@ -12,9 +12,45 @@ class RegistrationsController < Devise::RegistrationsController
       super # Caso contrário, segue o fluxo padrão do Devise
     end
   end
+
+  def update
+    self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
+
+    if update_resource(resource, account_update_params)
+      if request.xhr?
+        # Retorna o HTML atualizado com o avatar recarregado
+        render json: {
+          message: 'Profile updated successfully!',
+          html: render_to_string(template: 'devise/registrations/edit', locals: { resource: resource.reload })
+        }, status: :ok
+      else
+        set_flash_message :notice, :updated
+        redirect_to after_update_path_for(resource)
+      end
+    else
+      clean_up_passwords resource
+      if request.xhr?
+        render json: {
+          errors: resource.errors.full_messages,
+          html: render_to_string(template: 'devise/registrations/edit', locals: { resource: resource })
+        }, status: :unprocessable_entity
+      else
+        respond_with resource
+      end
+    end
+  end
+
   protected
 
   def after_sign_up_path_for(resource)
     welcome_path
+  end
+
+  def update_resource(resource, params)
+    if params[:password].blank? && params[:password_confirmation].blank?
+      resource.update_without_password(params.except(:current_password))
+    else
+      resource.update_with_password(params)
+    end
   end
 end

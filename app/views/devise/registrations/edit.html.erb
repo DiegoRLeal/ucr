@@ -38,8 +38,15 @@
 
     <!-- Avatar Upload Field -->
     <div class="input-group">
-      <%= f.file_field :avatar, direct_upload: true, class: "input-field" %>
-      <label class="input-label">Upload Avatar</label>
+      <% if @user.avatar.attached? %>
+        <%= image_tag url_for(@user.avatar), alt: "User Avatar", class: "avatar-preview" %>
+      <% else %>
+        <p>No avatar attached</p>
+      <% end %>
+
+      <div class="input-group">
+        <%= f.file_field :avatar, direct_upload: true, class: "input-field" %>
+      </div>
     </div>
 
     <div class="buttons">
@@ -57,7 +64,7 @@
 
       <!-- Back Link -->
       <%# <div class="action-group">
-        <%# <%= link_to "Back", :back, class: "btn btn-outline-secondary" %> 
+        <%# <%= link_to "Back", :back, class: "btn btn-outline-secondary" %>
       <%# </div>  %>
 
       <!-- Cancel Account Section -->
