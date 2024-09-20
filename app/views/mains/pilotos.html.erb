@@ -4,7 +4,7 @@
   <% @pilots.each do |pilot| %>
     <div class="card" style="background-image: url('<%= pilot.image_url %>');">
       <div class="border">
-        <h2><%= pilot.name %></h2>
+        <h2><%= pilot.name %></h2><div class="categoria"><%= pilot.categoria %></div>
         <div class="icons">
           <a href="<%= pilot.instagram %>" target="_blank" title="Instagram">
             <i class="fab fa-instagram" id="social" aria-hidden="true"></i>
