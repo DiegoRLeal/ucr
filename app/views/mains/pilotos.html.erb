@@ -7,13 +7,13 @@
         <h2><%= pilot.name %></h2>
         <div class="icons">
           <a href="<%= pilot.instagram %>" target="_blank" title="Instagram">
-            <i class="fab fa-instagram" aria-hidden="true"></i>
+            <i class="fab fa-instagram" id="social" aria-hidden="true"></i>
           </a>
           <a href="<%= pilot.twitch %>" target="_blank" title="Twitch">
-            <i class="fab fa-twitch" aria-hidden="true"></i>
+            <i class="fab fa-twitch" id="social" aria-hidden="true"></i>
           </a>
           <a href="<%= pilot.youtube %>" target="_blank" title="YouTube">
-            <i class="fab fa-youtube" aria-hidden="true"></i>
+            <i class="fab fa-youtube" id="social" aria-hidden="true"></i>
           </a>
         </div>
       </div>
@@ -97,20 +97,20 @@ h2 {
   opacity: 1;
 }
 
-.fab {
+#social {
   opacity: 0;
   transition: opacity 1s;
   color: white;
   font-size: 20px;
 }
 
-.fab:hover {
+#social:hover {
   opacity: 0;
   transition: opacity 1s;
   color: red;
 }
 
-.card:hover .fab {
+.card:hover #social {
   opacity: 1;
 }
 
