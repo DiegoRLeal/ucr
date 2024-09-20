@@ -26,6 +26,7 @@ RailsAdmin.config do |config|
         field :instagram
         field :twitch
         field :youtube
+        field :categoria
       end
 
       edit do
@@ -34,6 +35,11 @@ RailsAdmin.config do |config|
         field :twitch
         field :youtube
         field :image_url
+        field :categoria, :enum do
+          enum do
+            ['PRO', 'SILVER', 'AM']
+          end
+        end
       end
 
       show do
@@ -41,6 +47,7 @@ RailsAdmin.config do |config|
         field :instagram
         field :twitch
         field :youtube
+        field :categoria
       end
     end
 
