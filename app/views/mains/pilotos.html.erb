@@ -4,7 +4,10 @@
   <% @pilots.each do |pilot| %>
     <div class="card" style="background-image: url('<%= pilot.image_url %>');">
       <div class="border">
-        <h2><%= pilot.name %></h2><div class="categoria"><%= pilot.categoria %></div>
+        <h2><%= pilot.name %></h2>
+        <div class="<%= 'categoria ' + (pilot&.categoria&.downcase || '') %>">
+          <%= pilot&.categoria %>
+        </div>
         <div class="icons">
           <a href="<%= pilot.instagram %>" target="_blank" title="Instagram">
             <i class="fab fa-instagram" id="social" aria-hidden="true"></i>
@@ -24,6 +27,33 @@
 <style>
 body {
   background: linear-gradient(to bottom, #485563, #29323c);
+}
+
+.categoria.pro {
+  width: min-content;
+  background-color: white;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 7px;
+  margin: -15px 0 0 20px;
+}
+
+.categoria.silver {
+  width: min-content;
+  background-color: red;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 7px;
+  margin: -15px 0 0 20px;
+}
+
+.categoria.am {
+  width: min-content;
+  background-color: blue;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 7px;
+  margin: -15px 0 0 20px;
 }
 
 .container {
