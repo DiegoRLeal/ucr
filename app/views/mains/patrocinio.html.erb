@@ -80,9 +80,11 @@
         <p>Anúncio nos nossos cards</p>
       </li> %>
     </ul>
-    <button class="action" type="button">
-      <i class="fa-solid fa-flag-checkered"></i> Solicite contato
-    </button>
+    <a href="https://wa.me/2122017586" target="_blank">
+      <button class="action" type="button">
+        <i class="fa-solid fa-flag-checkered"></i> Solicite contato
+      </button>
+    </a>
   </section>
 
   <section id="prata" class="card">
@@ -164,9 +166,11 @@
         <p>Anúncio nos nossos cards</p>
       </li> %>
     </ul>
-    <button class="action" type="button">
-      <i class="fa-solid fa-flag-checkered"></i> Solicite contato
-    </button>
+    <a href="https://wa.me/2122017586" target="_blank">
+      <button class="action" type="button">
+        <i class="fa-solid fa-flag-checkered"></i> Solicite contato
+      </button>
+    </a>
   </section>
 
   <section id="gold" class="card">
@@ -248,9 +252,11 @@
         <p>Anúncio nos nossos cards</p>
       </li> %>
     </ul>
-    <button class="action" type="button">
-      <i class="fa-solid fa-flag-checkered"></i> Solicite contato
-    </button>
+    <a href="https://wa.me/2122017586" target="_blank">
+      <button class="action" type="button">
+        <i class="fa-solid fa-flag-checkered"></i> Solicite contato
+      </button>
+    </a>
   </section>
 
   <%# <section class="card">
@@ -345,6 +351,22 @@ html, body {
   height: 100%; /* Garantir que o body ocupe pelo menos 100% da altura */
   overflow-x: hidden; /* Isso é para evitar rolagem horizontal, mas não afeta a vertical */
   overflow-y: auto;
+}
+
+a, button {
+  text-decoration: none;
+  color: white;
+}
+
+button:hover a {
+  color: red;
+}
+
+button {
+  background-color: #333; /* apenas para visualização */
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
 }
 
 body {
@@ -498,6 +520,7 @@ header {
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   font-size: larger;
+  width: 100%;
 }
 
 .action:hover {
