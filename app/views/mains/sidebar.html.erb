@@ -76,15 +76,16 @@
                 <span>Profile</span>
               </a>
             </li>
+          <% if current_user.admin? %>
             <li class="item">
               <a href="/admin" class="link flex"target= "_blank">
                 <i class="bx bx-cog"></i>
                 <span>Admin</span>
               </a>
             </li>
+          <% end %>
           </ul>
         </div>
-
         <div class="sidebar_profile flex">
           <span class="nav_image">
             <img src="" alt="logo_img" />
