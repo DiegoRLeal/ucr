@@ -5,7 +5,7 @@
     <div class="card" style="background-image: url('<%= pilot.image_url %>');">
       <div class="border">
         <h2><%= pilot.name %></h2>
-        <div class="<%= 'categoria ' + (pilot&.categoria&.downcase || '') %>">
+        <div class="<%= 'categoria ' + (pilot&.categoria&.downcase || '') %>" id="category">
           <%= pilot&.categoria %>
         </div>
         <div class="icons">
@@ -122,6 +122,20 @@ h2 {
   margin: 20px;
   opacity: 0;
   transition: opacity 1s;
+}
+
+#category {
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+#category:hover {
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.card:hover #category {
+  opacity: 1;
 }
 
 #social {
