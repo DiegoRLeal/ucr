@@ -18,6 +18,12 @@
       <label class="input-label">Email</label>
     </div>
 
+    <!-- Current Password Field -->
+    <div class="input-group">
+      <%= f.password_field :current_password, placeholder: " ", class: "input-field" %>
+      <label class="input-label">Current Password</label>
+    </div>
+    
     <!-- Password Field -->
     <div class="input-group">
       <%= f.password_field :password, placeholder: " ", class: "input-field" %>
@@ -30,11 +36,6 @@
       <label class="input-label">Confirm New Password</label>
     </div>
 
-    <!-- Current Password Field -->
-    <div class="input-group">
-      <%= f.password_field :current_password, placeholder: " ", class: "input-field" %>
-      <label class="input-label">Current Password</label>
-    </div>
 
     <!-- Avatar Upload Field -->
     <div class="input-group">
@@ -71,7 +72,7 @@
 <style>
   /* Container Principal */
 .edit-profile-form-container {
-  max-width: 1000px;
+  max-width: 60%;
   background-color: #fff;
   border-radius: 20px;
   box-shadow: 0px 20px 25px hsla(0,0%,13%,0.5);
