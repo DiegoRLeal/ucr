@@ -1,130 +1,116 @@
 <%= render 'shared/navbar' %>
 
-<!DOCTYPE html>
-<!-- Coding by CodingNepal || www.codingnepalweb.com -->
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hoverable Sidebar Menu HTML CSS & JavaScript</title>
-    <link rel="stylesheet" href="style.css" />
-    <!-- Boxicons CSS -->
-    <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    <script src="script.js" defer></script>
-  </head>
-  <body>
-    <nav class="sidebar locked">
-      <div class="logo_items flex">
-        <span class="nav_image">
-          <img src="images/logo.png" alt="logo_img" />
-        </span>
-        <span class="logo_name">CodingNepal</span>
-        <i class="bx bx-lock-alt" id="lock-icon" title="Unlock Sidebar"></i>
-        <i class="bx bx-x" id="sidebar-close"></i>
-      </div>
+<link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+<script src="script.js" defer></script>
 
-      <div class="menu_container">
-        <div class="menu_items">
-          <ul class="menu_item">
-            <div class="menu_title flex">
-              <span class="title">Dashboard</span>
-              <span class="line"></span>
-            </div>
-            <li class="item">
-               <a href="#" id="race" class="link flex" href="javascript:void(0);">
-                <i class="bx bx-home-alt"></i>
-                <span>Race Results</span>
-              </a>
-            </li>
-            <li class="item">
-              <a href="#" id="setups" class="link flex" href="javascript:void(0);">
-                <i class="bx bx-grid-alt"></i>
-                <span>All Setups</span>
-              </a>
-            </li>
-          </ul>
+<nav class="sidebar locked">
+  <div class="logo_items flex">
+    <span class="nav_image">
+      <img src="images/logo.png" alt="logo_img" />
+    </span>
+    <span class="logo_name">CodingNepal</span>
+    <i class="bx bx-lock-alt" id="lock-icon" title="Unlock Sidebar"></i>
+    <i class="bx bx-x" id="sidebar-close"></i>
+  </div>
 
-          <ul class="menu_item">
-            <div class="menu_title flex">
-              <span class="title">Editor</span>
-              <span class="line"></span>
-            </div>
-            <li class="item">
-              <a href="#" id="profile" class="link flex" href="javascript:void(0);">>
-                <i class="bx bxs-magic-wand"></i>
-                <span>Profile</span>
-              </a>
-            </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="bx bx-folder"></i>
-                <span>New Projects</span>
-              </a>
-            </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="bx bx-cloud-upload"></i>
-                <span>Upload New</span>
-              </a>
-            </li>
-          </ul>
-
-          <ul class="menu_item">
-            <div class="menu_title flex">
-              <span class="title">Setting</span>
-              <span class="line"></span>
-            </div>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="bx bx-flag"></i>
-                <span>Notice Board</span>
-              </a>
-            </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="bx bx-award"></i>
-                <span>Award</span>
-              </a>
-            </li>
-            <li class="item">
-              <a href="#" class="link flex">
-                <i class="bx bx-cog"></i>
-                <span>Setting</span>
-              </a>
-            </li>
-          </ul>
+  <div class="menu_container">
+    <div class="menu_items">
+      <ul class="menu_item">
+        <div class="menu_title flex">
+          <span class="title">Dashboard</span>
+          <span class="line"></span>
         </div>
+        <li class="item">
+            <a href="#" id="race" class="link flex" href="javascript:void(0);">
+            <i class="bx bx-home-alt"></i>
+            <span>Race Results</span>
+          </a>
+        </li>
+        <li class="item">
+          <a href="#" id="setups" class="link flex" href="javascript:void(0);">
+            <i class="bx bx-grid-alt"></i>
+            <span>All Setups</span>
+          </a>
+        </li>
+      </ul>
 
-        <div class="sidebar_profile flex">
-          <span class="nav_image">
-            <img src="images/profile.jpg" alt="logo_img" />
-          </span>
-          <div class="data_text">
-            <span class="name">David Oliva</span>
-            <span class="email">david@gmail.com</span>
-          </div>
+      <ul class="menu_item">
+        <div class="menu_title flex">
+          <span class="title">Editor</span>
+          <span class="line"></span>
         </div>
-      </div>
-    </nav>
+        <li class="item">
+          <a href="#" id="profile" class="link flex" href="javascript:void(0);">>
+            <i class="bx bxs-magic-wand"></i>
+            <span>Profile</span>
+          </a>
+        </li>
+        <li class="item">
+          <a href="#" class="link flex">
+            <i class="bx bx-folder"></i>
+            <span>New Projects</span>
+          </a>
+        </li>
+        <li class="item">
+          <a href="#" class="link flex">
+            <i class="bx bx-cloud-upload"></i>
+            <span>Upload New</span>
+          </a>
+        </li>
+      </ul>
 
-    <!-- Navbar -->
-    <nav class="navbar flex">
-      <i class="bx bx-menu" id="sidebar-open"></i>
-      <input type="text" placeholder="Search..." class="search_box" />
+      <ul class="menu_item">
+        <div class="menu_title flex">
+          <span class="title">Setting</span>
+          <span class="line"></span>
+        </div>
+        <li class="item">
+          <a href="#" class="link flex">
+            <i class="bx bx-flag"></i>
+            <span>Notice Board</span>
+          </a>
+        </li>
+        <li class="item">
+          <a href="#" class="link flex">
+            <i class="bx bx-award"></i>
+            <span>Award</span>
+          </a>
+        </li>
+        <li class="item">
+          <a href="#" class="link flex">
+            <i class="bx bx-cog"></i>
+            <span>Setting</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sidebar_profile flex">
       <span class="nav_image">
         <img src="images/profile.jpg" alt="logo_img" />
       </span>
-    </nav>
-  </body>
-</html>
-
-
-    <div id="main-content" class="main-content">
-      <!-- O conteúdo da página de edição de usuário será carregado aqui -->
+      <div class="data_text">
+        <span class="name">David Oliva</span>
+        <span class="email">david@gmail.com</span>
+      </div>
     </div>
+  </div>
+</nav>
 
-    <style>
+<!-- Navbar -->
+<nav class="navbar flex">
+  <i class="bx bx-menu" id="sidebar-open"></i>
+  <input type="text" placeholder="Search..." class="search_box" />
+  <span class="nav_image">
+    <img src="images/profile.jpg" alt="logo_img" />
+  </span>
+</nav>
+
+<div id="main-content" class="main-content">
+  <!-- O conteúdo da página de edição de usuário será carregado aqui -->
+</div>
+
+<style>
  /* Import Google font - Poppins */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 * {
@@ -356,7 +342,6 @@ body {
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-
 <script>
   document.getElementById('race').addEventListener('click', function() {
     // Faz o AJAX para carregar o conteúdo da página de edição do usuário
@@ -416,55 +401,54 @@ body {
 
 <script>
   // Selecting the sidebar and buttons
-const sidebar = document.querySelector(".sidebar");
-const sidebarOpenBtn = document.querySelector("#sidebar-open");
-const sidebarCloseBtn = document.querySelector("#sidebar-close");
-const sidebarLockBtn = document.querySelector("#lock-icon");
+  const sidebar = document.querySelector(".sidebar");
+  const sidebarOpenBtn = document.querySelector("#sidebar-open");
+  const sidebarCloseBtn = document.querySelector("#sidebar-close");
+  const sidebarLockBtn = document.querySelector("#lock-icon");
 
-// Function to toggle the lock state of the sidebar
-const toggleLock = () => {
-  sidebar.classList.toggle("locked");
-  // If the sidebar is not locked
-  if (!sidebar.classList.contains("locked")) {
-    sidebar.classList.add("hoverable");
-    sidebarLockBtn.classList.replace("bx-lock-alt", "bx-lock-open-alt");
-  } else {
-    sidebar.classList.remove("hoverable");
-    sidebarLockBtn.classList.replace("bx-lock-open-alt", "bx-lock-alt");
-  }
-};
+  // Function to toggle the lock state of the sidebar
+  const toggleLock = () => {
+    sidebar.classList.toggle("locked");
+    // If the sidebar is not locked
+    if (!sidebar.classList.contains("locked")) {
+      sidebar.classList.add("hoverable");
+      sidebarLockBtn.classList.replace("bx-lock-alt", "bx-lock-open-alt");
+    } else {
+      sidebar.classList.remove("hoverable");
+      sidebarLockBtn.classList.replace("bx-lock-open-alt", "bx-lock-alt");
+    }
+  };
 
-// Function to hide the sidebar when the mouse leaves
-const hideSidebar = () => {
-  if (sidebar.classList.contains("hoverable")) {
+  // Function to hide the sidebar when the mouse leaves
+  const hideSidebar = () => {
+    if (sidebar.classList.contains("hoverable")) {
+      sidebar.classList.add("close");
+    }
+  };
+
+  // Function to show the sidebar when the mouse enter
+  const showSidebar = () => {
+    if (sidebar.classList.contains("hoverable")) {
+      sidebar.classList.remove("close");
+    }
+  };
+
+  // Function to show and hide the sidebar
+  const toggleSidebar = () => {
+    sidebar.classList.toggle("close");
+  };
+
+  // If the window width is less than 800px, close the sidebar and remove hoverability and lock
+  if (window.innerWidth < 800) {
     sidebar.classList.add("close");
+    sidebar.classList.remove("locked");
+    sidebar.classList.remove("hoverable");
   }
-};
 
-// Function to show the sidebar when the mouse enter
-const showSidebar = () => {
-  if (sidebar.classList.contains("hoverable")) {
-    sidebar.classList.remove("close");
-  }
-};
-
-// Function to show and hide the sidebar
-const toggleSidebar = () => {
-  sidebar.classList.toggle("close");
-};
-
-// If the window width is less than 800px, close the sidebar and remove hoverability and lock
-if (window.innerWidth < 800) {
-  sidebar.classList.add("close");
-  sidebar.classList.remove("locked");
-  sidebar.classList.remove("hoverable");
-}
-
-// Adding event listeners to buttons and sidebar for the corresponding actions
-sidebarLockBtn.addEventListener("click", toggleLock);
-sidebar.addEventListener("mouseleave", hideSidebar);
-sidebar.addEventListener("mouseenter", showSidebar);
-sidebarOpenBtn.addEventListener("click", toggleSidebar);
-sidebarCloseBtn.addEventListener("click", toggleSidebar);
-
+  // Adding event listeners to buttons and sidebar for the corresponding actions
+  sidebarLockBtn.addEventListener("click", toggleLock);
+  sidebar.addEventListener("mouseleave", hideSidebar);
+  sidebar.addEventListener("mouseenter", showSidebar);
+  sidebarOpenBtn.addEventListener("click", toggleSidebar);
+  sidebarCloseBtn.addEventListener("click", toggleSidebar);
 </script>

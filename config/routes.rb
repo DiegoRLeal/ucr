@@ -28,11 +28,12 @@ Rails.application.routes.draw do
   get "contato", to: 'mains#contato', as: 'contato'
   get "sidebar", to: 'mains#sidebar', as: 'sidebar'
 
+  # PWA
   get '/offline', to: 'pages#offline', as: 'offline'
   get '/service-worker.js' => 'service_workers#service_worker'
 
+  # JOB DE BUSCAR OS JSON NO DRIVE
   get '/oauth2callback', to: 'mains#oauth2callback'
-
   get 'job', to: 'mains#job'
   get '/show_specific_json', to: 'mains#show_specific_json'
 end

@@ -96,7 +96,6 @@ class MainsController < ApplicationController
     cleaned_content
   end
 
-
   def show_specific_json
     # Pega o caminho da pasta 'results'
     results_dir = File.join('app', 'results')
