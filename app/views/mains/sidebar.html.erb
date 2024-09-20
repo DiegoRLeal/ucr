@@ -40,9 +40,9 @@
               <span class="line"></span>
             </div>
             <li class="item">
-              <a id="profile" class="link flex" href="javascript:void(0);">
-                <i class="bx bxs-magic-wand"></i>
-                <span>Profile</span>
+              <a class="link flex">
+                <i class="bx bx-award"></i>
+                <span>Award</span>
               </a>
             </li>
             <li class="item">
@@ -70,16 +70,16 @@
                 <span>Notice Board</span>
               </a>
             </li>
-            <li class="item">
-              <a class="link flex">
-                <i class="bx bx-award"></i>
-                <span>Award</span>
+             <li class="item">
+              <a id="profile" class="link flex" href="javascript:void(0);">
+                <i class="bx bxs-magic-wand"></i>
+                <span>Profile</span>
               </a>
             </li>
             <li class="item">
-              <a class="link flex">
+              <a href="/admin" class="link flex"target= "_blank">
                 <i class="bx bx-cog"></i>
-                <span>Setting</span>
+                <span>Admin</span>
               </a>
             </li>
           </ul>
@@ -336,6 +336,7 @@ body {
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<%# RACE PAGE %>
 <script>
   document.getElementById('race').addEventListener('click', function() {
     // Faz o AJAX para carregar o conteúdo da página de edição do usuário
@@ -355,6 +356,7 @@ body {
   });
 </script>
 
+<%# SETUPS PAGE %>
 <script>
   document.getElementById('setups').addEventListener('click', function() {
     // Faz o AJAX para carregar o conteúdo da página de edição do usuário
@@ -374,6 +376,7 @@ body {
   });
 </script>
 
+<%# PROFILE PAGE %>
 <script>
   document.getElementById('profile').addEventListener('click', function(event) {
   event.preventDefault(); // Previne a ação padrão do link
