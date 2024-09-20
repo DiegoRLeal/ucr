@@ -27,3 +27,32 @@
     <%= render 'shared/plus' %>
   </body>
 </html>
+
+<style>
+.alert {
+  background-color: #f1d1d1;
+    color: #600c0c;
+    border: 1px solid #ebbebe;
+    padding: 1rem;
+    border-radius: 12px;
+    text-align: left;
+    gap: 10px;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var alertElement = document.querySelector('.alert');
+  
+  if (alertElement) {
+    setTimeout(function() {
+      alertElement.style.opacity = '0'; // Faz o alerta desaparecer suavemente
+      setTimeout(function() {
+        alertElement.style.display = 'none'; // Remove o alerta do fluxo do layout após a transição
+      }, 500); // Aguarda o fim da transição (0.5 segundos)
+    }, 3000); // 3 segundos
+  }
+});
+</script>
