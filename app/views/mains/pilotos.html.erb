@@ -1,8 +1,10 @@
 <%= render 'shared/navbar' %>
 
 <div class="container">
-  <div class="pro-category" style="display: flex; justify-content: center; gap: 30px;">
-    <h3>PILOTOS PRO</h3>
+  <div class="name-category" id="name-pro">
+    <h3>CATEGORIA - PRO</h3>
+  </div>
+  <div class="pro-category">
     <% @pilots.select { |pilot| pilot.categoria == 'PRO' }.each do |pilot| %>
       <div class="card" style="background-image: url('<%= pilot.image_url %>');">
         <div class="border">
@@ -26,8 +28,10 @@
     <% end %>
   </div>
 
-  <div class="silver-category" style="display: flex; justify-content: center; gap: 30px;">
-    <h3>PILOTOS SILVER</h3>
+  <div class="name-category" id="name-silver">
+    <h3>CATEGORIA - SILVER</h3>
+  </div>
+  <div class="silver-category">
     <% @pilots.select { |pilot| pilot.categoria == 'SILVER' }.each do |pilot| %>
       <div class="card" style="background-image: url('<%= pilot.image_url %>');">
         <div class="border">
@@ -51,8 +55,10 @@
     <% end %>
   </div>
 
-  <div class="am-category" style="display: flex; justify-content: center; gap: 30px;">
-    <h3>PILOTOS AM</h3>
+  <div class="name-category" id="name-am">
+    <h3>CATEGORIA - AM</h3>
+  </div>
+  <div class="am-category">
     <% @pilots.select { |pilot| pilot.categoria == 'AM' }.each do |pilot| %>
       <div class="card" style="background-image: url('<%= pilot.image_url %>');">
         <div class="border">
@@ -79,7 +85,49 @@
 
 <style>
 body {
-  background: linear-gradient(to bottom, #485563, #29323c);
+  background: linear-gradient(to bottom, #485563ba, #29323c);
+  height: auto;
+  overflow-y: auto;
+}
+
+.name-category {
+  width: 60%;
+  height: auto;
+}
+
+.name-category h3 {
+  font-size: 15px;
+}
+
+#name-pro {
+  background-color: white;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 7px;
+  margin: 20px 0 14px 0px;
+}
+
+#name-silver {
+  background-color: gray;
+  color: white;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 7px;
+  margin: 20px 0 14px 0px;
+}
+
+#name-am {
+  background-color: red;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 7px;
+  margin: 20px 0 14px 0px;
+}
+
+.pro-category, .silver-category, .am-category {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 6 colunas de tamanhos iguais */
+  gap: 20px; /* Espaçamento entre os cards */
 }
 
 .categoria.pro {
@@ -112,15 +160,15 @@ body {
 
 .container {
   height: 100vh;
-  width: 100vw;
+  /* width: 100vw; */
   max-height: 800px;
-  max-width: 1280px;
+  max-width: max-content;
   min-height: 600px;
   min-width: 1000px;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
-  margin: 0 auto;
+  margin: 0 50px;
   flex-wrap: wrap;
 }
 
@@ -138,8 +186,8 @@ body {
 }
 
 .card {
+  width: 100%; /* O card vai se ajustar ao tamanho da coluna */
   height: 379px;
-  width: 300px;
   background: grey;
   border-radius: 10px;
   transition: background 0.8s;
@@ -150,9 +198,10 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
-  background-size: 300px;
+  background-size: cover; /* Faz com que a imagem preencha o card */
   background-repeat: no-repeat;
   background-position: center center;
+  margin-bottom: 60px;
 }
 
 .card:hover {
@@ -229,4 +278,17 @@ h2 {
 .card:nth-child(even) {
   background-color: rgba(0, 0, 0, 0.1);
 }
+
+@media (max-width: 1200px) {
+  .pro-category, .silver-category, .am-category {
+    grid-template-columns: repeat(4, 1fr); /* 4 colunas em telas menores */
+  }
+}
+
+@media (max-width: 768px) {
+  .pro-category, .silver-category, .am-category {
+    grid-template-columns: repeat(2, 1fr); /* 2 colunas em telas muito pequenas */
+  }
+}
+
 </style>
