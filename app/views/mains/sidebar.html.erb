@@ -1,7 +1,7 @@
 <%= render 'shared/navbar' %>
 
     <link flex href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    <script src="script.js" defer></script>
+    <%# <script src="script.js" defer></script> %>
 
     <nav class="sidebar locked">
       <div class="logo_items flex">
@@ -87,7 +87,7 @@
 
         <div class="sidebar_profile flex">
           <span class="nav_image">
-            <img src="images/profile.jpg" alt="logo_img" />
+            <img src="" alt="logo_img" />
 
           </span>
           <div class="data_text">
@@ -336,7 +336,6 @@ body {
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-
 <script>
   document.getElementById('race').addEventListener('click', function() {
     // Faz o AJAX para carregar o conteúdo da página de edição do usuário
@@ -416,6 +415,10 @@ body {
             successMessage.classList.add('alert', 'alert-success');
             successMessage.textContent = response.message;
             document.getElementById('main-content').prepend(successMessage);
+
+            // Atualiza o nome e e-mail na sidebar
+            document.querySelector('.sidebar_profile .name').textContent = response.updated_user.full_name;
+            document.querySelector('.sidebar_profile .email').textContent = response.updated_user.email;
 
             // Ocultar a mensagem após 3 segundos
             hideAlertAutomatically();

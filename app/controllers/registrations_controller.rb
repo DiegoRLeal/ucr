@@ -18,10 +18,13 @@ class RegistrationsController < Devise::RegistrationsController
 
     if update_resource(resource, account_update_params)
       if request.xhr?
-        # Retorna o HTML atualizado com o avatar recarregado
         render json: {
           message: 'Profile updated successfully!',
-          html: render_to_string(template: 'devise/registrations/edit', locals: { resource: resource.reload })
+          html: render_to_string(template: 'devise/registrations/edit', locals: { resource: resource.reload }),
+          updated_user: {
+            full_name: resource.full_name,
+            email: resource.email
+          }
         }, status: :ok
       else
         set_flash_message :notice, :updated
