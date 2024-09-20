@@ -1,27 +1,80 @@
 <%= render 'shared/navbar' %>
 
 <div class="container">
-  <% @pilots.each do |pilot| %>
-    <div class="card" style="background-image: url('<%= pilot.image_url %>');">
-      <div class="border">
-        <h2><%= pilot.name %></h2>
-        <div class="<%= 'categoria ' + (pilot&.categoria&.downcase || '') %>" id="category">
-          <%= pilot&.categoria %>
-        </div>
-        <div class="icons">
-          <a href="<%= pilot.instagram %>" target="_blank" title="Instagram">
-            <i class="fab fa-instagram" id="social" aria-hidden="true"></i>
-          </a>
-          <a href="<%= pilot.twitch %>" target="_blank" title="Twitch">
-            <i class="fab fa-twitch" id="social" aria-hidden="true"></i>
-          </a>
-          <a href="<%= pilot.youtube %>" target="_blank" title="YouTube">
-            <i class="fab fa-youtube" id="social" aria-hidden="true"></i>
-          </a>
+  <h3>PILOTOS PRO</h3>
+  <div class="pro-category" style="display: flex; justify-content: center; gap: 30px;">
+    <% @pilots.select { |pilot| pilot.categoria == 'PRO' }.each do |pilot| %>
+      <div class="card" style="background-image: url('<%= pilot.image_url %>');">
+        <div class="border">
+          <h2><%= pilot.name %></h2>
+          <div class="<%= 'categoria ' + (pilot&.categoria&.downcase || '') %>" id="category">
+            <%= pilot&.categoria %>
+          </div>
+          <div class="icons">
+            <a href="<%= pilot.instagram %>" target="_blank" title="Instagram">
+              <i class="fab fa-instagram" id="social" aria-hidden="true"></i>
+            </a>
+            <a href="<%= pilot.twitch %>" target="_blank" title="Twitch">
+              <i class="fab fa-twitch" id="social" aria-hidden="true"></i>
+            </a>
+            <a href="<%= pilot.youtube %>" target="_blank" title="YouTube">
+              <i class="fab fa-youtube" id="social" aria-hidden="true"></i>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
+
+    <h3>PILOTOS SILVER</h3>
+    <div class="silver-category" style="display: flex; justify-content: center; gap: 30px;">
+    <% @pilots.select { |pilot| pilot.categoria == 'SILVER' }.each do |pilot| %>
+      <div class="card" style="background-image: url('<%= pilot.image_url %>');">
+        <div class="border">
+          <h2><%= pilot.name %></h2>
+          <div class="<%= 'categoria ' + (pilot&.categoria&.downcase || '') %>" id="category">
+            <%= pilot&.categoria %>
+          </div>
+          <div class="icons">
+            <a href="<%= pilot.instagram %>" target="_blank" title="Instagram">
+              <i class="fab fa-instagram" id="social" aria-hidden="true"></i>
+            </a>
+            <a href="<%= pilot.twitch %>" target="_blank" title="Twitch">
+              <i class="fab fa-twitch" id="social" aria-hidden="true"></i>
+            </a>
+            <a href="<%= pilot.youtube %>" target="_blank" title="YouTube">
+              <i class="fab fa-youtube" id="social" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+    <h3>PILOTOS AM</h3>
+    <div class="am-category" style="display: flex; justify-content: center; gap: 30px;">
+    <% @pilots.select { |pilot| pilot.categoria == 'AM' }.each do |pilot| %>
+      <div class="card" style="background-image: url('<%= pilot.image_url %>');">
+        <div class="border">
+          <h2><%= pilot.name %></h2>
+          <div class="<%= 'categoria ' + (pilot&.categoria&.downcase || '') %>" id="category">
+            <%= pilot&.categoria %>
+          </div>
+          <div class="icons">
+            <a href="<%= pilot.instagram %>" target="_blank" title="Instagram">
+              <i class="fab fa-instagram" id="social" aria-hidden="true"></i>
+            </a>
+            <a href="<%= pilot.twitch %>" target="_blank" title="Twitch">
+              <i class="fab fa-twitch" id="social" aria-hidden="true"></i>
+            </a>
+            <a href="<%= pilot.youtube %>" target="_blank" title="YouTube">
+              <i class="fab fa-youtube" id="social" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
 
 <style>
