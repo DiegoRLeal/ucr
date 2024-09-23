@@ -1,0 +1,24 @@
+<h1>Tempos dos Pilotos - <%= params[:track_name] %> em <%= params[:session_date].to_date.strftime('%d/%m/%Y') %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome do Piloto</th>
+      <th>Melhor Volta</th>
+      <th>Total de Voltas</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @drivers.each do |driver| %>
+      <tr>
+        <td><%= "#{driver.driver_first_name} #{driver.driver_last_name}" %></td>
+        <td><%= driver.best_lap %></td>
+        <td><%= driver.lap_count %></td>
+        <td>
+          <%= link_to 'Ver todas as voltas', show_lap_times_path(id: driver.id), class: 'btn btn-secondary' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

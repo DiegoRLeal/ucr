@@ -36,10 +36,8 @@ class MainsController < ApplicationController
 
     folder_id = '1NVadU7DI7-qqcAmQ1XOCB_1VellFH3-c'  # ID da pasta no Google Drive
     page_token = nil
-
-    # Definir a pasta 'results' para armazenar os arquivos baixados
-    results_dir = File.join('app', 'results')
-    FileUtils.mkdir_p(results_dir) unless File.directory?(results_dir)
+    max_files = nil  # Definir a quantidade máxima de arquivos (nil para processar todos)
+    processed_count = 0
 
     begin
       loop do
@@ -51,30 +49,103 @@ class MainsController < ApplicationController
           break
         else
           response.files.each do |file|
-            file_name = file.name
+            file_name = file.name  # Nome do arquivo (exemplo: '240323_160953_R.json')
             file_id = file.id
-            puts "Baixando arquivo JSON: #{file_name} (ID: #{file_id})"
 
-            file_path = File.join(results_dir, file_name)
+            # Verifica se o arquivo já foi processado
+            if ProcessedFile.exists?(file_id: file_id)
+              puts "O arquivo #{file_name} já foi processado anteriormente, pulando."
+              next
+            end
+
+            puts "Baixando e processando arquivo JSON: #{file_name} (ID: #{file_id})"
+
             begin
-              # Baixar o arquivo JSON e salvá-lo na pasta 'results'
-              File.open(file_path, 'wb') do |f|
-                drive_service.get_file(file_id, download_dest: f)
+              # Baixar o arquivo JSON
+              file_content = StringIO.new
+              drive_service.get_file(file_id, download_dest: file_content)
+
+              # Converter o conteúdo do JSON para string UTF-8, substituindo caracteres inválidos
+              file_content.rewind
+              json_content = file_content.read.force_encoding('UTF-8').encode('UTF-8', invalid: :replace, undef: :replace, replace: '')
+
+              # Limpar e processar o conteúdo JSON
+              cleaned_content = clean_json_content(json_content)
+              json_data = JSON.parse(cleaned_content)
+
+              # Extraindo os dados do nome do arquivo
+              date_string = file_name.split("_")[0]  # Extrai '240323' do nome do arquivo
+              time_string = file_name.split("_")[1]  # Extrai '160953' do nome do arquivo
+              session_date = Date.strptime(date_string, '%d%m%y')  # Converte '240323' em data
+              session_time = Time.strptime(time_string, '%H%M%S')  # Converte '160953' em hora
+
+              session_type = json_data["sessionType"]  # Extrai o sessionType
+              track_name = json_data["trackName"]      # Extrai o trackName
+
+              puts "Sessão: Data=#{session_date}, Hora=#{session_time}, Tipo=#{session_type}, Pista=#{track_name}"
+
+              # Agora, além de salvar os pilotos, você pode salvar essas informações no Driver ou outro model
+
+              # Iterar sobre os pilotos e salvar os dados
+              if json_data["sessionResult"] && json_data["sessionResult"]["leaderBoardLines"]
+                leaderboard = json_data["sessionResult"]["leaderBoardLines"]
+                leaderboard.each do |entry|
+                  car = entry["car"]
+                  driver = car["drivers"].first
+
+                  car_id = car["carId"]
+                  race_number = car["raceNumber"]
+                  car_model = car["carModel"]
+                  driver_first_name = driver["firstName"]
+                  driver_last_name = driver["lastName"]
+                  best_lap = entry["timing"]["bestLap"]
+                  total_time = entry["timing"]["totalTime"]
+                  lap_count = entry["timing"]["lapCount"]
+
+                  puts "Dados extraídos: car_id=#{car_id}, race_number=#{race_number}, driver=#{driver_first_name} #{driver_last_name}"
+
+                  # Crie o piloto com as novas informações de sessão
+                  Driver.create!(
+                    car_id: car_id,
+                    race_number: race_number,
+                    car_model: car_model,
+                    driver_first_name: driver_first_name,
+                    driver_last_name: driver_last_name,
+                    best_lap: best_lap,
+                    total_time: total_time,
+                    lap_count: lap_count,
+                    session_date: session_date,
+                    session_time: session_time,
+                    session_type: session_type,
+                    track_name: track_name
+                  )
+                end
+
+                # Após processar o arquivo, salvar no banco de dados para evitar duplicação futura
+                ProcessedFile.create!(file_id: file_id)
+                puts "Arquivo #{file_name} processado e armazenado com sucesso."
+              else
+                puts "O arquivo #{file_name} não contém os dados esperados, ignorando."
               end
-              puts "Arquivo #{file_name} baixado com sucesso em #{file_path}."
+
+              # Incrementar o contador de arquivos processados
+              processed_count += 1
+              break if max_files && processed_count >= max_files  # Parar após processar max_files arquivos (se definido)
 
             rescue => e
-              puts "Erro ao baixar o arquivo #{file_name}: #{e.message}"
+              puts "Erro ao processar o arquivo #{file_name}: #{e.message}"
             end
           end
         end
 
         page_token = response.next_page_token
-        break if page_token.nil?  # Continua enquanto houver mais páginas de arquivos
+        break if page_token.nil? || (max_files && processed_count >= max_files)  # Parar o loop após max_files arquivos
       end
     rescue => e
-      puts "Erro durante o processo de download: #{e.message}"
+      puts "Erro durante o processo de download e processamento: #{e.message}"
     end
+
+    render plain: "Processamento concluído."
   end
 
   def job_view
@@ -96,58 +167,41 @@ class MainsController < ApplicationController
     cleaned_content
   end
 
-  def show_specific_json
-    # Pega o caminho da pasta 'results'
-    results_dir = File.join('app', 'results')
-
-    # Pegar todos os arquivos JSON na pasta
-    json_files = Dir.glob(File.join(results_dir, '*.json'))
-
-    if json_files.empty?
-      @error_message = "Nenhum arquivo JSON foi encontrado na pasta results."
-      return
-    end
-
-    # Inicializar a variável para armazenar os dados processados
-    @all_leaderboards = []
-
-    json_files.each do |json_file|
-      begin
-        # Ler o conteúdo de cada arquivo JSON em modo binário e converter para UTF-8
-        file_content = File.open(json_file, "rb").read
-        file_content = file_content.encode("UTF-8", invalid: :replace, undef: :replace, replace: '').strip
-
-        if file_content.empty?
-          @error_message = "O arquivo JSON '#{File.basename(json_file)}' está vazio."
-          next
-        end
-
-        # Limpar o conteúdo do JSON antes de fazer o parsing
-        cleaned_content = clean_json_content(file_content)
-
-        # Fazer o parsing do conteúdo JSON
-        @json_data = JSON.parse(cleaned_content)
-
-        # Exibir uma mensagem de erro se o JSON não contiver os dados esperados
-        if @json_data["sessionResult"].nil? || @json_data["sessionResult"]["leaderBoardLines"].nil?
-          @error_message = "O arquivo JSON '#{File.basename(json_file)}' não contém os dados esperados."
-          next
-        else
-          @leaderboard = @json_data["sessionResult"]["leaderBoardLines"]
-          @all_leaderboards << { file: File.basename(json_file), data: @leaderboard }
-        end
-
-      rescue JSON::ParserError => e
-        @error_message = "Erro ao processar o arquivo JSON '#{File.basename(json_file)}': #{e.message}"
-      rescue Encoding::InvalidByteSequenceError => e
-        @error_message = "Erro de codificação ao ler o arquivo JSON '#{File.basename(json_file)}': #{e.message}"
-      rescue => e
-        @error_message = "Erro ao processar o arquivo JSON '#{File.basename(json_file)}': #{e.message}"
-      end
-    end
+  def pilotos
+    @pilots = Driver.all
   end
 
-  def pilotos
-    @pilots = Pilot.all
+  # Método de callback para lidar com o código de autorização retornado pelo Google
+  def oauth2callback
+    client_id = Google::Auth::ClientId.new(ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'])
+    token_store = Google::Auth::Stores::FileTokenStore.new(file: TOKEN_PATH)
+    authorizer = Google::Auth::UserAuthorizer.new(client_id, SCOPE, token_store)
+
+    user_id = "default"
+
+    # Obter o código de autorização da URL de callback
+    code = params[:code]
+
+    if code.nil?
+      # Se não houver código de autorização, exibir uma mensagem de erro
+      flash[:error] = "Código de autorização não encontrado"
+      redirect_to root_path
+    else
+      # Trocar o código de autorização por tokens de acesso e refresh
+      credentials = authorizer.get_and_store_credentials_from_code(
+        user_id: user_id,
+        code: code,
+        base_url: OOB_URI
+      )
+
+      if credentials
+        # Redireciona para a página principal ou qualquer outra rota após a autorização bem-sucedida
+        flash[:notice] = "Autorização bem-sucedida!"
+        redirect_to root_path
+      else
+        flash[:error] = "Erro ao armazenar as credenciais"
+        redirect_to root_path
+      end
+    end
   end
 end

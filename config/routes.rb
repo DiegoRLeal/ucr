@@ -36,4 +36,11 @@ Rails.application.routes.draw do
   get '/oauth2callback', to: 'mains#oauth2callback'
   get 'job', to: 'mains#job'
   get '/show_specific_json', to: 'mains#show_specific_json'
+
+  resources :drivers, only: [:index] do
+    collection do
+      get 'show_pilot_times'
+      get 'show_lap_times'
+    end
+  end
 end

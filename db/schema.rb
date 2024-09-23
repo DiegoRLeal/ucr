@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_20_162443) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_23_190406) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -95,6 +95,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_20_162443) do
     t.index ["creator_id"], name: "index_blazer_queries_on_creator_id"
   end
 
+  create_table "drivers", force: :cascade do |t|
+    t.string "car_id"
+    t.integer "race_number"
+    t.string "car_model"
+    t.string "driver_first_name"
+    t.string "driver_last_name"
+    t.string "best_lap"
+    t.string "total_time"
+    t.integer "lap_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.date "session_date"
+    t.time "session_time"
+    t.string "session_type"
+    t.string "track_name"
+  end
+
   create_table "pilots", force: :cascade do |t|
     t.string "name"
     t.string "instagram"
@@ -104,6 +121,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_20_162443) do
     t.datetime "updated_at", null: false
     t.string "image_url"
     t.string "categoria"
+  end
+
+  create_table "processed_files", force: :cascade do |t|
+    t.string "file_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "results", force: :cascade do |t|
