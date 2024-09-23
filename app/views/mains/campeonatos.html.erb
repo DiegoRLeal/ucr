@@ -151,7 +151,7 @@ body{
 
     .content button:hover {
         color: #FFFFFF; /* White */
-        background-color: #FF8C00; /* Dark orange */
+        background-color: #f83534; /* Red */
     }
 
 
@@ -208,8 +208,8 @@ body{
     position: absolute;
     bottom: 20px;
     justify-content: space-between;
-    display: flex;
-    margin-bottom: 420px;
+    /* display: flex;
+    margin-bottom: 420px; */
 }
 
 .button button{
@@ -230,9 +230,19 @@ body{
 
 @media (max-width: 720px) {
   .item .content {
-    top: 83%;
+    top: 75%;
     left: 50px;
   }
+
+  .slide .item:nth-child(3){
+    top: 45%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1200px) {
+    .container {
+        top: 38%;
+    }  
 }
 </style>
 
