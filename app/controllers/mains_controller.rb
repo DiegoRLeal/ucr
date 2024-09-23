@@ -76,15 +76,13 @@ class MainsController < ApplicationController
               # Extraindo os dados do nome do arquivo
               date_string = file_name.split("_")[0]  # Extrai '240323' do nome do arquivo
               time_string = file_name.split("_")[1]  # Extrai '160953' do nome do arquivo
-              session_date = Date.strptime(date_string, '%d%m%y')  # Converte '240323' em data
+              session_date = Date.strptime(date_string, '%y%m%d')  # Converte '240323' em data
               session_time = Time.strptime(time_string, '%H%M%S')  # Converte '160953' em hora
 
               session_type = json_data["sessionType"]  # Extrai o sessionType
               track_name = json_data["trackName"]      # Extrai o trackName
 
               puts "Sessão: Data=#{session_date}, Hora=#{session_time}, Tipo=#{session_type}, Pista=#{track_name}"
-
-              # Agora, além de salvar os pilotos, você pode salvar essas informações no Driver ou outro model
 
               # Iterar sobre os pilotos e salvar os dados
               if json_data["sessionResult"] && json_data["sessionResult"]["leaderBoardLines"]
@@ -104,7 +102,10 @@ class MainsController < ApplicationController
 
                   puts "Dados extraídos: car_id=#{car_id}, race_number=#{race_number}, driver=#{driver_first_name} #{driver_last_name}"
 
-                  # Crie o piloto com as novas informações de sessão
+                  # Extrair as voltas
+                  laps = json_data["laps"].select { |lap| lap["carId"] == car_id }
+
+                  # Criar o piloto e salvar as voltas
                   Driver.create!(
                     car_id: car_id,
                     race_number: race_number,
@@ -117,7 +118,8 @@ class MainsController < ApplicationController
                     session_date: session_date,
                     session_time: session_time,
                     session_type: session_type,
-                    track_name: track_name
+                    track_name: track_name,
+                    laps: laps  # Salvar as voltas como JSON
                   )
                 end
 

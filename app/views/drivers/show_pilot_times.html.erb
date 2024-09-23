@@ -13,7 +13,7 @@
     <% @drivers.each do |driver| %>
       <tr>
         <td><%= "#{driver.driver_first_name} #{driver.driver_last_name}" %></td>
-        <td><%= driver.best_lap %></td>
+        <td><%= format_laptime(driver.best_lap.to_i) %></td> <!-- Usando o helper para formatar a melhor volta -->
         <td><%= driver.lap_count %></td>
         <td>
           <%= link_to 'Ver todas as voltas', show_lap_times_path(id: driver.id), class: 'btn btn-secondary' %>
