@@ -1,20 +1,87 @@
-<h1>Voltas de <%= @driver.driver_first_name %> <%= @driver.driver_last_name %></h1>
+<h1 class="page-title text-center">Voltas de <%= @driver.driver_first_name %> <%= @driver.driver_last_name %></h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Número da Volta</th>
-      <th>Tempo da Volta</th>
-      <th>Splits</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @driver.laps.each_with_index do |lap, index| %>
-      <tr style="background-color: <%= lap['isValidForBest'] ? 'green' : 'red' %>;">
-        <td><%= index + 1 %></td>
-        <td><%= format_laptime(lap['laptime']) %></td>  <!-- Usando o helper para formatar o laptime -->
-        <td><%= lap['splits'].join(", ") %></td>
+<div class="table-responsive container-lg py-4">
+  <table class="table table-custom table-hover align-middle text-center">
+    <thead>
+      <tr>
+        <th>Número da Volta</th>
+        <th>Tempo da Volta</th>
+        <th>Splits</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @driver.laps.each_with_index do |lap, index| %>
+        <tr class="<%= lap['isValidForBest'] ? 'bg-success text-white' : 'bg-danger text-white' %>">
+          <td><%= index + 1 %></td>
+          <td><%= format_laptime(lap['laptime']) %></td> <!-- Usando o helper para formatar o laptime -->
+          <td><%= lap['splits'].join(", ") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<style>
+  /* Estilos Globais */
+  body {
+    background-color: #f0f4f8;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  /* Título da página */
+  .page-title {
+    font-size: 2.2rem;
+    color: #34495e;
+    margin-bottom: 30px;
+    font-weight: 600;
+  }
+
+  /* Tabela Customizada */
+  .table-custom {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .table-custom th {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .table-custom td {
+    color: white;
+    font-size: 1rem;
+  }
+
+  /* Ajustes de cores para voltas válidas e inválidas */
+  .bg-success {
+    background-color: #27ae60 !important;
+  }
+
+  .bg-danger {
+    background-color: #e74c3c !important;
+  }
+
+  .text-white {
+    color: #fff;
+  }
+
+  .table-custom tr:hover {
+    background-color: #f0f4f8;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .page-title {
+      font-size: 1.8rem;
+    }
+
+    .table-custom td {
+      font-size: 0.9rem;
+    }
+  }
+</style>

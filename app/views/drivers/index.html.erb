@@ -1,24 +1,104 @@
-<h1>Relatório de Pistas e Pilotos</h1>
+<h1 class="page-title text-center">Relatório de Pistas e Pilotos</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Nome da Pista</th>
-      <th>Data</th>
-      <th>Quantidade de Pilotos</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @track_sessions.each do |session| %>
+<div class="table-responsive container-lg py-4">
+  <table class="table table-custom table-hover align-middle text-center">
+    <thead>
       <tr>
-        <td><%= session.track_name %></td>
-        <td><%= session.session_date.strftime('%d/%m/%Y') %></td>
-        <td><%= session.pilots_count %></td>
-        <td>
-          <%= link_to 'Ver tempos dos pilotos', show_pilot_times_drivers_path(track_name: session.track_name, session_date: session.session_date), class: 'btn btn-primary' %>
-        </td>
+        <th>Nome da Pista</th>
+        <th>Data</th>
+        <th>Quantidade de Pilotos</th>
+        <th>Ações</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @track_sessions.each do |session| %>
+        <tr>
+          <td><%= session.track_name %></td>
+          <td><%= session.session_date.strftime('%d/%m/%Y') %></td>
+          <td><%= session.pilots_count %></td>
+          <td>
+            <%= link_to show_pilot_times_drivers_path(track_name: session.track_name, session_date: session.session_date), class: 'btn btn-primary btn-sm px-3' do %>
+              <i class="fas fa-clock"></i> Ver tempos
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<style>
+  /* Estilos Globais */
+  body {
+    background-color: #f0f4f8;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  /* Título da página */
+  .page-title {
+    font-size: 2.2rem;
+    color: #34495e;
+    margin-bottom: 30px;
+    font-weight: 600;
+  }
+
+  /* Tabela Customizada */
+  .table-custom {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .table-custom th {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .table-custom td {
+    color: #34495e;
+    font-size: 1rem;
+  }
+
+  .table-custom tr:nth-child(even) {
+    background-color: #f7f9fb;
+  }
+
+  .table-custom tr:hover {
+    background-color: #f0f4f8;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Botões de ação */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    background-color: #2980b9;
+    border: none;
+    color: #fff;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+  }
+
+  .btn i {
+    margin-right: 5px;
+  }
+
+  .btn:hover {
+    background-color: #1a6a92;
+  }
+
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .page-title {
+      font-size: 1.8rem;
+    }
+
+    .table-custom td {
+      font-size: 0.9rem;
+    }
+  }
+</style>
