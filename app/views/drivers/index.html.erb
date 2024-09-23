@@ -16,7 +16,7 @@
         <td><%= session.session_date.strftime('%d/%m/%Y') %></td>
         <td><%= session.pilots_count %></td>
         <td>
-          <%= link_to 'Ver tempos dos pilotos', show_pilot_times_path(track_name: session.track_name, session_date: session.session_date), class: 'btn btn-primary' %>
+          <%= link_to 'Ver tempos dos pilotos', show_pilot_times_drivers_path(track_name: session.track_name, session_date: session.session_date), class: 'btn btn-primary' %>
         </td>
       </tr>
     <% end %>

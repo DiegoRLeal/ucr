@@ -6,8 +6,13 @@ class DriversController < ApplicationController
   end
 
   def show_pilot_times
-    @drivers = Driver.where(track_name: params[:track_name], session_date: params[:session_date])
-                     .order('best_lap ASC')
+    @track_name = params[:track_name]
+    @session_date = params[:session_date]
+
+    # Lógica para buscar os pilotos baseados na pista e data da sessão
+    @drivers = Driver.where(track_name: @track_name, session_date: @session_date)
+
+    # Renderizar a view que exibe os tempos dos pilotos
   end
 
   def show_lap_times
