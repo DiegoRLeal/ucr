@@ -1,6 +1,7 @@
 class DriversController < ApplicationController
   def index
     @tracks = Driver.distinct.order(:track_name).pluck(:track_name)
+    @best_laps_by_track = Driver.group(:track_name).minimum(:best_lap)
   end
 
   def track_sessions
