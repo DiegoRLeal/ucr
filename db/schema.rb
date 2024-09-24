@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_24_181736) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_24_195435) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -40,8 +43,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_24_181736) do
   end
 
   create_table "blazer_audits", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "query_id"
+    t.bigint "user_id"
+    t.bigint "query_id"
     t.text "statement"
     t.string "data_source"
     t.datetime "created_at"
@@ -50,8 +53,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_24_181736) do
   end
 
   create_table "blazer_checks", force: :cascade do |t|
-    t.integer "creator_id"
-    t.integer "query_id"
+    t.bigint "creator_id"
+    t.bigint "query_id"
     t.string "state"
     t.string "schedule"
     t.text "emails"
@@ -66,8 +69,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_24_181736) do
   end
 
   create_table "blazer_dashboard_queries", force: :cascade do |t|
-    t.integer "dashboard_id"
-    t.integer "query_id"
+    t.bigint "dashboard_id"
+    t.bigint "query_id"
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -76,7 +79,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_24_181736) do
   end
 
   create_table "blazer_dashboards", force: :cascade do |t|
-    t.integer "creator_id"
+    t.bigint "creator_id"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -84,7 +87,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_24_181736) do
   end
 
   create_table "blazer_queries", force: :cascade do |t|
-    t.integer "creator_id"
+    t.bigint "creator_id"
     t.string "name"
     t.text "description"
     t.text "statement"
@@ -111,8 +114,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_24_181736) do
     t.string "session_type"
     t.string "track_name"
     t.text "laps"
-    t.integer "pilot_id"
-    t.index ["pilot_id"], name: "index_drivers_on_pilot_id"
   end
 
   create_table "pilots", force: :cascade do |t|
@@ -128,14 +129,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_24_181736) do
 
   create_table "processed_files", force: :cascade do |t|
     t.string "file_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "results", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -159,5 +152,4 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_24_181736) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "drivers", "pilots"
 end

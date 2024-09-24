@@ -28,7 +28,7 @@ class DriversController < ApplicationController
 
       # Filtra tempos inválidos e seleciona a melhor volta de cada piloto, agrupando pelo ID do piloto
       @drivers = Driver.where(track_name: @track_name, session_date: @session_date)
-                      .where("CAST(best_lap AS INTEGER) < 2147483647")  # Ignora voltas inválidas
+                      .where("CAST(best_lap AS INTEGER)")  # Ignora voltas inválidas
                       .select('drivers.*, MIN(CAST(best_lap AS INTEGER)) AS best_lap')  # Seleciona a melhor volta
                       .group('drivers.id, drivers.driver_first_name, drivers.driver_last_name, drivers.lap_count')  # Agrupa por piloto
                       .order(Arel.sql('MIN(CAST(best_lap AS INTEGER)) ASC'))  # Ordena pela melhor volta

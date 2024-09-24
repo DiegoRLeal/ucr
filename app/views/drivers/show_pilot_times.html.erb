@@ -5,6 +5,7 @@
     <thead>
       <tr>
         <th>Nome do Piloto</th>
+        <th>Carro</th>
         <th>Melhor Volta</th>
         <th>Total de Voltas</th>
         <th>Ações</th>
@@ -13,7 +14,8 @@
     <tbody>
       <% @drivers.each do |driver| %>
         <tr>
-          <td><%= driver.driver_first_name %> <%= driver.driver_last_name %></td>
+          <td><%= driver.driver_first_name %> <%= driver.driver_last_name %> # <%= driver.race_number %></td>
+          <td><%= driver.car_model.name %></td>
           <td><%= driver.best_lap.to_i < 2147483647 ? format_laptime(driver.best_lap.to_i) : "N/A" %></td>
           <td><%= driver.lap_count %></td>
           <td class="btn">
