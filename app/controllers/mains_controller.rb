@@ -34,7 +34,8 @@ class MainsController < ApplicationController
     drive_service.client_options.application_name = APPLICATION_NAME
     drive_service.authorization = authorize
 
-    folder_id = '1NVadU7DI7-qqcAmQ1XOCB_1VellFH3-c'  # ID da pasta no Google Drive
+    # folder_id = '1NVadU7DI7-qqcAmQ1XOCB_1VellFH3-c'  # ID da pasta no Google Drive do Diego
+    folder_id = '1n4QWdy3GvOgeuweeSulr03BNtAcEXAHY' # ID da pasta no Google Drive do Server
     page_token = nil
     max_files = nil  # Definir a quantidade máxima de arquivos (nil para processar todos)
     processed_count = 0

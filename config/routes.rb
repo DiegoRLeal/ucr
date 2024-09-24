@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     collection do
       get 'show_pilot_times'
       get 'show_lap_times'
+      get 'track_sessions'
     end
   end
 end

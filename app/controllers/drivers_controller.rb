@@ -1,8 +1,17 @@
 class DriversController < ApplicationController
+  # def index
+  #   @track_sessions = Driver.select('track_name, session_date, COUNT(*) as pilots_count')
+  #                           .group('track_name, session_date')
+  #                           .order('session_date DESC')
+  # end
   def index
+    @tracks = Driver.distinct.pluck(:track_name)
+  end
+
+  def track_sessions
     @track_sessions = Driver.select('track_name, session_date, COUNT(*) as pilots_count')
+                            .where(track_name: params[:track_name])
                             .group('track_name, session_date')
-                            .order('session_date DESC')
   end
 
   def show_pilot_times

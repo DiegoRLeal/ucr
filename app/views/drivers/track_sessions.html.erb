@@ -1,0 +1,28 @@
+<h1 class="page-title text-center">Sessões de <%= params[:track_name] %></h1>
+
+<div class="table-responsive container-lg py-4">
+  <table class="table table-custom table-hover align-middle text-center">
+    <thead>
+      <tr>
+        <th>Nome da Pista</th>
+        <th>Data</th>
+        <th>Quantidade de Pilotos</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @track_sessions.each do |session| %>
+        <tr>
+          <td><%= session.track_name %></td>
+          <td><%= session.session_date.strftime('%d/%m/%Y') %></td>
+          <td><%= session.pilots_count %></td>
+          <td>
+            <%= link_to show_pilot_times_drivers_path(track_name: session.track_name, session_date: session.session_date), class: 'btn btn-primary btn-sm px-3' do %>
+              <i class="fas fa-clock"></i> Ver tempos
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
