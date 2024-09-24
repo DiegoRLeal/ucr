@@ -13,7 +13,7 @@
     <tbody>
       <% @track_sessions.each do |session| %>
         <tr>
-          <td><%= session.track_name %></td>
+          <td><%= format_track_name(session.track_name) %></td>
           <td><%= session.session_date.strftime('%d/%m/%Y') %></td>
           <td><%= session.pilots_count %></td>
           <td>
