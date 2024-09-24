@@ -21,19 +21,20 @@ class DriversController < ApplicationController
   end
 
   def show_pilot_times
-    @track_name = params[:track_name]
-    @session_date = params[:session_date]
+      @track_name = params[:track_name]
+      @session_date = params[:session_date]
 
-    # Filtra tempos inválidos e converte 'best_lap' para número, ordenando corretamente
-    @drivers = Driver.where(track_name: @track_name, session_date: @session_date)
-                     .where("CAST(best_lap AS INTEGER) < 2147483647")  # Ignora voltas inválidas
-                     .order(Arel.sql('CAST(best_lap AS INTEGER) ASC'))  # Usa Arel.sql para SQL bruto
-  end
+      # Filtra tempos inválidos e seleciona a melhor volta de cada piloto, agrupando pelo ID do piloto
+      @drivers = Driver.where(track_name: @track_name, session_date: @session_date)
+                      .where("CAST(best_lap AS INTEGER) < 2147483647")  # Ignora voltas inválidas
+                      .select('drivers.*, MIN(CAST(best_lap AS INTEGER)) AS best_lap')  # Seleciona a melhor volta
+                      .group('drivers.id, drivers.driver_first_name, drivers.driver_last_name, drivers.lap_count')  # Agrupa por piloto
+                      .order(Arel.sql('MIN(CAST(best_lap AS INTEGER)) ASC'))  # Ordena pela melhor volta
+    end
 
-
-  def show_lap_times
-    @driver = Driver.find(params[:id])
-    # Aqui você terá que adaptar para onde estão armazenadas todas as voltas de um piloto.
-    # Se as voltas não estiverem no Driver, você terá que acessar a tabela onde as voltas estão armazenadas.
-  end
+    def show_lap_times
+      @driver = Driver.find(params[:id])
+      # Aqui você terá que adaptar para onde estão armazenadas todas as voltas de um piloto.
+      # Se as voltas não estiverem no Driver, você terá que acessar a tabela onde as voltas estão armazenadas.
+    end
 end
