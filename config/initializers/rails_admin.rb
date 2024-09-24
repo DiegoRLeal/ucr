@@ -21,6 +21,7 @@ RailsAdmin.config do |config|
     end
 
     config.model 'Pilot' do
+      label 'Drivers'  # Isso vai alterar o nome exibido no menu para 'Drivers'
       list do
         field :name
         field :instagram
@@ -48,6 +49,56 @@ RailsAdmin.config do |config|
         field :twitch
         field :youtube
         field :categoria
+      end
+    end
+
+    config.model 'Driver' do
+      label 'Race Results'  # Renomeia para 'Race Results'
+
+      list do
+        field :car_id
+        field :race_number
+        field :car_model
+        field :driver_first_name
+        field :driver_last_name
+        field :best_lap
+        field :total_time
+        field :lap_count
+        field :track_name
+        field :session_date
+        field :session_type
+      end
+
+      edit do
+        field :car_id
+        field :race_number
+        field :car_model
+        field :driver_first_name
+        field :driver_last_name
+        field :best_lap
+        field :total_time
+        field :lap_count
+        field :track_name
+        field :session_date
+        field :session_time
+        field :session_type
+        field :laps, :json  # Exibe o campo 'laps' como JSON no formulário de edição
+      end
+
+      show do
+        field :car_id
+        field :race_number
+        field :car_model
+        field :driver_first_name
+        field :driver_last_name
+        field :best_lap
+        field :total_time
+        field :lap_count
+        field :track_name
+        field :session_date
+        field :session_time
+        field :session_type
+        field :laps, :json  # Exibe o campo 'laps' como JSON no modo de exibição
       end
     end
 
