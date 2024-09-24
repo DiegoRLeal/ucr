@@ -23,15 +23,15 @@ class DriversController < ApplicationController
 
 
   def show_pilot_times
-      @track_name = params[:track_name]
-      @session_date = params[:session_date]
+    @track_name = params[:track_name]
+    @session_date = params[:session_date]
 
-      # Filtra tempos inválidos e seleciona a melhor volta de cada piloto, agrupando pelo ID do piloto
-      @drivers = Driver.where(track_name: @track_name, session_date: @session_date)
-                      .where("CAST(best_lap AS INTEGER)")  # Ignora voltas inválidas
-                      .select('drivers.*, MIN(CAST(best_lap AS INTEGER)) AS best_lap')  # Seleciona a melhor volta
-                      .group('drivers.id, drivers.driver_first_name, drivers.driver_last_name, drivers.lap_count')  # Agrupa por piloto
-                      .order(Arel.sql('MIN(CAST(best_lap AS INTEGER)) ASC'))  # Ordena pela melhor volta
+    # Filtra tempos válidos e seleciona a melhor volta de cada piloto, agrupando pelo ID do piloto
+    @drivers = Driver.where(track_name: @track_name, session_date: @session_date)
+                    #  .where("best_lap::integer < 2147483647")  # Filtra voltas inválidas, ajustando a conversão para inteiro
+                     .select('drivers.*, MIN(best_lap::integer) AS best_lap')  # Seleciona a melhor volta
+                     .group('drivers.id, drivers.driver_first_name, drivers.driver_last_name, drivers.lap_count')  # Agrupa por piloto
+                     .order(Arel.sql('MIN(best_lap::integer) ASC'))  # Ordena pela melhor volta
   end
 
   def show_lap_times
