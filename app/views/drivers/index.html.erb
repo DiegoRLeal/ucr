@@ -20,7 +20,7 @@
       <div class="card__info">
         <span class="card__category"> Pista </span>
         <h3 class="card__title"><%= format_track_name(track_name) %></h3>
-        <span class="card__by">Ver Sessões</span>
+        <%# <span class="card__by">Ver Sessões</span> %>
       </div>
     </article>
   <% end %>
@@ -169,17 +169,20 @@ body {
 .card__clock {
   width: 15px;
   vertical-align: middle;
-  fill: #AD7D52;
+  fill: hsla(242,88.4%,45.3%,1);
+  font-weight: 600;
 }
 .card__time {
   font-size: 12px;
-  color: #AD7D52;
+  color: hsla(242,88.4%,45.3%,1);
   vertical-align: middle;
   margin-left: 5px;
+  font-weight: 600;
 }
 
 .card__clock-info {
   float: right;
+  display: flex;
 }
 
 .card__img {
