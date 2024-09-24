@@ -13,10 +13,8 @@
     <tbody>
       <% @drivers.each do |driver| %>
         <tr>
-          <td><%= "#{driver.driver_first_name} #{driver.driver_last_name}" %></td>
-          <td class="<%= driver.best_lap.to_i ? 'text-success' : 'text-danger' %>">
-            <%= format_laptime(driver.best_lap.to_i) %> <!-- Helper para formatar a melhor volta -->
-          </td>
+          <td><%= driver.driver_first_name %> <%= driver.driver_last_name %></td>
+          <td><%= driver.best_lap.to_i < 2147483647 ? format_laptime(driver.best_lap.to_i) : "N/A" %></td>
           <td><%= driver.lap_count %></td>
           <td>
             <%= link_to show_lap_times_drivers_path(id: driver.id), class: 'btn btn-primary btn-sm px-3' do %>

@@ -1,7 +1,16 @@
 class DriversController < ApplicationController
   def index
     @tracks = Driver.distinct.order(:track_name).pluck(:track_name)
-    @best_laps_by_track = Driver.group(:track_name).minimum(:best_lap)
+
+    # Consulta para pegar o piloto com a melhor volta para cada pista, ignorando voltas inválidas
+    @best_laps_by_track = Driver.select('drivers.track_name, drivers.driver_first_name, drivers.driver_last_name, drivers.best_lap')
+                                .joins("INNER JOIN (
+                                    SELECT track_name, MIN(CAST(best_lap AS INTEGER)) AS best_lap
+                                    FROM drivers
+                                    WHERE CAST(best_lap AS INTEGER) < 2147483647  -- Filtra os valores inválidos
+                                    GROUP BY track_name
+                                  ) AS best_laps ON drivers.track_name = best_laps.track_name AND CAST(drivers.best_lap AS INTEGER) = best_laps.best_lap")
+                                .order('drivers.track_name')
   end
 
   def track_sessions
@@ -15,10 +24,12 @@ class DriversController < ApplicationController
     @track_name = params[:track_name]
     @session_date = params[:session_date]
 
-    # Ordena os pilotos pela melhor volta (best_lap) em ordem crescente
+    # Filtra tempos inválidos e converte 'best_lap' para número, ordenando corretamente
     @drivers = Driver.where(track_name: @track_name, session_date: @session_date)
-                     .order('best_lap ASC')
+                     .where("CAST(best_lap AS INTEGER) < 2147483647")  # Ignora voltas inválidas
+                     .order(Arel.sql('CAST(best_lap AS INTEGER) ASC'))  # Usa Arel.sql para SQL bruto
   end
+
 
   def show_lap_times
     @driver = Driver.find(params[:id])
