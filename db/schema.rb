@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_24_181736) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_24_181714) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -111,8 +111,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_24_181736) do
     t.string "session_type"
     t.string "track_name"
     t.text "laps"
-    t.integer "pilot_id"
-    t.index ["pilot_id"], name: "index_drivers_on_pilot_id"
   end
 
   create_table "pilots", force: :cascade do |t|
@@ -159,5 +157,4 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_24_181736) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "drivers", "pilots"
 end
