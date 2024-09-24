@@ -148,7 +148,7 @@ class MainsController < ApplicationController
       puts "Erro durante o processo de download e processamento: #{e.message}"
     end
 
-    render plain: "Processamento concluído."
+    # render plain: "Processamento concluído."
   end
 
   def job_view
