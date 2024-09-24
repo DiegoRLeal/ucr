@@ -32,11 +32,11 @@ class DriversController < ApplicationController
                       .select('drivers.*, MIN(CAST(best_lap AS INTEGER)) AS best_lap')  # Seleciona a melhor volta
                       .group('drivers.id, drivers.driver_first_name, drivers.driver_last_name, drivers.lap_count')  # Agrupa por piloto
                       .order(Arel.sql('MIN(CAST(best_lap AS INTEGER)) ASC'))  # Ordena pela melhor volta
-    end
+  end
 
-    def show_lap_times
-      @driver = Driver.find(params[:id])
-      # Aqui você terá que adaptar para onde estão armazenadas todas as voltas de um piloto.
-      # Se as voltas não estiverem no Driver, você terá que acessar a tabela onde as voltas estão armazenadas.
-    end
+  def show_lap_times
+    @driver = Driver.find(params[:id])
+    # Aqui você terá que adaptar para onde estão armazenadas todas as voltas de um piloto.
+    # Se as voltas não estiverem no Driver, você terá que acessar a tabela onde as voltas estão armazenadas.
+  end
 end
