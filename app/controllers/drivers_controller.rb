@@ -14,11 +14,13 @@ class DriversController < ApplicationController
   end
 
   def track_sessions
-    @track_sessions = Driver.select('track_name, session_date, COUNT(*) as pilots_count')
+    # Seleciona o nome da pista, data e hora da sessão, número de pilotos
+    @track_sessions = Driver.select('track_name, session_date, session_time, COUNT(*) as pilots_count')
                             .where(track_name: params[:track_name])
-                            .group('track_name, session_date')
-                            .order('session_date DESC')  # Ordena por data em ordem decrescente
+                            .group('track_name, session_date, session_time')  # Agrupa também por hora da sessão
+                            .order('session_date DESC, session_time DESC')  # Ordena por data e hora em ordem decrescente
   end
+
 
   def show_pilot_times
       @track_name = params[:track_name]
