@@ -171,7 +171,7 @@ class MainsController < ApplicationController
   end
 
   def pilotos
-    @pilots = Driver.all
+    @pilots = Pilot.all
   end
 
   # Método de callback para lidar com o código de autorização retornado pelo Google

@@ -1,27 +1,22 @@
 class DriversController < ApplicationController
-  # def index
-  #   @track_sessions = Driver.select('track_name, session_date, COUNT(*) as pilots_count')
-  #                           .group('track_name, session_date')
-  #                           .order('session_date DESC')
-  # end
   def index
-    @tracks = Driver.distinct.pluck(:track_name)
+    @tracks = Driver.distinct.order(:track_name).pluck(:track_name)
   end
 
   def track_sessions
     @track_sessions = Driver.select('track_name, session_date, COUNT(*) as pilots_count')
                             .where(track_name: params[:track_name])
                             .group('track_name, session_date')
+                            .order('session_date DESC')  # Ordena por data em ordem decrescente
   end
 
   def show_pilot_times
     @track_name = params[:track_name]
     @session_date = params[:session_date]
 
-    # Lógica para buscar os pilotos baseados na pista e data da sessão
+    # Ordena os pilotos pela melhor volta (best_lap) em ordem crescente
     @drivers = Driver.where(track_name: @track_name, session_date: @session_date)
-
-    # Renderizar a view que exibe os tempos dos pilotos
+                     .order('best_lap ASC')
   end
 
   def show_lap_times
