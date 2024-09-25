@@ -19,13 +19,13 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "mains#index"
 
-  get "resultados", to: 'mains#resultados', as: 'resultados'
   get "campeonatos", to: 'mains#campeonatos', as: 'campeonatos'
-  get "pilotos", to: 'mains#pilotos', as: 'pilotos'
-  get "carros", to: 'mains#carros', as: 'carros'
   get "patrocinio", to: 'mains#patrocinio', as: 'patrocinio'
+  get "pilotos", to: 'mains#pilotos', as: 'pilotos'
+  get "resultados", to: 'mains#resultados', as: 'resultados'
+  # get "carros", to: 'mains#carros', as: 'carros'
   get "setups", to: 'mains#setups', as: 'setups'
-  get "contato", to: 'mains#contato', as: 'contato'
+  # get "contato", to: 'mains#contato', as: 'contato'
   get "sidebar", to: 'mains#sidebar', as: 'sidebar'
 
   # PWA
@@ -35,7 +35,7 @@ Rails.application.routes.draw do
   # JOB DE BUSCAR OS JSON NO DRIVE
   get '/oauth2callback', to: 'mains#oauth2callback'
   get 'job', to: 'mains#job'
-  get '/show_specific_json', to: 'mains#show_specific_json'
+  # get '/show_specific_json', to: 'mains#show_specific_json'
 
   resources :drivers, only: [:index] do
     collection do

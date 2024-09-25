@@ -34,7 +34,6 @@ class MainsController < ApplicationController
     drive_service.client_options.application_name = APPLICATION_NAME
     drive_service.authorization = authorize
 
-    # folder_id = '1NVadU7DI7-qqcAmQ1XOCB_1VellFH3-c'  # ID da pasta no Google Drive do Diego
     folder_id = '1n4QWdy3GvOgeuweeSulr03BNtAcEXAHY' # ID da pasta no Google Drive do Server
     page_token = nil
     max_files = nil  # Definir a quantidade máxima de arquivos (nil para processar todos)
@@ -50,7 +49,7 @@ class MainsController < ApplicationController
           break
         else
           response.files.each do |file|
-            file_name = file.name  # Nome do arquivo (exemplo: '240323_160953_R.json')
+            file_name = file.name
             file_id = file.id
 
             # Verifica se o arquivo já foi processado
@@ -77,15 +76,15 @@ class MainsController < ApplicationController
               # Extraindo os dados do nome do arquivo
               date_string = file_name.split("_")[0]  # Extrai '240323' do nome do arquivo
               time_string = file_name.split("_")[1]  # Extrai '160953' do nome do arquivo
-              session_date = Date.strptime(date_string, '%y%m%d')  # Converte '240323' em data
-              session_time = Time.strptime(time_string, '%H%M%S')  # Converte '160953' em hora
+              session_date = Date.strptime(date_string, '%y%m%d')
+              session_time = Time.strptime(time_string, '%H%M%S')
 
-              session_type = json_data["sessionType"]  # Extrai o sessionType
-              track_name = json_data["trackName"]      # Extrai o trackName
+              session_type = json_data["sessionType"]
+              track_name = json_data["trackName"]
 
               puts "Sessão: Data=#{session_date}, Hora=#{session_time}, Tipo=#{session_type}, Pista=#{track_name}"
 
-              # Iterar sobre os pilotos e salvar os dados
+              # Verifica se os dados de resultados da sessão estão presentes
               if json_data["sessionResult"] && json_data["sessionResult"]["leaderBoardLines"]
                 leaderboard = json_data["sessionResult"]["leaderBoardLines"]
                 leaderboard.each do |entry|
@@ -94,23 +93,45 @@ class MainsController < ApplicationController
 
                   car_id = car["carId"]
                   race_number = car["raceNumber"]
-                  car_model = car["carModel"]
+                  car_model_id = car["carModel"].to_i  # Mantém o valor como integer
                   driver_first_name = driver["firstName"]
                   driver_last_name = driver["lastName"]
                   best_lap = entry["timing"]["bestLap"]
                   total_time = entry["timing"]["totalTime"]
                   lap_count = entry["timing"]["lapCount"]
 
-                  puts "Dados extraídos: car_id=#{car_id}, race_number=#{race_number}, driver=#{driver_first_name} #{driver_last_name}"
+                  # Buscar o modelo do carro no banco de dados (car_model é integer agora)
+                  car_model = CarModel.find_by(car_model: car_model_id)
+
+                  if car_model.nil?
+                    puts "CarModel com ID #{car_model_id} não encontrado, pulando."
+                    next
+                  end
 
                   # Extrair as voltas
                   laps = json_data["laps"].select { |lap| lap["carId"] == car_id }
 
-                  # Criar o piloto e salvar as voltas
+                  # Extrair penalidades durante a corrida
+                  penalty = json_data["penalties"]&.find { |p| p["carId"] == car_id }
+                  penalty_reason = penalty ? penalty["reason"] : nil
+                  penalty_type = penalty ? penalty["penalty"] : nil
+                  penalty_value = penalty ? penalty["penaltyValue"] : nil
+                  penalty_violation_in_lap = penalty ? penalty["violationInLap"] : nil
+                  penalty_cleared_in_lap = penalty ? penalty["clearedInLap"] : nil
+
+                  # Extrair penalidades pós-corrida
+                  post_race_penalty = json_data["post_race_penalties"]&.find { |p| p["carId"] == car_id }
+                  post_race_penalty_reason = post_race_penalty ? post_race_penalty["reason"] : nil
+                  post_race_penalty_type = post_race_penalty ? post_race_penalty["penalty"] : nil
+                  post_race_penalty_value = post_race_penalty ? post_race_penalty["penaltyValue"] : nil
+                  post_race_penalty_violation_in_lap = post_race_penalty ? post_race_penalty["violationInLap"] : nil
+                  post_race_penalty_cleared_in_lap = post_race_penalty ? post_race_penalty["clearedInLap"] : nil
+
+                  # Criar ou atualizar o piloto com os dados e penalidades
                   Driver.create!(
                     car_id: car_id,
                     race_number: race_number,
-                    car_model: car_model,
+                    car_model: car_model,  # Passar a instância de CarModel ao invés de apenas o ID
                     driver_first_name: driver_first_name,
                     driver_last_name: driver_last_name,
                     best_lap: best_lap,
@@ -120,7 +141,19 @@ class MainsController < ApplicationController
                     session_time: session_time,
                     session_type: session_type,
                     track_name: track_name,
-                    laps: laps  # Salvar as voltas como JSON
+                    laps: laps,
+
+                    penalty_reason: penalty_reason,
+                    penalty_type: penalty_type,
+                    penalty_value: penalty_value,
+                    penalty_violation_in_lap: penalty_violation_in_lap,
+                    penalty_cleared_in_lap: penalty_cleared_in_lap,
+
+                    post_race_penalty_reason: post_race_penalty_reason,
+                    post_race_penalty_type: post_race_penalty_type,
+                    post_race_penalty_value: post_race_penalty_value,
+                    post_race_penalty_violation_in_lap: post_race_penalty_violation_in_lap,
+                    post_race_penalty_cleared_in_lap: post_race_penalty_cleared_in_lap
                   )
                 end
 
@@ -133,7 +166,7 @@ class MainsController < ApplicationController
 
               # Incrementar o contador de arquivos processados
               processed_count += 1
-              break if max_files && processed_count >= max_files  # Parar após processar max_files arquivos (se definido)
+              break if max_files && processed_count >= max_files
 
             rescue => e
               puts "Erro ao processar o arquivo #{file_name}: #{e.message}"
@@ -142,18 +175,17 @@ class MainsController < ApplicationController
         end
 
         page_token = response.next_page_token
-        break if page_token.nil? || (max_files && processed_count >= max_files)  # Parar o loop após max_files arquivos
+        break if page_token.nil? || (max_files && processed_count >= max_files)
       end
     rescue => e
       puts "Erro durante o processo de download e processamento: #{e.message}"
     end
-
-    # render plain: "Processamento concluído."
   end
 
-  def job_view
-    job  # Chama o método para baixar todos os arquivos JSON
-  end
+
+  # def job_view
+  #   job  # Chama o método para baixar todos os arquivos JSON
+  # end
 
   def clean_json_content(content)
     # Remover caracteres não imprimíveis
