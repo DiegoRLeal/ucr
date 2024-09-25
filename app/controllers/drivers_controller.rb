@@ -43,17 +43,18 @@ class DriversController < ApplicationController
     puts @drivers.inspect
   end
 
-
   def show_lap_times
-    @driver = Driver.find_by(car_id: params[:car_id])  # Buscar usando car_id em vez de id
+    @driver = Driver.find_by(car_id: params[:car_id])  # Buscando pelo car_id
 
-    if @driver
-      # Exibir as voltas do piloto
-      @laps = @driver.laps  # Adaptar conforme o armazenamento das voltas
-    else
-      # Tratar o caso onde o piloto não foi encontrado
-      flash[:alert] = "Piloto não encontrado."
-      redirect_to drivers_path
+    # Se 'laps' estiver serializado como string JSON, converta-o para um array
+    @laps = @driver.laps.is_a?(String) ? JSON.parse(@driver.laps) : @driver.laps
+
+    # Debug: imprime o conteúdo de @laps no log
+    puts "Laps content: #{@laps.inspect}"
+
+    # Caso @laps seja nil ou vazio, adicionar uma mensagem de erro
+    if @laps.nil? || @laps.empty?
+      flash[:alert] = "Nenhuma volta encontrada para o piloto."
     end
   end
 
