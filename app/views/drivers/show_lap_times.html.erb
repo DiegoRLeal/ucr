@@ -4,47 +4,53 @@
 
 <div class="table-responsive container-lg py-5">
   <table class="table table-custom table-hover align-middle text-center">
-  <thead>
-    <tr class="title-laps">
-      <th>Volta</th>
-      <th>Split 1</th>
-      <th>Split 2</th>
-      <th>Split 3</th>
-      <th>Tempo da Volta</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% # Calcula os menores splits apenas das voltas válidas %>
-    <% best_splits = Array.new(@laps.first['splits'].length, Float::INFINITY) %>
-    <% @laps.each do |lap| %>
-      <% if lap['isValidForBest'] %>
-        <% lap['splits'].each_with_index do |split, index| %>
-          <% best_splits[index] = [best_splits[index], split].min %>
+    <thead>
+      <tr class="title-laps">
+        <th>Volta</th>
+        <th>Split 1</th>
+        <th>Split 2</th>
+        <th>Split 3</th>
+        <th>Tempo da Volta</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% # Calcula os menores splits apenas das voltas válidas %>
+      <% best_splits = Array.new(@laps.first['splits'].length, Float::INFINITY) %>
+      <% @laps.each do |lap| %>
+        <% if lap['isValidForBest'] %>
+          <% lap['splits'].each_with_index do |split, index| %>
+            <% best_splits[index] = [best_splits[index], split].min %>
+          <% end %>
         <% end %>
       <% end %>
-    <% end %>
 
-    <% # Calcula o menor tempo de volta das voltas válidas %>
-    <% best_laptime = @laps.select { |lap| lap['isValidForBest'] }.map { |lap| lap['laptime'] }.min %>
+      <% # Calcula o menor tempo de volta das voltas válidas %>
+      <% best_laptime = @laps.select { |lap| lap['isValidForBest'] }.map { |lap| lap['laptime'] }.min %>
 
-    <% @laps.each_with_index do |lap, lap_index| %>
-      <tr class="<%= lap['isValidForBest'] ? (lap['laptime'] == best_laptime ? 'best-lap' : 'valid-lap') : 'invalid-lap' %>">
-        <td><%= lap_index + 1 %></td>
-        <% lap['splits'].each_with_index do |split, split_index| %>
-          <% is_best_split = lap['isValidForBest'] && split == best_splits[split_index] %>
-          <td class="<%= 'best-split' if is_best_split %>">
-            <%= format_laptime(split) %>
+      <% # Calcula o tempo da volta ideal somando os menores splits %>
+      <% ideal_lap_time = best_splits.sum %>
+
+      <% @laps.each_with_index do |lap, lap_index| %>
+        <tr class="<%= lap['isValidForBest'] ? (lap['laptime'] == best_laptime ? 'best-lap' : 'valid-lap') : 'invalid-lap' %>">
+          <td><%= lap_index + 1 %></td>
+          <% lap['splits'].each_with_index do |split, split_index| %>
+            <% is_best_split = lap['isValidForBest'] && split == best_splits[split_index] %>
+            <td class="<%= is_best_split ? 'best-split' : (lap['laptime'] == best_laptime ? 'best-lap-split' : '') %>">
+              <%= format_laptime(split) %>
+            </td>
+          <% end %>
+          <td class="<%= lap['laptime'] == best_laptime ? 'best-laptime' : 'default-laptime' %>">
+            <%= format_laptime(lap['laptime']) %>
           </td>
-        <% end %>
-        <% is_best_laptime = lap['isValidForBest'] && lap['laptime'] == best_laptime %>
-        <td class="<%= is_best_laptime ? 'best-laptime' : 'default-laptime' %>">
-          <%= format_laptime(lap['laptime']) %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+        </tr>
+      <% end %>
 
+      <tr class="ideal-lap">
+        <td colspan="4">Volta Ideal</td>
+        <td><%= format_laptime(ideal_lap_time) %></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <button class="button" onclick="history.back()">
@@ -152,6 +158,7 @@ h1  {
   }
 
   /* Voltas Válidas e Inválidas */
+
   .best-lap {
     background-color: white;
     color: black;
@@ -173,8 +180,8 @@ h1  {
   }
 
   .best-lap-split {
-    background-color: green;
-    color: white;
+    background-color: white;
+    color: black;
   }
 
   .best-laptime {
@@ -186,6 +193,13 @@ h1  {
     /* background-color: white; */
     color: black;
   }
+
+  .ideal-lap {
+    background-color: #379fc1;
+    font-weight: bold;
+    color: black;
+  }
+
 
    /* Button BACK */
 .button {
