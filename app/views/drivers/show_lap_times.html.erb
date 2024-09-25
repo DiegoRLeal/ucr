@@ -1,6 +1,6 @@
 <h1 class="page-title text-center">Voltas de <%= @driver.driver_first_name %> <%= @driver.driver_last_name %></h1>
 
-<div class="table-responsive container-lg py-4">
+<div class="table-responsive container-lg py-5">
   <table class="table table-custom table-hover align-middle text-center">
     <thead>
       <tr>
@@ -11,7 +11,7 @@
     </thead>
     <tbody>
       <% @laps.each_with_index do |lap, index| %>
-        <tr class="<%= lap['isValidForBest'] ? 'bg-success text-white' : 'bg-danger text-white' %>">
+        <tr class="<%= lap['isValidForBest'] ? 'valid-lap' : 'invalid-lap' %>">
           <td><%= index + 1 %></td>
           <td><%= format_laptime(lap['laptime']) %></td>
           <td><%= lap['splits'].map { |split| format_laptime(split) }.join(", ") %></td>
@@ -70,42 +70,47 @@
   align-items: center;
 }
 
-  /* Tabela Customizada */
+/* Estilo da Tabela */
   .table-custom {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    color: #fff;
     overflow: hidden;
   }
 
   .table-custom th {
-    background-color: #2c3e50;
+    background-color: rgba(44, 62, 80, 0.9);
     color: #ecf0f1;
-    font-weight: 500;
+    font-weight: 600;
     text-transform: uppercase;
+    padding: 15px;
   }
 
   .table-custom td {
-    color: white;
+    padding: 20px;
     font-size: 1rem;
   }
 
-  /* Ajustes de cores para voltas válidas e inválidas */
-  .bg-success {
-    background-color: #27ae60 !important;
-  }
-
-  .bg-danger {
-    background-color: #e74c3c !important;
-  }
-
-  .text-white {
-    color: #fff;
+  .table-custom tr {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
   .table-custom tr:hover {
-    background-color: #f0f4f8;
-    transition: background-color 0.3s ease;
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Voltas Válidas e Inválidas */
+  .valid-lap {
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    color: #fff;
+  }
+
+  .invalid-lap {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: #fff;
   }
 
    /* Button BACK */
@@ -192,7 +197,7 @@
     }
 
     .table-custom td {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
   }
 </style>

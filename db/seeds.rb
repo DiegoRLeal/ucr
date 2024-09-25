@@ -67,7 +67,7 @@ car_data = {
   "86" => "Porsche 935 2019"
 }
 
-car_data.each do |car_id, car_name|
-  # Aqui você está usando o car_id (como "0", "1", etc.) e o car_name para criar os registros
-  CarModel.create(car_id: car_id, car_name: car_name) # Ajuste a categoria conforme necessário
+car_data.each do |car_model, car_name|
+  # Aqui você está usando o car_model (como "0", "1", etc.) e o car_name para criar os registros
+  CarModel.create(car_model: car_model, car_name: car_name) # Ajuste a categoria conforme necessário
 end
