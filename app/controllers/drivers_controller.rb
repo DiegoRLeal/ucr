@@ -40,7 +40,7 @@ class DriversController < ApplicationController
 
     if @driver
       # Se 'laps' estiver serializado como string JSON, converta-o para um array
-      @laps = @driver.laps.is_a?(String) ? JSON.parse(@driver.laps) : @driver.laps
+      @laps = @driver.laps.is_a?(String) ? JSON.parse(@driver.laps.gsub('=>', ':')) : @driver.laps
 
       # Debug: imprime o conteúdo de @laps no log
       puts "Laps content for driver #{@driver.driver_first_name} #{@driver.driver_last_name} on #{params[:session_date]} at #{params[:session_time]}: #{@laps.inspect}"
