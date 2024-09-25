@@ -1,4 +1,6 @@
-<h1 class="page-title text-center">Sessões da pista <br> <%= params[:track_name] %></h1>
+<h1 class="page-title text-center" data-track="<%= params[:track_name] %>">
+  Sessões da pista <br> <%= params[:track_name] %>
+</h1>
 
 <div class="table-responsive container-lg py-4">
   <table class="table table-custom table-hover align-middle text-center">
@@ -51,6 +53,49 @@
   </div>
 </button>
 
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  document.addEventListener('turbo:load', function() {
+    const pageTitle = document.querySelector('.page-title');
+    const trackName = pageTitle.getAttribute('data-track');
+
+    const trackBackgrounds = {
+      'barcelona': 'https://simracingcockpit.gg/wp-content/uploads/2024/04/4-14-scaled1.jpg',
+      'brands_hatch': 'https://coachdaveacademy.com/wp-content/uploads/2023/12/blog-image-brandshatchtgt2-1024x576.jpg',
+      'cota': 'https://coachdaveacademy.com/wp-content/uploads/2022/06/banner-image-usdlc-scaled.jpg',
+      'donington': 'https://emap-romulus-prod.s3.eu-west-1.amazonaws.com/wp-content/uploads/sites/9/2023/08/Aggregate-Industries-Donington.jpg',
+      'hungaroring': 'https://www.overtake.gg/attachments/assetto-corsa-competizione-hungaroring-jpg.281317/',
+      'imola': 'https://pits.thesimgrid.com/wp-content/uploads/2022/03/Imola-track-pic-1024x576.png',
+      'indianapolis': 'https://s1.cdn.autoevolution.com/images/news/acc-takes-racing-to-the-home-of-the-brave-with-three-new-legendary-tracks-192427_1.jpg',
+      'kyalami': 'https://www.overtake.gg/attachments/assetto-corsa-competizione-kyalami-preview-1-jpg.335951/',
+      'laguna_seca': 'https://www.studio-397.com/wp-content/uploads/2022/04/rF2_Laguna_Seca_header.jpg',
+      'misano': 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/299695396.jpg?k=57cce17dbaac398eadef38e5e3a7826a2960b98388e985e2160bdc593fdb23f2&o=&hp=1',
+      'monza': 'https://coachdaveacademy.com/wp-content/uploads/2023/07/blog-image-monzat12-1024x576.jpg',
+      'mount_panorama': 'https://coachdaveacademy.com/wp-content/uploads/2022/04/banner-image-fastestcar18-scaled.jpg',
+      'nurburgring': 'https://coachdaveacademy.com/wp-content/uploads/2023/12/blog-image-nurbtgt1314-1024x576.jpg',
+      'oulton_park': 'https://coachdaveacademy.com/wp-content/uploads/2023/12/blog-image-oultontgt1-1024x576.jpg',
+      'paul_ricard': 'https://live.staticflickr.com/65535/49376858237_8159ef239f_b.jpg',
+      'red_bull_ring': 'https://simracingsetup.com/wp-content/uploads/2024/01/Red-Bull-Ring-ACC.webp',
+      'silverstone': 'https://coachdaveacademy.com/wp-content/uploads/2023/07/banner-image-silverstonetg-1.jpg',
+      'snetterton': 'https://www.overtake.gg/attachments/snetterton_2011_10-jpg.105177/',
+      'spa': 'https://bertalankeszler.com/wp-content/uploads/2020/02/Blog-Post-ACC-Spa-Kurzrennen-2.png',
+      'suzuka': 'https://simracingsetup.com/wp-content/uploads/2024/08/Suzuka-Track-Map-First-Corner.webp',
+      'valencia': 'https://live.staticflickr.com/65535/52810459139_fa4fb09e73_k.jpg',
+      'watkins_glen': 'https://www.overtake.gg/attachments/screenshot_rss_gt_shadow_v8_lilski_watkins_glen_14-7-118-1-0-7-jpg.259822/',
+      'zandvoort': 'https://f1grandprix.motorionline.com/wp-content/uploads/2015/11/zandvoort_sogna_ritorno_f1_2015.jpg',
+      'zolder': 'https://www.overtake.gg/attachments/zolder-jpg.300610/',
+    };
+
+    const imageUrl = trackBackgrounds[trackName] || 'default-url';
+
+    console.log('Track name:', trackName);
+    console.log('Background URL:', imageUrl);
+
+    pageTitle.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${imageUrl})`;
+  });
+</script>
 
 <style>
   /* Button BACK */
@@ -206,7 +251,7 @@ h1{
   color: #fff;
   margin-bottom: 30px;
   font-weight: 600;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(https://www.overtake.gg/attachments/assetto-corsa-competizione-hungaroring-jpg.281317/);
+  /* background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(https://www.overtake.gg/attachments/assetto-corsa-competizione-hungaroring-jpg.281317/); */
   width: auto;
   height: 265px;
   background-position: center;
