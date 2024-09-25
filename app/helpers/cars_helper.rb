@@ -35,7 +35,7 @@ module CarsHelper
       "29" => "lamborghini.png",
       "30" => "bmw.png",
       "31" => "audi.png",
-      "32" => "ferrari_296.png",
+      "32" => "ferrari.png",
       "33" => "lamborghini.png",
       "34" => "porsche.png",
       "35" => "mclaren.png",
