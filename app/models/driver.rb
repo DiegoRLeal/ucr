@@ -2,10 +2,10 @@ class Driver < ApplicationRecord
   belongs_to :car_model, foreign_key: 'car_model', primary_key: 'car_model'
 
   def lap_times
-    return [] unless laps.present?
-    # Substitui '=>' por ':' para corrigir o formato JSON antes de fazer o parse
-    JSON.parse(laps.gsub('=>', ':'))
+    # Verifica se laps está presente e converte o JSON corretamente
+    laps.present? ? JSON.parse(laps.gsub('=>', ':')) : []
   end
+
 
   def total_laptime
     lap_times.sum { |lap| lap['laptime'].to_i }
@@ -19,7 +19,7 @@ class Driver < ApplicationRecord
     if penalty_reason.present? || penalty_type.present? || penalty_value.present?
       "#{penalty_reason} - #{penalty_type} (#{penalty_value})"
     else
-      "Nenhuma"
+      "0"
     end
   end
 

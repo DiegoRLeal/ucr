@@ -14,6 +14,14 @@ module ApplicationHelper
     format("%d:%06.3f", minutes, seconds)
   end
 
+  def format_total_laptime(laptime)
+    return "N/A" if laptime.nil? || laptime <= 0
+
+    minutes = laptime / 60000
+    seconds = (laptime % 60000) / 1000.0
+
+    format("%d:%06.3f", minutes, seconds)
+  end
 
   def format_track_name(track_name)
     track_name.split('_').map(&:capitalize).join(' ')

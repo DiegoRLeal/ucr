@@ -34,7 +34,14 @@
             <td><%= driver.lap_count %></td>
 
             <!-- Tempo total -->
-            <td><%= format_laptime(driver.total_laptime) if driver.lap_times.present? %></td>
+            <td>
+              <% if driver.lap_times.present? && driver.lap_times.any? %>
+                <% total_laptime = driver.lap_times.map { |lap| lap["laptime"].to_i }.sum %>
+                <%= format_total_laptime(total_laptime) %>
+              <% else %>
+                N/A
+              <% end %>
+            </td>
 
             <!-- Gap -->
             <td>
