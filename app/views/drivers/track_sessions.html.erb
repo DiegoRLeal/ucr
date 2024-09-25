@@ -206,10 +206,7 @@ h1{
   color: #fff;
   margin-bottom: 30px;
   font-weight: 600;
-}
-
-.page-title {
-  background-image: url(https://www.overtake.gg/attachments/assetto-corsa-competizione-hungaroring-jpg.281317/);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(https://www.overtake.gg/attachments/assetto-corsa-competizione-hungaroring-jpg.281317/);
   width: auto;
   height: 265px;
   background-position: center;
@@ -221,6 +218,7 @@ h1{
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 12px;
 }
 
 table{
@@ -339,6 +337,13 @@ section{
 ::-webkit-scrollbar-thumb {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 }
+
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .page-title {
+      font-size: 1.8rem;
+    }
+  }
 </style>
 
 
