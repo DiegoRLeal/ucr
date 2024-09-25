@@ -98,13 +98,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_24_201603) do
     t.index ["creator_id"], name: "index_blazer_queries_on_creator_id"
   end
 
-  create_table "car_models", force: :cascade do |t|
-    t.string "car_name"
-    t.integer "car_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "drivers", force: :cascade do |t|
     t.string "car_id"
     t.integer "race_number"
