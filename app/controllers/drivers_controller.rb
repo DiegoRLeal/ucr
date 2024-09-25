@@ -47,6 +47,7 @@ class DriversController < ApplicationController
   end
 
   def show_lap_times
+    @track_name = params[:track_name]
     @driver = Driver.find_by(driver_first_name: params[:first_name], driver_last_name: params[:last_name], race_number: params[:race_number], session_date: params[:session_date], session_time: params[:session_time])
 
     if @driver

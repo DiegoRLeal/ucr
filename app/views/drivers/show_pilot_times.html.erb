@@ -1,4 +1,6 @@
-<h1 class="page-title text-center">Tempos dos Pilotos <br> <%= params[:track_name] %> <br><br> <%= params[:session_date].to_date.strftime('%d/%m/%Y') %></h1>
+<h1 class="page-title text-center" data-track="<%= params[:track_name] %>" data-session-date="<%= params[:session_date] %>">
+  Tempos dos Pilotos <br> <%= params[:track_name] %> <br><br> <%= params[:session_date].to_date.strftime('%d/%m/%Y') %>
+</h1>
 
 <div class="table-responsive container-lg py-4">
   <table class="table table-custom table-hover align-middle text-center">
@@ -73,7 +75,7 @@
 
             <!-- Ações -->
             <td class="btn">
-              <%= link_to show_lap_times_drivers_path(first_name: driver.driver_first_name, last_name: driver.driver_last_name, race_number: driver.race_number, session_date: driver.session_date, session_time: driver.session_time), class: 'Btn', method: :get do %>
+              <%= link_to show_lap_times_drivers_path(track_name: params[:track_name], first_name: driver.driver_first_name, last_name: driver.driver_last_name, race_number: driver.race_number, session_date: driver.session_date, session_time: driver.session_time), class: 'Btn', method: :get do %>
               <span class="text">
                 <i class="fas fa-stopwatch"></i> Ver todas as voltas
               </span>
@@ -265,7 +267,6 @@ h1{
   color: #fff;
   margin-bottom: 30px;
   font-weight: 600;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(https://www.overtake.gg/attachments/assetto-corsa-competizione-hungaroring-jpg.281317/);
   width: auto;
   height: 265px;
   background-position: center;

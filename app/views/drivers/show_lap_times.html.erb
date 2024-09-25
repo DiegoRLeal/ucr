@@ -1,4 +1,7 @@
-<h1 class="page-title text-center"> PILOTO <br> <%= @driver.driver_first_name %> <%= @driver.driver_last_name %></h1>
+<h1 class="page-title text-center" data-track="<%= params[:track_name] %>">
+  PILOTO <br> <%= @driver.driver_first_name %> <%= @driver.driver_last_name %>
+</h1>
+
 
 <div class="table-responsive container-lg py-5">
   <table class="table table-custom table-hover align-middle text-center">
@@ -66,7 +69,6 @@ h1  {
   color: #fff;
   margin-bottom: 30px;
   font-weight: 600;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(https://www.overtake.gg/attachments/assetto-corsa-competizione-hungaroring-jpg.281317/);
   width: auto;
   height: 265px;
   background-position: center;
