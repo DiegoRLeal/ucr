@@ -1,3 +1,3 @@
 class Driver < ApplicationRecord
-  serialize :laps, JSON  # Serializar as voltas como JSON
+  belongs_to :car_model, foreign_key: 'car_model', primary_key: 'car_model'
 end
