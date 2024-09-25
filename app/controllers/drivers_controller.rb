@@ -46,18 +46,18 @@ class DriversController < ApplicationController
                   .order(Arel.sql('MIN(best_lap::integer) ASC'))
 
       # Calcular pontos com penalidade após a consulta
-      @drivers_with_points = @drivers.map.with_index(1) do |driver, index|
-        calculated_points = points(index, driver.penalty_value || 0)
-
-        # Debug: Verifique os valores calculados de pontos
-        puts "Driver: #{driver.driver_first_name} #{driver.driver_last_name} - Position: #{index} - Penalty: #{driver.penalty_value} - Calculated Points: #{calculated_points}"
-
-        driver.attributes.merge(calculated_points: calculated_points)
+      @drivers_with_points = @drivers.map do |driver|
+        driver_hash = driver.attributes.symbolize_keys
+        driver_hash[:calculated_points] = calculate_points(driver) # Método para calcular os pontos
+        driver_hash
       end
+  end
 
-      # Debug: Verifique se os drivers com pontos foram criados corretamente
-      puts @drivers_with_points.inspect
 
+  def calculate_points(driver)
+    # Sua lógica para calcular pontos vai aqui.
+    # Exemplo simples:
+    driver.best_lap ? 30 : 0
   end
 
   def show_lap_times
