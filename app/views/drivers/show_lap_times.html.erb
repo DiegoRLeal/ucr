@@ -3,8 +3,8 @@
 <div class="table-responsive container-lg py-5">
   <table class="table table-custom table-hover align-middle text-center">
     <thead>
-      <tr>
-        <th class="lap-number">Número da Volta</th>
+      <tr class="title-laps">
+        <th>Nº Volta</th>
         <th>Split 1</th>
         <th>Split 2</th>
         <th>Split 3</th>
@@ -76,18 +76,20 @@
 
 /* Estilo da Tabela */
   .table-custom {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: #0000001a;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
     color: #fff;
     overflow: hidden;
-    width: 100%;
+    width: 45%;
     text-align: center;
+    padding: 25px;
+    margin-top: 15px;
   }
 
   .table-custom th {
-    background-color: rgba(44, 62, 80, 0.9);
+    background-color: hsl(0deg 0% 0% / 0%);
     color: #ecf0f1;
     font-weight: 600;
     text-transform: uppercase;
@@ -97,30 +99,39 @@
   .table-custom td {
     padding: 20px;
     font-size: 1rem;
+    border-radius: 118px 41px 119px 42px;
+    -webkit-border-radius: 118px 41px 119px 42px;
+    -moz-border-radius: 118px 41px 119px 42px;
+    font-weight: 700;
   }
 
   .table-custom tr {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
   }
 
   .table-custom tr:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    /* transform: translateY(-4px); */
+    /* box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); */
+  }
+
+  .title-laps th:hover {
+    transform: none;
+  }
+
+  .table-responsive {
+    display: flex;
+    justify-content: center;
   }
 
   /* Voltas Válidas e Inválidas */
   .valid-lap {
-    background: #80808000;
-    color: #55eb7e;
+    background: #10e627;
+    color: black;
   }
 
   .invalid-lap {
-    background: #80808000;
-    color: red;
-  }
-
-  .lap-number {
-    width: 10%;
+    background: red;
+    color: white;
   }
 
    /* Button BACK */
