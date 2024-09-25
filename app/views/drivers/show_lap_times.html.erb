@@ -14,7 +14,7 @@
         <tr class="<%= lap['isValidForBest'] ? 'bg-success text-white' : 'bg-danger text-white' %>">
           <td><%= index + 1 %></td>
           <td><%= format_laptime(lap['laptime']) %></td>
-          <td><%= lap['splits'].join(", ") %></td>
+          <td><%= lap['splits'].map { |split| format_laptime(split) }.join(", ") %></td>
         </tr>
       <% end %>
     </tbody>
