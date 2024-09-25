@@ -1,9 +1,4 @@
 class RegistrationsController < Devise::RegistrationsController
-  layout 'welcome', only: [:welcome]
-
-  def welcome
-    welcome_path
-  end
 
   def edit
     if request.xhr? # Se for uma requisição AJAX
@@ -44,10 +39,6 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   protected
-
-  def after_sign_up_path_for(resource)
-    welcome_path
-  end
 
   def update_resource(resource, params)
     if params[:password].blank? && params[:password_confirmation].blank?
