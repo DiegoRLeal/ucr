@@ -5,6 +5,8 @@ require "fileutils"
 require "json"
 
 class MainsController < ApplicationController
+  before_action :authenticate_user!, only: [:sidebar]
+
   OOB_URI = "http://localhost:3000/job/oauth2callback".freeze
   APPLICATION_NAME = "Google Drive API Ruby".freeze
   TOKEN_PATH = "token.yaml".freeze

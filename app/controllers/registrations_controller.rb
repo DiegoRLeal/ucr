@@ -1,5 +1,15 @@
 class RegistrationsController < Devise::RegistrationsController
 
+  def create
+    super do |resource|
+      if resource.persisted? # Se o cadastro foi bem-sucedido
+        flash[:welcome] = true
+        sign_in(resource) # Autentica automaticamente o usuário
+        redirect_to sidebar_path and return # Redireciona para a página sidebar e encerra a ação
+      end
+    end
+  end
+
   def edit
     if request.xhr? # Se for uma requisição AJAX
       render 'devise/registrations/edit', layout: false # Renderiza o arquivo edit.html.erb sem layout
