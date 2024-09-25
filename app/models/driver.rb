@@ -22,11 +22,4 @@ class Driver < ApplicationRecord
       "0"
     end
   end
-
-  def points
-    # Suponha que os pontos sejam baseados em alguma lógica de penalidade ou performance
-    base_points = 100
-    penalty_deduction = penalty_value.present? ? penalty_value * 10 : 0
-    base_points - penalty_deduction
-  end
 end

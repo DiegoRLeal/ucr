@@ -68,8 +68,8 @@
             <!-- Penalidades -->
             <td><%= driver.penalties || "0"%></td>
 
-            <!-- Pontos -->
-            <td><%= driver.points || "0" %></td>
+            <!-- Exibindo Pontos Calculados -->
+            <td><%= @driver_with_points[:calculated_points] %></td> <!-- Exibindo os pontos calculados de um único piloto -->
 
             <!-- Ações -->
             <td class="btn">
