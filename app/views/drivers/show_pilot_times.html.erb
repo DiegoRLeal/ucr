@@ -7,35 +7,78 @@
         <th>Nome do Piloto</th>
         <th>Carro</th>
         <th>Melhor Volta</th>
+        <th>Volta Média</th>
         <th>Total de Voltas</th>
+        <th>Tempo</th>
+        <th>Gap</th>
+        <th>Consistência</th>
+        <th>Penalidades</th>
+        <th>Pontos</th>
         <th>Ações</th>
       </tr>
-    </thead>
-    <tbody>
-      <% @drivers.each do |driver| %>
-        <tr>
-          <td><%= driver.driver_first_name %> <%= driver.driver_last_name %> # <%= driver.race_number %></td>
-          <td>
-            <img src="<%= car_image_path(driver.car_model.car_model) %>" alt="<%= driver.car_model.car_name %>" style="width: 20px; height: 20px; margin-right: 5px;">
-            <%= driver.car_model.car_name %>
-          </td>
-          <td><%= driver.best_lap.to_i < 2147483647 ? format_laptime(driver.best_lap.to_i) : "N/A" %></td>
-          <td><%= driver.lap_count %></td>
-          <td class="btn">
-            <%= link_to show_lap_times_drivers_path(first_name: driver.driver_first_name, last_name: driver.driver_last_name, race_number: driver.race_number, session_date: driver.session_date, session_time: driver.session_time), class: 'Btn', method: :get do %>
-            <span class="text">
-              <i class="fas fa-stopwatch"></i> Ver todas as voltas
-            </span>
-            <span class="svgIcon">
-              <svg fill="white" viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg">
-                <path d="M280 64h40c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128C0 92.7 28.7 64 64 64h40 9.6C121 27.5 153.3 0 192 0s71 27.5 78.4 64H280zM64 112c-8.8 0-16 7.2-16 16V448c0 8.8 7.2 16 16 16H320c8.8 0 16-7.2 16-16V128c0-8.8-7.2-16-16-16H304v24c0 13.3-10.7 24-24 24H192 104c-13.3 0-24-10.7-24-24V112H64zm128-8a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"></path>
-              </svg>
-            </span>
-          <% end %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
+      </thead>
+      <tbody>
+        <% @drivers.each do |driver| %>
+          <tr>
+            <td><%= driver.driver_first_name %> <%= driver.driver_last_name %> # <%= driver.race_number %></td>
+            <td>
+              <img src="<%= car_image_path(driver.car_model.car_model) %>" alt="<%= driver.car_model.car_name %>" style="width: 20px; height: 20px; margin-right: 5px;">
+              <%= driver.car_model.car_name %>
+            </td>
+            <td><%= driver.best_lap.to_i < 2147483647 ? format_laptime(driver.best_lap.to_i) : "N/A" %></td>
+
+            <!-- Cálculo da volta média -->
+            <td><%= driver.lap_count > 0 ? format_laptime(driver.average_laptime) : "N/A" %></td>
+
+            <!-- Total de voltas -->
+            <td><%= driver.lap_count %></td>
+
+            <!-- Tempo total -->
+            <td><%= format_laptime(driver.total_laptime) if driver.lap_times.present? %></td>
+
+            <!-- Gap -->
+            <td>
+              <% if driver.lap_times.present? %>
+                <% gap = driver.lap_times.map { |lap| lap['laptime'].to_i - driver.average_laptime } %>
+                <%= gap.map { |g| format_laptime(g.abs) }.join(', ') %>
+              <% else %>
+                N/A
+              <% end %>
+            </td>
+
+            <!-- Consistência -->
+            <td>
+              <% if driver.lap_times.present? %>
+                <% variance = driver.lap_times.map { |lap| (lap['laptime'].to_i - driver.average_laptime) ** 2 }.sum / driver.lap_count %>
+                <% consistency = Math.sqrt(variance) %>
+                <%= format_laptime(consistency) %>
+              <% else %>
+                N/A
+              <% end %>
+            </td>
+
+            <!-- Penalidades -->
+            <td><%= driver.penalties || "Nenhuma" %></td>
+
+            <!-- Pontos -->
+            <td><%= driver.points || "0" %></td>
+
+            <!-- Ações -->
+            <td class="btn">
+              <%= link_to show_lap_times_drivers_path(first_name: driver.driver_first_name, last_name: driver.driver_last_name, race_number: driver.race_number, session_date: driver.session_date, session_time: driver.session_time), class: 'Btn', method: :get do %>
+              <span class="text">
+                <i class="fas fa-stopwatch"></i> Ver todas as voltas
+              </span>
+              <span class="svgIcon">
+                <svg fill="white" viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M280 64h40c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128C0 92.7 28.7 64 64 64h40 9.6C121 27.5 153.3 0 192 0s71 27.5 78.4 64H280zM64 112c-8.8 0-16 7.2-16 16V448c0 8.8 7.2 16 16 16H320c8.8 0 16-7.2 16-16V128c0-8.8-7.2-16-16-16H304v24c0 13.3-10.7 24-24 24H192 104c-13.3 0-24-10.7-24-24V112H64zm128-8a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"></path>
+                </svg>
+              </span>
+            <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
   </table>
 </div>
 

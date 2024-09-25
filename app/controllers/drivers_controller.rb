@@ -27,12 +27,18 @@ class DriversController < ApplicationController
     @session_time = params[:session_time]
 
     # Filtra tempos válidos e seleciona a melhor volta de cada piloto, agrupando por car_model, driver_first_name e driver_last_name
-    @drivers = Driver.joins('LEFT JOIN car_models ON car_models.car_model = drivers.car_model')
-                     .where(track_name: @track_name, session_date: @session_date, session_time: @session_time)
-                    #  .where("best_lap::integer < 2147483647")  # Filtra voltas inválidas
-                     .select('drivers.car_model, drivers.driver_first_name, drivers.driver_last_name, MIN(best_lap::integer) AS best_lap, MAX(drivers.race_number) AS race_number, MAX(drivers.lap_count) AS lap_count, car_models.car_name, drivers.car_id, drivers.session_date, drivers.session_time')  # Inclui session_date e session_time
-                     .group('drivers.car_model, drivers.driver_first_name, drivers.driver_last_name, car_models.car_name, drivers.car_id, drivers.session_date, drivers.session_time')
-                     .order(Arel.sql('MIN(best_lap::integer) ASC'))
+    # @drivers = Driver.joins('LEFT JOIN car_models ON car_models.car_model = drivers.car_model')
+    #                  .where(track_name: @track_name, session_date: @session_date, session_time: @session_time)
+    #                 #  .where("best_lap::integer < 2147483647")  # Filtra voltas inválidas
+    #                  .select('drivers.car_model, drivers.driver_first_name, drivers.driver_last_name, MIN(best_lap::integer) AS best_lap, MAX(drivers.race_number) AS race_number, MAX(drivers.lap_count) AS lap_count, car_models.car_name, drivers.car_id, drivers.session_date, drivers.session_time')  # Inclui session_date e session_time
+    #                  .group('drivers.car_model, drivers.driver_first_name, drivers.driver_last_name, car_models.car_name, drivers.car_id, drivers.session_date, drivers.session_time')
+    #                  .order(Arel.sql('MIN(best_lap::integer) ASC'))
+
+      @drivers = Driver.joins('LEFT JOIN car_models ON car_models.car_model = drivers.car_model')
+                  .where(track_name: @track_name, session_date: @session_date, session_time: @session_time)
+                  .select('drivers.car_model, drivers.driver_first_name, drivers.driver_last_name, drivers.laps, MIN(best_lap::integer) AS best_lap, MAX(drivers.race_number) AS race_number, MAX(drivers.lap_count) AS lap_count, car_models.car_name, drivers.car_id, drivers.session_date, drivers.session_time, drivers.penalty_reason, drivers.penalty_type, drivers.penalty_value, drivers.points')
+                  .group('drivers.car_model, drivers.driver_first_name, drivers.driver_last_name, drivers.laps, car_models.car_name, drivers.car_id, drivers.session_date, drivers.session_time, drivers.penalty_reason, drivers.penalty_type, drivers.penalty_value, drivers.points')
+                  .order(Arel.sql('MIN(best_lap::integer) ASC'))
   end
 
   def show_lap_times

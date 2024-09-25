@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_25_134126) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_25_162433) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -131,6 +131,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_25_134126) do
     t.integer "post_race_penalty_value"
     t.integer "post_race_penalty_violation_in_lap"
     t.integer "post_race_penalty_cleared_in_lap"
+    t.integer "points"
   end
 
   create_table "pilots", force: :cascade do |t|
