@@ -7,14 +7,18 @@
         <th>Número da Volta</th>
         <th>Tempo da Volta</th>
         <th>Splits</th>
+        <th>Splits</th>
+        <th>Splits</th>
       </tr>
     </thead>
     <tbody>
       <% @laps.each_with_index do |lap, index| %>
         <tr class="<%= lap['isValidForBest'] ? 'bg-success text-white' : 'bg-danger text-white' %>">
           <td><%= index + 1 %></td>
+          <% lap['splits'].each_with_index do |split, index| %>
+            <td><%= format_laptime(split) %></td>
+          <% end %>
           <td><%= format_laptime(lap['laptime']) %></td>
-          <td><%= lap['splits'].map { |split| format_laptime(split) }.join(", ") %></td>
         </tr>
       <% end %>
     </tbody>
