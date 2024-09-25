@@ -34,7 +34,7 @@ class DriversController < ApplicationController
     # Filtra tempos válidos e seleciona a melhor volta de cada piloto, agrupando por car_model, driver_first_name e driver_last_name
     @drivers = Driver.joins('LEFT JOIN car_models ON car_models.car_model = drivers.car_model')
                      .where(track_name: @track_name, session_date: @session_date, session_time: @session_time)
-                     .where("best_lap::integer < 2147483647")  # Filtra voltas inválidas
+                    #  .where("best_lap::integer < 2147483647")  # Filtra voltas inválidas
                      .select('drivers.car_model, drivers.driver_first_name, drivers.driver_last_name, MIN(best_lap::integer) AS best_lap, MAX(drivers.race_number) AS race_number, MAX(drivers.lap_count) AS lap_count, car_models.car_name, drivers.car_id')
                      .group('drivers.car_model, drivers.driver_first_name, drivers.driver_last_name, car_models.car_name, drivers.car_id')
                      .order(Arel.sql('MIN(best_lap::integer) ASC'))
