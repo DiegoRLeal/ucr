@@ -39,8 +39,8 @@
             <!-- Gap -->
             <td>
               <% if driver.lap_times.present? %>
-                <% gap = driver.lap_times.map { |lap| lap['laptime'].to_i - driver.average_laptime } %>
-                <%= gap.map { |g| format_laptime(g.abs) }.join(', ') %>
+                <% total_gap = driver.lap_times.sum { |lap| (lap['laptime'].to_i - driver.average_laptime).abs } %>
+                <%= format_laptime(total_gap) %>
               <% else %>
                 N/A
               <% end %>
@@ -51,14 +51,15 @@
               <% if driver.lap_times.present? %>
                 <% variance = driver.lap_times.map { |lap| (lap['laptime'].to_i - driver.average_laptime) ** 2 }.sum / driver.lap_count %>
                 <% consistency = Math.sqrt(variance) %>
-                <%= format_laptime(consistency) %>
+                <% percentage_consistency = (consistency / driver.average_laptime) * 100 %>
+                <%= "#{percentage_consistency.round(2)}%" %>
               <% else %>
                 N/A
               <% end %>
             </td>
 
             <!-- Penalidades -->
-            <td><%= driver.penalties || "Nenhuma" %></td>
+            <td><%= driver.penalties || "0"%></td>
 
             <!-- Pontos -->
             <td><%= driver.points || "0" %></td>
