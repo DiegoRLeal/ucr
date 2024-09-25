@@ -2,30 +2,49 @@
   PILOTO <br> <%= @driver.driver_first_name %> <%= @driver.driver_last_name %>
 </h1>
 
-
 <div class="table-responsive container-lg py-5">
   <table class="table table-custom table-hover align-middle text-center">
-    <thead>
-      <tr class="title-laps">
-        <th>Volta</th>
-        <th>Split 1</th>
-        <th>Split 2</th>
-        <th>Split 3</th>
-        <th>Tempo da Volta</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @laps.each_with_index do |lap, index| %>
-        <tr class="<%= lap['isValidForBest'] ? 'valid-lap' : 'invalid-lap' %>">
-          <td><%= index + 1 %></td>
-          <% lap['splits'].each_with_index do |split, index| %>
-            <td><%= format_laptime(split) %></td>
-          <% end %>
-          <td><%= format_laptime(lap['laptime']) %></td>
-        </tr>
+  <thead>
+    <tr class="title-laps">
+      <th>Volta</th>
+      <th>Split 1</th>
+      <th>Split 2</th>
+      <th>Split 3</th>
+      <th>Tempo da Volta</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% # Calcula os menores splits apenas das voltas válidas %>
+    <% best_splits = Array.new(@laps.first['splits'].length, Float::INFINITY) %>
+    <% @laps.each do |lap| %>
+      <% if lap['isValidForBest'] %>
+        <% lap['splits'].each_with_index do |split, index| %>
+          <% best_splits[index] = [best_splits[index], split].min %>
+        <% end %>
       <% end %>
-    </tbody>
-  </table>
+    <% end %>
+
+    <% # Calcula o menor tempo de volta das voltas válidas %>
+    <% best_laptime = @laps.select { |lap| lap['isValidForBest'] }.map { |lap| lap['laptime'] }.min %>
+
+    <% @laps.each_with_index do |lap, lap_index| %>
+      <tr class="<%= lap['isValidForBest'] ? (lap['laptime'] == best_laptime ? 'best-lap' : 'valid-lap') : 'invalid-lap' %>">
+        <td><%= lap_index + 1 %></td>
+        <% lap['splits'].each_with_index do |split, split_index| %>
+          <% is_best_split = lap['isValidForBest'] && split == best_splits[split_index] %>
+          <td class="<%= 'best-split' if is_best_split %>">
+            <%= format_laptime(split) %>
+          </td>
+        <% end %>
+        <% is_best_laptime = lap['isValidForBest'] && lap['laptime'] == best_laptime %>
+        <td class="<%= is_best_laptime ? 'best-laptime' : 'default-laptime' %>">
+          <%= format_laptime(lap['laptime']) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 </div>
 
 <button class="button" onclick="history.back()">
@@ -133,14 +152,39 @@ h1  {
   }
 
   /* Voltas Válidas e Inválidas */
+  .best-lap {
+    background-color: white;
+    color: black;
+  }
+
   .valid-lap {
-    background: #10e627;
+    background-color: white;
     color: black;
   }
 
   .invalid-lap {
-    background: red;
+    background-color: red;
     color: white;
+  }
+
+  .best-split {
+    background-color: purple;
+    color: white;
+  }
+
+  .best-lap-split {
+    background-color: green;
+    color: white;
+  }
+
+  .best-laptime {
+    background-color: #10e627;
+    color: black;
+  }
+
+  .default-laptime {
+    /* background-color: white; */
+    color: black;
   }
 
    /* Button BACK */
