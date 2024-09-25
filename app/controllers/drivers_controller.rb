@@ -21,8 +21,6 @@ class DriversController < ApplicationController
                             .order('session_date DESC, session_time DESC')  # Ordena por data e hora em ordem decrescente
   end
 
-
-
   def show_pilot_times
     @track_name = params[:track_name]
     @session_date = params[:session_date]
@@ -36,7 +34,6 @@ class DriversController < ApplicationController
                      .group('drivers.car_model, drivers.driver_first_name, drivers.driver_last_name, car_models.car_name, drivers.car_id, drivers.session_date, drivers.session_time')
                      .order(Arel.sql('MIN(best_lap::integer) ASC'))
   end
-
 
   def show_lap_times
     @driver = Driver.find_by(driver_first_name: params[:first_name], driver_last_name: params[:last_name], race_number: params[:race_number], session_date: params[:session_date], session_time: params[:session_time])
@@ -57,6 +54,4 @@ class DriversController < ApplicationController
       redirect_to drivers_path
     end
   end
-
-
 end
