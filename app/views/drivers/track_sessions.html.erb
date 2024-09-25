@@ -15,7 +15,7 @@
           <td><%= session.session_date.strftime('%d/%m/%Y') %> <%= session.session_time.strftime('%H:%M:%S') %></td>
           <td><%= session.pilots_count %></td>
           <td class="btn">
-            <%= link_to show_pilot_times_drivers_path(track_name: session.track_name, session_date: session.session_date), class: 'Btn' do %>
+            <%= link_to show_pilot_times_drivers_path(track_name: session.track_name, session_date: session.session_date, session_time: session.session_time), class: 'Btn' do %>
               <span class="text">
               <i class="fas fa-stopwatch"></i> Ver tempos
             </span>

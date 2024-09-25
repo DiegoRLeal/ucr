@@ -69,5 +69,5 @@ car_data = {
 
 car_data.each do |car_id, car_name|
   # Aqui você está usando o car_id (como "0", "1", etc.) e o car_name para criar os registros
-  CarModel.create(car_id: car_id, name: car_name) # Ajuste a categoria conforme necessário
+  CarModel.create(car_id: car_id, car_name: car_name) # Ajuste a categoria conforme necessário
 end
