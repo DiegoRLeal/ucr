@@ -22,7 +22,7 @@
               <span class="line"></span>
             </div>
             <li class="item">
-               <a href="/drivers" id="race" class="link flex" href="javascript:void(0);">
+               <a id="drivers" class="link flex" href="javascript:void(0);">
                 <i class="bx bx-home-alt"></i>
                 <span>Race Results</span>
               </a>
@@ -364,6 +364,26 @@ body {
     // Faz o AJAX para carregar o conteúdo da página de edição do usuário
     $.ajax({
       url: "/setups", // Caminho da página de edição
+      type: 'GET',
+      dataType: 'html', // O retorno será HTML
+      success: function(data) {
+        // Insere o conteúdo carregado no div da área principal
+        document.getElementById('main-content').innerHTML = data;
+      },
+      error: function() {
+        // Caso ocorra algum erro no carregamento
+        document.getElementById('main-content').innerHTML = '<p>Failed to load user settings.</p>';
+      }
+    });
+  });
+</script>
+
+<%# DRIVERS PAGE %>
+<script>
+  document.getElementById('drivers').addEventListener('click', function() {
+    // Faz o AJAX para carregar o conteúdo da página de edição do usuário
+    $.ajax({
+      url: "/drivers", // Caminho da página de edição
       type: 'GET',
       dataType: 'html', // O retorno será HTML
       success: function(data) {
