@@ -28,34 +28,35 @@ class DriversController < ApplicationController
     @session_date = params[:session_date]
     @session_time = params[:session_time]
 
-    # Depuração
-    puts "Track: #{@track_name}, Date: #{@session_date}, Time: #{@session_time}"
-
     # Filtra tempos válidos e seleciona a melhor volta de cada piloto, agrupando por car_model, driver_first_name e driver_last_name
     @drivers = Driver.joins('LEFT JOIN car_models ON car_models.car_model = drivers.car_model')
                      .where(track_name: @track_name, session_date: @session_date, session_time: @session_time)
                     #  .where("best_lap::integer < 2147483647")  # Filtra voltas inválidas
-                     .select('drivers.car_model, drivers.driver_first_name, drivers.driver_last_name, MIN(best_lap::integer) AS best_lap, MAX(drivers.race_number) AS race_number, MAX(drivers.lap_count) AS lap_count, car_models.car_name, drivers.car_id')
-                     .group('drivers.car_model, drivers.driver_first_name, drivers.driver_last_name, car_models.car_name, drivers.car_id')
+                     .select('drivers.car_model, drivers.driver_first_name, drivers.driver_last_name, MIN(best_lap::integer) AS best_lap, MAX(drivers.race_number) AS race_number, MAX(drivers.lap_count) AS lap_count, car_models.car_name, drivers.car_id, drivers.session_date, drivers.session_time')  # Inclui session_date e session_time
+                     .group('drivers.car_model, drivers.driver_first_name, drivers.driver_last_name, car_models.car_name, drivers.car_id, drivers.session_date, drivers.session_time')
                      .order(Arel.sql('MIN(best_lap::integer) ASC'))
-
-    # Outra depuração
-    puts @drivers.inspect
   end
+
 
   def show_lap_times
-    @driver = Driver.find_by(car_id: params[:car_id])  # Buscando pelo car_id
+    @driver = Driver.find_by(driver_first_name: params[:first_name], driver_last_name: params[:last_name], race_number: params[:race_number], session_date: params[:session_date], session_time: params[:session_time])
 
-    # Se 'laps' estiver serializado como string JSON, converta-o para um array
-    @laps = @driver.laps.is_a?(String) ? JSON.parse(@driver.laps) : @driver.laps
+    if @driver
+      # Se 'laps' estiver serializado como string JSON, converta-o para um array
+      @laps = @driver.laps.is_a?(String) ? JSON.parse(@driver.laps) : @driver.laps
 
-    # Debug: imprime o conteúdo de @laps no log
-    puts "Laps content: #{@laps.inspect}"
+      # Debug: imprime o conteúdo de @laps no log
+      puts "Laps content for driver #{@driver.driver_first_name} #{@driver.driver_last_name} on #{params[:session_date]} at #{params[:session_time]}: #{@laps.inspect}"
 
-    # Caso @laps seja nil ou vazio, adicionar uma mensagem de erro
-    if @laps.nil? || @laps.empty?
-      flash[:alert] = "Nenhuma volta encontrada para o piloto."
+      # Caso @laps seja nil ou vazio, adicionar uma mensagem de erro
+      if @laps.nil? || @laps.empty?
+        flash[:alert] = "Nenhuma volta encontrada para o piloto."
+      end
+    else
+      flash[:alert] = "Piloto não encontrado para esta sessão."
+      redirect_to drivers_path
     end
   end
+
 
 end
