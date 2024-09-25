@@ -1,10 +1,10 @@
-<h1 class="page-title text-center">Voltas de <%= @driver.driver_first_name %> <%= @driver.driver_last_name %></h1>
+<h1 class="page-title text-center"> <%= @driver.driver_first_name %> <%= @driver.driver_last_name %></h1>
 
 <div class="table-responsive container-lg py-5">
   <table class="table table-custom table-hover align-middle text-center">
     <thead>
       <tr class="title-laps">
-        <th>Nº Volta</th>
+        <th>Volta</th>
         <th>Split 1</th>
         <th>Split 2</th>
         <th>Split 3</th>
@@ -50,6 +50,15 @@
     background-color: #f0f4f8;
     font-family: 'Poppins', sans-serif;
   }
+
+  h1{
+  font-size: 30px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 15px;
+}
 
   /* Título da página */
 .page-title {
