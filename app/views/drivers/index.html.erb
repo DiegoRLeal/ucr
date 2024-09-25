@@ -22,7 +22,8 @@
         <span class="card__category"> Pista </span>
         <h3 class="card__title"><%= format_track_name(track_name) %></h3>
         <% if best_lap_info %>
-          <span class="card__by">Melhor volta por <%= best_lap_info.driver_first_name %> <%= best_lap_info.driver_last_name %></span>
+          <span class="card__by"><strong>Melhor volta:</strong> <%= best_lap_info.driver_first_name %> <%= best_lap_info.driver_last_name %></span>
+
         <% else %>
           <span class="card__by">Sem dados de volta</span>
         <% end %>
