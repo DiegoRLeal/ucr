@@ -3,10 +3,6 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { registrations: 'registrations' }
 
-  devise_scope :user do
-    get 'welcome', to: 'registrations#welcome', as: :welcome
-  end
-
   authenticate :user, ->(user) { user.admin? } do
     mount Blazer::Engine, at: "blazer"
   end

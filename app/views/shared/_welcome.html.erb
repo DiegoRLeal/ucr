@@ -1,184 +1,108 @@
-<div class="welcome-message">
-  <!-- Backgrounds -->
-  <div class="background0"></div>
-  <div class="background1"></div>
-  <div class="background2"></div>
-  <div class="background3"></div>
-  <div class="background4"></div>
-  <div class="background5"></div>
-  <div class="background6"></div>
-  <div class="background7"></div>
-
-  <!-- Criterion -->
-  <div class="criterion">
-    <!-- Text Elements -->
-    <div class="text0">W</div>
-    <div class="text1">e</div>
-    <div class="text2">l</div>
-    <div class="text3">c</div>
-    <div class="text4">o</div>
-    <div class="text5">m</div>
-    <div class="text6">e</div>
-    <div class="text7">: )</div>
-
-    <!-- Frames -->
-    <div class="frame0"></div>
-    <div class="frame1"></div>
-    <div class="frame2"></div>
-    <div class="frame3"></div>
-    <div class="frame4"></div>
-    <div class="frame5"></div>
-    <div class="frame6"></div>
-    <div class="frame7"></div>
-
-    <!-- Particles -->
-    <div class="particle00"></div>
-    <div class="particle01"></div>
-    <div class="particle02"></div>
-    <div class="particle03"></div>
-    <div class="particle04"></div>
-    <div class="particle05"></div>
-    <div class="particle06"></div>
-    <div class="particle07"></div>
-    <div class="particle08"></div>
-    <div class="particle09"></div>
-    <div class="particle010"></div>
-    <div class="particle011"></div>
-
-    <div class="particle10"></div>
-    <div class="particle11"></div>
-    <div class="particle12"></div>
-    <div class="particle13"></div>
-    <div class="particle14"></div>
-    <div class="particle15"></div>
-    <div class="particle16"></div>
-    <div class="particle17"></div>
-    <div class="particle18"></div>
-    <div class="particle19"></div>
-    <div class="particle110"></div>
-    <div class="particle111"></div>
-
-    <!-- Repetir o mesmo padrão para cada letra/partícula -->
-    <div class="particle20"></div>
-    <div class="particle21"></div>
+<center>
+  <div id="loading" class="loading">
+    <div class="loading-text">
+      <span class="loading-text-words">S</span>
+      <span class="loading-text-words">E</span>
+      <span class="loading-text-words">J</span>
+      <span class="loading-text-words">A</span>
+      <span class="loading-text-words"> </span>
+      <span class="loading-text-words">B</span>
+      <span class="loading-text-words">E</span>
+      <span class="loading-text-words">M</span>
+      <span class="loading-text-words">-</span>
+      <span class="loading-text-words">V</span>
+      <span class="loading-text-words">I</span>
+      <span class="loading-text-words">N</span>
+      <span class="loading-text-words">D</span>
+      <span class="loading-text-words">O</span>
+    </div>
   </div>
-</div>
+
+  <!-- Conteúdo da página que será mostrado após o loading -->
+  <div id="content" style="display: none;">
+  </div>
+</center>
 
 <style>
-/* Básicos */
-* {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-family: 'Lato', sans-serif;
-  line-height: 1;
-}
+  @import url(https://fonts.googleapis.com/css?family=Quattrocento+Sans);
 
-body {
-  background-color: #F5F6F8;
-  overflow: hidden;
-}
+  .loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 9999;
+  }
 
-/* Exemplo de estilo para backgrounds */
-.background0, .background1, .background2, .background3, .background4, .background5, .background6, .background7 {
-  width: 100px;
-  height: 100px;
-  background-color: #ccc;
-  margin: 5px;
-  display: inline-block;
-}
+  .loading-text {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    text-align: center;
+    width: 100%;
+    height: 100px;
+    line-height: 100px;
+  }
 
-/* Exemplo de estilo para particles */
-.particle00, .particle01, .particle02, .particle03, .particle04, .particle05 {
-  width: 10px;
-  height: 10px;
-  background-color: red;
-  border-radius: 50%;
-  position: absolute;
-  /* Adicione mais estilos conforme necessário */
-}
+  .loading-text span {
+    display: inline-block;
+    margin: 0 5px;
+    color: #fff;
+    font-family: 'Quattrocento Sans', sans-serif;
+    filter: blur(0px);
+    animation: blur-text 1.5s infinite linear alternate;
+  }
 
-/* Sidebar */
-.sidebar-navigation {
-  display: inline-block;
-  min-height: 100vh;
-  width: 80px;
-  background-color: #313443;
-  float: left;
-}
+  .loading-text span:nth-child(1) {
+    animation-delay: 0s;
+  }
 
-.sidebar-navigation ul {
-  text-align: center;
-  color: white;
-}
+  .loading-text span:nth-child(2) {
+    animation-delay: 0.2s;
+  }
 
-.sidebar-navigation ul li {
-  padding: 28px 0;
-  cursor: pointer;
-  transition: all ease-out 120ms;
-}
+  .loading-text span:nth-child(3) {
+    animation-delay: 0.4s;
+  }
 
-.sidebar-navigation ul li:hover {
-  background-color: #22252E;
-}
+  .loading-text span:nth-child(4) {
+    animation-delay: 0.6s;
+  }
 
-.sidebar-navigation ul li i {
-  display: block;
-  font-size: 24px;
-  transition: all ease 450ms;
-}
+  .loading-text span:nth-child(5) {
+    animation-delay: 0.8s;
+  }
 
-.sidebar-navigation ul li .tooltip {
-  display: inline-block;
-  position: absolute;
-  background-color: #313443;
-  padding: 8px 15px;
-  border-radius: 3px;
-  margin-top: -26px;
-  left: 90px;
-  opacity: 0;
-  visibility: hidden;
-  font-size: 13px;
-  letter-spacing: 0.5px;
-}
+  .loading-text span:nth-child(6) {
+    animation-delay: 1s;
+  }
 
-.sidebar-navigation ul li .tooltip:before {
-  content: '';
-  display: block;
-  position: absolute;
-  left: -4px;
-  top: 10px;
-  transform: rotate(45deg);
-  width: 10px;
-  height: 10px;
-  background-color: inherit;
-}
+  .loading-text span:nth-child(7) {
+    animation-delay: 1.2s;
+  }
 
-.sidebar-navigation ul li:hover .tooltip {
-  visibility: visible;
-  opacity: 1;
-}
-
-.sidebar-navigation ul li.active {
-  background-color: #22252E;
-}
-
-.sidebar-navigation ul li.active i {
-  color: #98D7EC;
-}
+  @keyframes blur-text {
+    0% {
+      filter: blur(0px);
+    }
+    100% {
+      filter: blur(4px);
+    }
+  }
 </style>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-  $('ul li').on('click', function() {
-    $('li').removeClass('active');
-    $(this).addClass('active');
-  });
-</script>
-
-<script>
-  // Redireciona para a página de edição após 5 segundos
+  // Simula o carregamento por 2 segundos (ajuste conforme necessário)
   setTimeout(function() {
-    window.location.href = "<%= sidebar_path %>"; // Esse código precisa estar dentro de uma view ERB do Rails para funcionar
-  }, 5000); // 5 segundos de espera
+    // Oculte o elemento de carregamento
+    document.getElementById('loading').style.display = 'none';
+
+    // Mostre o conteúdo da página
+    document.getElementById('content').style.display = 'block';
+  }, 3000); // Tempo de espera de 2 segundos (ajuste conforme necessário)
 </script>
