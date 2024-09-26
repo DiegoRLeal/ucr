@@ -92,10 +92,11 @@
         </div>
 
         <% if user_signed_in? %>
-          <div class="sidebar_profile flex">
-            <span class="nav_image">
-              <img src="" alt="logo_img" />
-            </span>
+          <div class="sidebar_profile grid">
+            <div class="logout">
+              <%= button_to 'Logout', destroy_user_session_path, method: :delete, data: { turbo: false }, class: 'btn btn-logout' %>
+            </div>
+
             <div class="data_text">
               <span class="name"><%= current_user.full_name %></span>
               <span class="email"><%= current_user.email %></span>
@@ -164,6 +165,7 @@ body {
   font-weight: 500px;
   transition: all 0.3s ease;
 }
+
 .sidebar.close .logo_name,
 .sidebar.close #lock-icon,
 .sidebar.close #sidebar-close {
@@ -254,6 +256,7 @@ body {
   margin-top: 15px;
   gap: 15px;
   border-top: 2px solid rgba(0, 0, 0, 0.1);
+  display: grid;
 }
 .sidebar_profile .name {
   font-size: 18px;
@@ -262,6 +265,28 @@ body {
 .sidebar_profile .email {
   font-size: 15px;
   color: hsla(240, 7%, 62%, 1);
+}
+
+.logout {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-logout {
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  color: #212121;
+  text-align: center;
+  border: 1px solid white;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.btn-logout:hover {
+  background-color: #f83534;
+  color: white;
+  border: 1px solid #f83534;
 }
 
 /* Navbar */

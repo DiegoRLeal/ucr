@@ -45,3 +45,5 @@ yarn-debug.log*
 token.yaml
 token.yaml
 .env*
+
+db_data/
