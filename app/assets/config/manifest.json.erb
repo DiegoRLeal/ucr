@@ -10,32 +10,19 @@
   "theme_color": "white",
   "icons": [
     {
-      "src": "<%= asset_path 'icons/maskable-icon-512x512.png' %>",
+      "src": "<%= image_path "icons/maskable-icon-512x512.png" %>",
       "sizes": "512x512",
-      "type": "image/png"
-    },
-    {
-      "src": "<%= asset_path 'icons/android-icon-96x96.png' %>",
-      "sizes": "96x96",
-      "type": "image/png"
-    },
-    {
-      "src": "<%= asset_path 'icons/apple-icon-192x192.png' %>",
-      "sizes": "192x192",
-      "type": "image/png"
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "<%= asset_path 'screenshots/desktop.png' %>",
-      "sizes": "1200x800",
       "type": "image/png",
-      "form_factor": "wide"
+      "purpose": "any maskable"
     },
-    {
-      "src": "<%= asset_path 'screenshots/mobile.png' %>",
-      "sizes": "400x800",
-      "type": "image/png"
-    }
+    <% files = Dir.entries(Rails.root.join("app/assets/images/icons/")).select {|f| !File.directory? f} %>
+    <% files.each_with_index do |file, index| %>
+      <% match = file.match(/.+-(?<size>\d{2,3}x\d{2,3}).png/) %>
+      {
+        "src": "<%= image_path "icons/#{file}" %>",
+        "sizes": "<%= match && match[:size] %>",
+        "type": "image/png"
+      }<%= "," unless (files.size - 1) == index %>
+    <% end %>
   ]
 }

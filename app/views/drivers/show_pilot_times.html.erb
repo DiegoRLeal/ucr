@@ -20,7 +20,7 @@
       </tr>
       </thead>
       <tbody>
-        <% @drivers.each do |driver| %>
+        <% @drivers.each_with_index do |driver, index| %>
           <tr>
             <td><%= driver.driver_first_name %> <%= driver.driver_last_name %> # <%= driver.race_number %></td>
             <td>
@@ -37,9 +37,12 @@
 
             <!-- Tempo total -->
             <td>
-              <% if driver.lap_times.present? && driver.lap_times.any? %>
-                <% total_laptime = driver.lap_times.map { |lap| lap["laptime"].to_i }.sum %>
-                <%= format_total_laptime(total_laptime) %>
+              <% driver = @drivers[index] %>
+
+              <!-- Verificar se o totalTime está presente -->
+              <% if driver.total_time.present? %>
+                <!-- Exibir o tempo total formatado -->
+                <%= format_total_laptime(driver.total_time.to_i) %>
               <% else %>
                 N/A
               <% end %>
@@ -47,31 +50,34 @@
 
             <!-- Gap -->
             <td>
-              <% if driver.lap_times.present? %>
-                <% total_gap = driver.lap_times.sum { |lap| (lap['laptime'].to_i - driver.average_laptime).abs } %>
-                <%= format_laptime(total_gap) %>
+              <% driver_total_time = driver.total_time.to_i %>
+              <% leader_total_time = @drivers.first.total_time.to_i %>
+              <% laps_completed_by_driver = driver.lap_count %>
+              <% leader_laps = @drivers.first.laps.is_a?(String) ? JSON.parse(@drivers.first.laps.gsub('=>', ':')) : @drivers.first.laps %>
+
+              <% if leader_laps.present? %>
+                <% leader_time_for_same_laps = leader_laps[0...laps_completed_by_driver].map { |lap| lap["laptime"].to_i }.sum %>
+
+                <% if leader_time_for_same_laps > 0 %>
+                  <% gap = driver_total_time - leader_time_for_same_laps %>
+                  <!-- Exibir o gap formatado -->
+                  <%= gap > 0 ? format_total_laptime(gap) : "0:00.000" %>
+                <% else %>
+                  N/A
+                <% end %>
               <% else %>
                 N/A
               <% end %>
             </td>
 
             <!-- Consistência -->
-            <td>
-              <% if driver.lap_times.present? %>
-                <% variance = driver.lap_times.map { |lap| (lap['laptime'].to_i - driver.average_laptime) ** 2 }.sum / driver.lap_count %>
-                <% consistency = Math.sqrt(variance) %>
-                <% percentage_consistency = (consistency / driver.average_laptime) * 100 %>
-                <%= "#{percentage_consistency.round(2)}%" %>
-              <% else %>
-                N/A
-              <% end %>
-            </td>
+            <td><%= calculate_consistency(driver.laps) %> %</td>
 
             <!-- Penalidades -->
-            <td><%= driver.penalties || "0"%></td>
+            <td><%= driver.penalties.present? ? driver.penalties.scan(/(\w+ - \w+)/).count : "0" %></td>
 
             <!-- Exibindo Pontos Calculados -->
-            <td></td>
+            <td><%= calculate_points(index + 1) %></td> <!-- Mostra os pontos com base na posição -->
 
             <!-- Ações -->
             <td class="btn">
