@@ -1,20 +1,9 @@
 <center>
   <div id="loading" class="loading">
     <div class="loading-text">
-      <span class="loading-text-words">S</span>
-      <span class="loading-text-words">E</span>
-      <span class="loading-text-words">J</span>
-      <span class="loading-text-words">A</span>
-      <span class="loading-text-words"> </span>
-      <span class="loading-text-words">B</span>
-      <span class="loading-text-words">E</span>
-      <span class="loading-text-words">M</span>
-      <span class="loading-text-words">-</span>
-      <span class="loading-text-words">V</span>
-      <span class="loading-text-words">I</span>
-      <span class="loading-text-words">N</span>
-      <span class="loading-text-words">D</span>
-      <span class="loading-text-words">O</span>
+      <% t('welcome').split('').each do |char| %>
+        <span class="loading-text-words"><%= char %></span>
+      <% end %>
     </div>
   </div>
 

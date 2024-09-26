@@ -9,11 +9,11 @@
     <div class="nav">
       <ul>
         <li><a href="<%= root_path %>" data-text="Home">Home</a></li>
-        <li><a href="/campeonatos" data-text="Campeonatos">Campeonatos</a></li>
-        <li><a href="/resultados" data-text="Resultados">Resultados</a></li>
-        <li><a href="/pilotos" data-text="Drivers">Drivers</a></li>
+        <li><a href="/campeonatos" data-text="<%= t('navbar.campeonatos').html_safe %>"><%= t('navbar.campeonatos').html_safe %></a></li>
+        <li><a href="/resultados" data-text="<%= t('navbar.resultados').html_safe %>"><%= t('navbar.resultados').html_safe %></a></li>
+        <li><a href="/pilotos" data-text="<%= t('navbar.pilotos').html_safe %>"><%= t('navbar.pilotos').html_safe %></a></li>
         <%# <li><a href="/carros" data-text="Cars">Cars</a></li> %>
-        <li><a href="/patrocinio" data-text="Sponsors">Sponsors</a></li>
+        <li><a href="/patrocinio" data-text="<%= t('navbar.patrocinio').html_safe %>"><%= t('navbar.patrocinio').html_safe %></a></li>
         <%# <li><a href="/contato" data-text="Contact">Contact</a></li> %>
       </ul>
   </div>

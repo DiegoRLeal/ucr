@@ -3,7 +3,7 @@
 
 <!--GOOGLE FONTS-->
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Play&display=swap" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Play&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -22,16 +22,16 @@
 
     <div class="row">
       <ul>
-        <li><a href="/campeonatos">Campeonatos</a></li>
-        <li><a href="/resultados">Resultados</a></li>
-        <li><a href="/pilotos">Drivers</a></li>
-        <li><a href="/patrocinio">Sponsors</a></li>
+        <li><a href="/campeonatos"><%= t('footer.campeonatos').html_safe %></a></li>
+        <li><a href="/resultados"><%= t('footer.resultados').html_safe %></a></li>
+        <li><a href="/pilotos"><%= t('footer.pilotos').html_safe %></a></li>
+        <li><a href="/patrocinio"><%= t('footer.patrocinio').html_safe %></a></li>
         <%# <li><a href="#">Career</a></li> %>
       </ul>
     </div>
 
     <div class="row">
-      Under Control Racing || Copyright © <%= Time.now.year %>  - All rights reserved || Developed By: Leal Coding 
+      Under Control Racing || Copyright © <%= Time.now.year %>  - All rights reserved || Developed By: Leal Coding
     </div>
   </div>
 </footer>

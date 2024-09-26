@@ -1,0 +1,132 @@
+pt-BR:
+  devise:
+    registrations:
+      edit:
+        edit_account: "Editar Conta"
+        current_password: "Senha Atual"
+        new_password: "Nova Senha"
+        confirm_new_password: "Confirmar Nova Senha"
+        submit: "Atualizar"
+        cancel_account: "Cancelar conta"
+        cancel_confirmation: "Tem certeza de que deseja cancelar sua conta?"
+        no_avatar_attached: "Nenhum avatar anexado"
+      new:
+        sign_up: "Registrar-se"
+        submit: "Cadastrar"
+        minimum_password_length: "(mínimo de %{length} caracteres)"
+    sessions:
+      new:
+        sign_in: "Entrar"
+        submit: "Login"
+        remember_me: "Lembrar-me"
+        forgot_password: "Esqueceu sua senha?"
+    shared:
+      links:
+        logout: "Sair"
+        logout_confirmation: "Tem certeza de que deseja sair?"
+        sign_in: "Entrar"
+        sign_up: "Registrar-se"
+        forgot_your_password: "Esqueceu sua senha?"
+  activerecord:
+    attributes:
+      user:
+        full_name: "Nome Completo"
+        email: "Email"
+        password: "Senha"
+        password_confirmation: "Confirmar Senha"
+
+  index:
+    title: 'Bem-vindo à <br> Under Control'
+    subtitle: 'Acompanhe e gerencie o desempenho da nossa equipe de corrida virtual. <br> Patrocine nossa equipe e exponha sua marca.'
+    campeonatos: "Campeonatos"
+    resultados: "Resultados"
+    pilotos: "Pilotos"
+    patrocinio: "Patrocínio"
+    instale: "Instale o app para uma melhor experiência."
+    instalar: "Instalar"
+    nao: "Não, obrigado"
+
+  navbar:
+    campeonatos: "Campeonatos"
+    resultados: "Resultados"
+    pilotos: "Pilotos"
+    patrocinio: "Patrocínio"
+
+  footer:
+    campeonatos: "Campeonatos"
+    resultados: "Resultados"
+    pilotos: "Pilotos"
+    patrocinio: "Patrocínio"
+
+  pilotos:
+    title: 'Nossos <span class="color-emphasis-1">pilotos</span><br>'
+    subtitle: 'por <span class="color-emphasis-1">categoria.</span>'
+    pro: "CATEGORIA - PRO"
+    silver: "CATEGORIA - SILVER"
+    am: "CATEGORIA - AM"
+
+  patrocinio:
+    title1: "Velocidade e"
+    title2: "parceria"
+    title3: "rumo à"
+    title4: "vitória."
+    plano1: "Bronze"
+    preco1: "R$ 50,00"
+    desc1: "* O período de contrato de patrocínio tem vigência de 6 meses."
+    item1_1: "02 inserções de vídeo até 01 min"
+    item1_2: "Formato 16:9 fornecido pelo patrocionador"
+    item1_3: "Inserção da marca nas midias de divulgação em todas as etapas"
+    item1_4: "Prenseça em nosso site"
+    solicite: "Solicite contato"
+    plano2: "Prata"
+    preco2: "R$ 75,00"
+    desc2: "* O período de contrato de patrocínio tem vigência de 6 meses."
+    item2_1: "04 inserções de vídeo até 01 min"
+    item2_2: "Vídeo formato 16:9 fornecido pelo patrocionador"
+    item2_3: "Inserção da marca nas midias de divulgação em todas as etapas"
+    item2_4: "Prenseça em nosso site"
+    plano3: "Gold"
+    preco3: "R$ 100,00"
+    desc3: "* O período de contrato de patrocínio tem vigência de 6 meses."
+    item3_1: "06 inserções de vídeo até 01 min exclusivo na etapa, não dividindo espaço com outros patrocinadores."
+    item3_2: "Vídeo formato 16:9 fornecido pelo patrocionador"
+    item3_3: "Inserção da marca nas midias de divulgação em todas as etapas"
+    item3_4: "Prenseça em nosso site"
+
+  drivers:
+    pista: "Pista"
+    melhor_volta: "Melhor volta:"
+    sem_volta: "Sem dados de volta"
+
+  track_sessions:
+    sessoes: "Sessões da pista"
+    data_hora: "Data e Hora da Sessão"
+    qtd_pilots: "Quantidade de Piloto"
+    acoes: "Ações"
+    ver_tempos: "Ver tempos"
+
+  show_pilot_times:
+    tempo_piloto: "Tempos dos Pilotos"
+    nome: "Nome do Piloto"
+    carro: "Carro"
+    melhor_volta: "Melhor Volta"
+    volta_media: "Volta Média"
+    total_voltas: "Total de Voltas"
+    tempo: "Tempo"
+    gap: "Gap"
+    consistencia: "Consistência"
+    penalidades: "Penalidades"
+    pontos: "Pontos"
+    acoes: "Ações"
+    ver_todas_voltas: "Ver todas as voltas"
+
+  lap_times:
+    piloto: "Piloto"
+    volta: "Volta"
+    split1: "Split 1"
+    split2: "Split 2"
+    split3: "Split 3"
+    tempo_volta: "Tempo da Volta"
+    volta_ideal: "Volta Ideal"
+
+  welcome: "SEJA BEM-VINDO"

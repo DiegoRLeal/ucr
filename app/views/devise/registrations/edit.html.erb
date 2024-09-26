@@ -1,48 +1,47 @@
 <div class="edit-profile-form-container">
   <!-- Cabeçalho do formulário com gradiente -->
   <div class="edit-profile-header">
-    <h2>Edit Your Profile</h2>
+    <h2><%= t('devise.registrations.edit.edit_account') %></h2>
   </div>
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "edit-profile-form" }) do |f| %>
 
-    <!-- Full Name Field -->
+    <!-- Campo Nome Completo -->
     <div class="input-group">
       <%= f.text_field :full_name, placeholder: " ", class: "input-field" %>
-      <label class="input-label">Full Name</label>
+      <label class="input-label"><%= t('activerecord.attributes.user.full_name') %></label>
     </div>
 
-    <!-- Email Field -->
+    <!-- Campo Email -->
     <div class="input-group">
       <%= f.email_field :email, placeholder: " ", class: "input-field" %>
-      <label class="input-label">Email</label>
+      <label class="input-label"><%= t('activerecord.attributes.user.email') %></label>
     </div>
 
-    <!-- Current Password Field -->
+    <!-- Campo Senha Atual -->
     <div class="input-group">
       <%= f.password_field :current_password, placeholder: " ", class: "input-field" %>
-      <label class="input-label">Current Password</label>
+      <label class="input-label"><%= t('devise.registrations.edit.current_password') %></label>
     </div>
-    
-    <!-- Password Field -->
+
+    <!-- Campo Nova Senha -->
     <div class="input-group">
       <%= f.password_field :password, placeholder: " ", class: "input-field" %>
-      <label class="input-label">New Password</label>
+      <label class="input-label"><%= t('devise.registrations.edit.new_password') %></label>
     </div>
 
-    <!-- Password Confirmation Field -->
+    <!-- Campo Confirmar Nova Senha -->
     <div class="input-group">
       <%= f.password_field :password_confirmation, placeholder: " ", class: "input-field" %>
-      <label class="input-label">Confirm New Password</label>
+      <label class="input-label"><%= t('devise.registrations.edit.confirm_new_password') %></label>
     </div>
 
-
-    <!-- Avatar Upload Field -->
+    <!-- Campo para Upload de Avatar -->
     <div class="input-group">
       <% if @user.avatar.attached? %>
-        <%= image_tag url_for(@user.avatar), alt: "User Avatar", class: "avatar-preview" %>
+        <%= image_tag url_for(@user.avatar), alt: "Avatar do Usuário", class: "avatar-preview" %>
       <% else %>
-        <p>No avatar attached</p>
+        <p><%= t('devise.registrations.edit.no_avatar_attached') %></p>
       <% end %>
 
       <div class="input-group">
@@ -51,23 +50,25 @@
     </div>
 
     <div class="buttons">
-      <!-- Submit Button -->
+      <!-- Botão de Enviar -->
       <div class="action-group">
-        <%= f.submit "Update", class: "btn" %>
+        <%= f.submit t('devise.registrations.edit.submit'), class: "btn" %>
       </div>
 
-      <% end %>
+    <% end %>
 
-      <!-- Logout Button -->
+      <!-- Botão de Logout -->
       <div class="action-group">
-        <%= button_to "Logout", destroy_user_session_path, method: :delete, data: { confirm: "Are you sure you want to log out?" }, class: "btn btn-secondary" %>
+        <%= button_to t('devise.shared.links.logout'), destroy_user_session_path, method: :delete, data: { confirm: t('devise.shared.links.logout_confirmation') }, class: "btn btn-secondary" %>
       </div>
 
+      <!-- Botão de Cancelar Conta -->
       <div class="action-group">
-        <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger mt-3 btn-gradient" %>
+        <%= button_to t('devise.registrations.edit.cancel_account'), registration_path(resource_name), data: { confirm: t('devise.registrations.edit.cancel_confirmation') }, method: :delete, class: "btn btn-danger mt-3 btn-gradient" %>
       </div>
     </div>
 </div>
+
 
 <style>
   /* Container Principal */

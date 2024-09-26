@@ -1,31 +1,132 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
-  hello: "Hello world"
+  devise:
+    registrations:
+      edit:
+        edit_account: "Edit Account"
+        current_password: "Current Password"
+        new_password: "New Password"
+        confirm_new_password: "Confirm New Password"
+        submit: "Update"
+        cancel_account: "Cancel account"
+        cancel_confirmation: "Are you sure you want to cancel your account?"
+        no_avatar_attached: "No avatar attached"
+      new:
+        sign_up: "Sign up"
+        submit: "Register"
+        minimum_password_length: "(minimum of %{length} characters)"
+    sessions:
+      new:
+        sign_in: "Sign in"
+        submit: "Login"
+        remember_me: "Remember me"
+        forgot_password: "Forgot your password?"
+    shared:
+      links:
+        logout: "Log out"
+        logout_confirmation: "Are you sure you want to log out?"
+        sign_in: "Sign in"
+        sign_up: "Sign up"
+        forgot_your_password: "Forgot your password?"
+  activerecord:
+    attributes:
+      user:
+        full_name: "Full Name"
+        email: "Email"
+        password: "Password"
+        password_confirmation: "Confirm Password"
+
+  index:
+    title: 'Welcome to <br> Under Control'
+    subtitle: 'Monitor and manage the performance of our virtual racing team. <br> Sponsor our team and expose your brand.'
+    campeonatos: "Championships"
+    resultados: "Results"
+    pilotos: "Drivers"
+    patrocinio: "Sponsorship"
+    instale: "Install the app for a better experience."
+    instalar: "Install"
+    nao: "No, thanks"
+
+  navbar:
+    campeonatos: "Championships"
+    resultados: "Results"
+    pilotos: "Drivers"
+    patrocinio: "Sponsorship"
+
+  footer:
+    campeonatos: "Championships"
+    resultados: "Results"
+    pilotos: "Drivers"
+    patrocinio: "Sponsorship"
+
+  pilotos:
+    title: 'Our <span class="color-emphasis-1">drivers</span><br>'
+    subtitle: 'by <span class="color-emphasis-1">category.</span>'
+    pro: "CATEGORY - PRO"
+    silver: "CATEGORY - SILVER"
+    am: "CATEGORY - AM"
+
+  patrocinio:
+    title1: "Speed and"
+    title2: "partnership"
+    title3: "towards"
+    title4: "victory."
+    plano1: "Bronze"
+    preco1: "R$50,00"
+    desc1: "* The sponsorship contract period lasts for 6 months."
+    item1_1: "02 video inserts up to 01 min"
+    item1_2: "16:9 format provided by the sponsor"
+    item1_3: "Brand insertion in all event promotion media"
+    item1_4: "Presence on our website"
+    solicite: "Request contact"
+    plano2: "Silver"
+    preco2: "R$75,00"
+    desc2: "* The sponsorship contract period lasts for 6 months."
+    item2_1: "04 video inserts up to 01 min"
+    item2_2: "16:9 format video provided by the sponsor"
+    item2_3: "Brand insertion in all event promotion media"
+    item2_4: "Presence on our website"
+    plano3: "Gold"
+    preco3: "R$100,00"
+    desc3: "* The sponsorship contract period lasts for 6 months."
+    item3_1: "06 video inserts up to 01 min exclusive to the stage, without sharing space with other sponsors."
+    item3_2: "16:9 format video provided by the sponsor"
+    item3_3: "Brand insertion in all event promotion media"
+    item3_4: "Presence on our website"
+
+  drivers:
+    pista: "Track"
+    melhor_volta: "Best lap:"
+    sem_volta: "No lap data"
+
+  track_sessions:
+    sessoes: "Track sessions"
+    data_hora: "Session Date and Time"
+    qtd_pilots: "Number of Drivers"
+    acoes: "Actions"
+    ver_tempos: "View lap times"
+
+  show_pilot_times:
+    tempo_piloto: "Driver Lap Times"
+    nome: "Driver Name"
+    carro: "Car"
+    melhor_volta: "Best Lap"
+    volta_media: "Average Lap"
+    total_voltas: "Total Laps"
+    tempo: "Time"
+    gap: "Gap"
+    consistencia: "Consistency"
+    penalidades: "Penalties"
+    pontos: "Points"
+    acoes: "Actions"
+    ver_todas_voltas: "View all laps"
+
+  lap_times:
+    piloto: "Driver"
+    volta: "Lap"
+    split1: "Split 1"
+    split2: "Split 2"
+    split3: "Split 3"
+    tempo_volta: "Lap Time"
+    volta_ideal: "Ideal Lap"
+
+  welcome: "WELCOME"

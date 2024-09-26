@@ -1,16 +1,16 @@
 <h1 class="page-title text-center" data-track="<%= params[:track_name] %>">
-  PILOTO <br> <%= @driver.driver_first_name %> <%= @driver.driver_last_name %>
+  <%= t('lap_times.piloto').html_safe %> <br> <%= @driver.driver_first_name %> <%= @driver.driver_last_name %>
 </h1>
 
 <div class="table-responsive container-lg py-5">
   <table class="table table-custom table-hover align-middle text-center">
     <thead>
       <tr class="title-laps">
-        <th>Volta</th>
-        <th>Split 1</th>
-        <th>Split 2</th>
-        <th>Split 3</th>
-        <th>Tempo da Volta</th>
+        <th><%= t('lap_times.volta').html_safe %></th>
+        <th><%= t('lap_times.split1').html_safe %></th>
+        <th><%= t('lap_times.split2').html_safe %></th>
+        <th><%= t('lap_times.split3').html_safe %></th>
+        <th><%= t('lap_times.tempo_volta').html_safe %></th>
       </tr>
     </thead>
     <tbody>
@@ -46,7 +46,7 @@
       <% end %>
 
       <tr class="ideal-lap">
-        <td colspan="4">Volta Ideal</td>
+        <td colspan="4"><%= t('lap_times.volta_ideal').html_safe %></td>
         <td><%= format_laptime(ideal_lap_time) %></td>
       </tr>
     </tbody>

@@ -26,6 +26,13 @@ module D
     config.time_zone = 'America/Sao_Paulo'
     config.active_record.default_timezone = :utc
 
+    # Adiciona os idiomas que a aplicação suporta
+    config.i18n.available_locales = [:en, :'pt-BR']
+    # Define o idioma padrão
+    config.i18n.default_locale = :en
+    # Carrega automaticamente todos os arquivos de tradução
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
+
     config.hosts.clear
   end
 end

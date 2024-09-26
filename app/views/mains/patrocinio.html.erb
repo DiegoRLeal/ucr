@@ -3,8 +3,8 @@
 
 	<div class="wrapper">
 	 <h1 class="mega montserrat bold">
-		Velocidade e <span class="color-emphasis-1">parceria</span><br>
-		 rumo à <span class="color-emphasis-1">vitória.</span>
+		<%= t('patrocinio.title1').html_safe %> <span class="color-emphasis-1"><%= t('patrocinio.title2').html_safe %></span><br>
+		 <%= t('patrocinio.title3').html_safe %> <span class="color-emphasis-1"><%= t('patrocinio.title4').html_safe %></span>
 		</h1>
 	 </div>
 
@@ -12,11 +12,11 @@
 <div class="planos">
   <section id="bronze" class="card">
     <header>
-      <h2 id="bronze-title" class="title">Bronze</h2>
-      <h1 class="price">R$ 50,00</h1>
+      <h2 id="bronze-title" class="title"><%= t('patrocinio.plano1').html_safe %></h2>
+      <h1 class="price"><%= t('patrocinio.preco1').html_safe %></h1>
     </header>
     <%# <p id="slots" class="desc">10 slots</p> %>
-    <p class="desc">* O período de contrato de patrocínio tem vigência de 6 meses.</p>
+    <p class="desc"><%= t('patrocinio.desc1').html_safe %></p>
     <ul class="lists">
       <li class="list">
         <svg
@@ -30,7 +30,7 @@
             fill-rule="evenodd"
           ></path>
         </svg>
-        <p>02 inserções de vídeo até 01 min</p>
+        <p><%= t('patrocinio.item1_1').html_safe %></p>
       </li>
       <li class="list">
         <svg
@@ -44,7 +44,7 @@
             fill-rule="evenodd"
           ></path>
         </svg>
-        <p>Formato 16:9 fornecido pelo patrocionador</p>
+        <p><%= t('patrocinio.item1_2').html_safe %></p>
       </li>
       <li class="list">
         <svg
@@ -58,7 +58,7 @@
             fill-rule="evenodd"
           ></path>
         </svg>
-        <p>Inserção da marca nas midias de divulgação em todas as etapas</p>
+        <p><%= t('patrocinio.item1_3').html_safe %></p>
       </li>
       <li class="list">
         <svg
@@ -72,7 +72,7 @@
             fill-rule="evenodd"
           ></path>
         </svg>
-        <p>Prenseça em nosso site</p>
+        <p><%= t('patrocinio.item1_4').html_safe %></p>
       </li>
       <%# <li class="list">
         <svg
@@ -91,18 +91,18 @@
     </ul>
     <a href="https://wa.me/2122017586" target="_blank">
       <button class="action" type="button">
-        <i class="fa-solid fa-flag-checkered"></i> Solicite contato
+        <i class="fa-solid fa-flag-checkered"></i> <%= t('patrocinio.solicite').html_safe %>
       </button>
     </a>
   </section>
 
   <section id="prata" class="card">
     <header>
-      <h2 id="prata-title" class="title">Prata</h2>
-      <h1 class="price">R$ 75,00</h1>
+      <h2 id="prata-title" class="title"><%= t('patrocinio.plano2').html_safe %></h2>
+      <h1 class="price"><%= t('patrocinio.preco2').html_safe %></h1>
     </header>
     <%# <p id="slots" class="desc">4 slots</p> %>
-    <p class="desc">* O período de contrato de patrocínio tem vigência de 6 meses.</p>
+    <p class="desc"><%= t('patrocinio.desc2').html_safe %></p>
     <ul class="lists">
       <li class="list">
         <svg
@@ -116,7 +116,7 @@
             fill-rule="evenodd"
           ></path>
         </svg>
-        <p>04 inserções de vídeo até 01 min</p>
+        <p><%= t('patrocinio.item2_1').html_safe %></p>
       </li>
       <li class="list">
         <svg
@@ -130,7 +130,7 @@
             fill-rule="evenodd"
           ></path>
         </svg>
-        <p>Vídeo formato 16:9 fornecido pelo patrocionador</p>
+        <p><%= t('patrocinio.item2_2').html_safe %></p>
       </li>
       <li class="list">
         <svg
@@ -144,7 +144,7 @@
             fill-rule="evenodd"
           ></path>
         </svg>
-        <p>Inserção da marca nas midias de divulgação em todas as etapas</p>
+        <p><%= t('patrocinio.item2_3').html_safe %></p>
       </li>
       <li class="list">
         <svg
@@ -158,7 +158,7 @@
             fill-rule="evenodd"
           ></path>
         </svg>
-        <p>Presença no nosso site</p>
+        <p><%= t('patrocinio.item2_4').html_safe %></p>
       </li>
       <%# <li class="list">
         <svg
@@ -177,18 +177,18 @@
     </ul>
     <a href="https://wa.me/2122017586" target="_blank">
       <button class="action" type="button">
-        <i class="fa-solid fa-flag-checkered"></i> Solicite contato
+        <i class="fa-solid fa-flag-checkered"></i> <%= t('patrocinio.solicite').html_safe %>
       </button>
     </a>
   </section>
 
   <section id="gold" class="card">
     <header>
-      <h2 id="gold-title" class="title">Gold</h2>
-      <h1 class="price">R$ 100,00</h1>
+      <h2 id="gold-title" class="title"><%= t('patrocinio.plano3').html_safe %></h2>
+      <h1 class="price"><%= t('patrocinio.preco3').html_safe %></h1>
     </header>
     <%# <p id="slots" class="desc">2 slots</p> %>
-    <p class="desc">* O período de contrato de patrocínio tem vigência de 6 meses.</p>
+    <p class="desc"><%= t('patrocinio.desc3').html_safe %></p>
     <ul class="lists">
       <li class="list">
         <svg
@@ -202,7 +202,7 @@
             fill-rule="evenodd"
           ></path>
         </svg>
-        <p>06 inserções de vídeo até 01 min exclusivo na etapa, não dividindo espaço com outros patrocinadores.</p>
+        <p><%= t('patrocinio.item3_1').html_safe %></p>
       </li>
       <li class="list">
         <svg
@@ -216,7 +216,7 @@
             fill-rule="evenodd"
           ></path>
         </svg>
-        <p>Vídeo formato 16:9 fornecido pelo patrocionador</p>
+        <p><%= t('patrocinio.item3_2').html_safe %></p>
       </li>
       <li class="list">
         <svg
@@ -230,7 +230,7 @@
             fill-rule="evenodd"
           ></path>
         </svg>
-        <p>Inserção da marca nas midias de divulgação em todas as etapas</p>
+        <p><%= t('patrocinio.item3_3').html_safe %></p>
       </li>
       <li class="list">
         <svg
@@ -244,7 +244,7 @@
             fill-rule="evenodd"
           ></path>
         </svg>
-        <p>Presença no nosso site</p>
+        <p><%= t('patrocinio.item3_4').html_safe %></p>
       </li>
       <%# <li class="list">
         <svg
@@ -263,7 +263,7 @@
     </ul>
     <a href="https://wa.me/2122017586" target="_blank">
       <button class="action" type="button">
-        <i class="fa-solid fa-flag-checkered"></i> Solicite contato
+        <i class="fa-solid fa-flag-checkered"></i> <%= t('patrocinio.solicite').html_safe %>
       </button>
     </a>
   </section>

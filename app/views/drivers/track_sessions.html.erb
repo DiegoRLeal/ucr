@@ -1,14 +1,14 @@
 <h1 class="page-title text-center" data-track="<%= params[:track_name] %>">
-  Sessões da pista <br> <%= params[:track_name] %>
+  <%= t('track_sessions.sessoes').html_safe %> <br> <%= params[:track_name] %>
 </h1>
 
 <div class="table-responsive container-lg py-4">
   <table class="table table-custom table-hover align-middle text-center">
     <thead>
       <tr>
-        <th>Data e Hora da Sessão</th>
-        <th>Quantidade de Pilotos</th>
-        <th>Ações</th>
+        <th><%= t('track_sessions.data_hora').html_safe %></th>
+        <th><%= t('track_sessions.qtd_pilots').html_safe %></th>
+        <th><%= t('track_sessions.acoes').html_safe %></th>
       </tr>
     </thead>
     <tbody>
@@ -19,7 +19,7 @@
           <td class="btn">
             <%= link_to show_pilot_times_drivers_path(track_name: session.track_name, session_date: session.session_date, session_time: session.session_time), class: 'Btn' do %>
               <span class="text">
-              <i class="fas fa-stopwatch"></i> Ver tempos
+              <i class="fas fa-stopwatch"></i> <%= t('track_sessions.ver_tempos').html_safe %>
             </span>
             <span class="svgIcon">
               <svg fill="white" viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg">

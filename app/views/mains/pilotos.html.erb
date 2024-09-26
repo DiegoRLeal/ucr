@@ -2,14 +2,14 @@
 
 <div class="wrapper">
   <h1 class="mega montserrat bold">
-  Nossos <span class="color-emphasis-1">pilotos</span><br>
-    por <span class="color-emphasis-1">categoria.</span>
+  <%= t('pilotos.title').html_safe %>
+    <%= t('pilotos.subtitle').html_safe %>
   </h1>
 </div>
 
 <div class="container">
   <div class="name-category" id="name-pro">
-    <h3>CATEGORIA - PRO</h3>
+    <h3><%= t('pilotos.pro').html_safe %></h3>
   </div>
   <div class="pro-category">
     <% @pilots.select { |pilot| pilot.categoria == 'PRO' }.each do |pilot| %>
@@ -36,7 +36,7 @@
   </div>
 
   <div class="name-category" id="name-silver">
-    <h3>CATEGORIA - SILVER</h3>
+    <h3><%= t('pilotos.silver').html_safe %></h3>
   </div>
   <div class="silver-category">
     <% @pilots.select { |pilot| pilot.categoria == 'SILVER' }.each do |pilot| %>
@@ -63,7 +63,7 @@
   </div>
 
   <div class="name-category" id="name-am">
-    <h3>CATEGORIA - AM</h3>
+    <h3><%= t('pilotos.am').html_safe %></h3>
   </div>
   <div class="am-category">
     <% @pilots.select { |pilot| pilot.categoria == 'AM' }.each do |pilot| %>
@@ -259,7 +259,7 @@ p{
 	left: 0;
 	right: 0;
 	bottom: -2rem;
-	
+
 }
 .double-header-line:before, .double-header-line:after{
 	content: "";

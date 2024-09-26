@@ -13,8 +13,8 @@
       </div>
 
        <div class="heading-page" style="text-align: center; margin-bottom: 100px;">
-          <h1 class="text-1">Bem-vindo à <%= @name %><br> Under Control <span class="highlight" id="racingText"></span></h1>
-          <p class="mb-5">Acompanhe e gerencie o desempenho da nossa equipe de corrida virtual. <br> Patrocine nossa equipe e exponha sua marca.</p>
+          <h1 class="text-1"><%= t('index.title').html_safe %> <span class="highlight" id="racingText"></span></h1>
+          <p class="mb-5"><%= t('index.subtitle').html_safe %>
       </div>
 
     <div class="container" style="display: flex; justify-content: center;">
@@ -37,7 +37,7 @@
                                         <span class="icon">
                                             <i class="fa fa-trophy"></i>
                                         </span>
-                                        <span class="title">Campeonatos</span>
+                                        <span class="title"><%= t('index.campeonatos').html_safe %></span>
                                     </span>
                                     <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
                                   <% end %>
@@ -58,7 +58,7 @@
                                         <span class="icon">
                                             <i class="fa fa-flag-checkered"></i>
                                         </span>
-                                        <span class="title">Resultados</span>
+                                        <span class="title"><%= t('index.resultados').html_safe %></span>
                                     </span>
                                     <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
                                 <% end %>
@@ -79,7 +79,7 @@
                                         <span class="icon">
                                             <i class="fa fa-user"></i>
                                         </span>
-                                        <span class="title">Pilotos</span>
+                                        <span class="title"><%= t('index.pilotos').html_safe %></span>
                                     </span>
                                     <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
                                 <% end %>
@@ -100,7 +100,7 @@
                                         <span class="icon">
                                             <i class="fa fa-hand-holding-usd"></i>
                                         </span>
-                                        <span class="title">Patrocínio</span>
+                                        <span class="title"><%= t('index.patrocinio').html_safe %></span>
                                     </span>
                                     <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
                                 <% end %>
@@ -886,10 +886,10 @@ font-family: monospace;
 <!-- Modal simples de instalação -->
 <div id="install-prompt" class="modal hidden">
   <div class="modal-content">
-    <p>Instale o app para uma melhor experiência.</p>
+    <p><%= t('index.instale').html_safe %></p>
     <div class="btn-group">
-      <button id="accept-install" class="install-btn">Instalar</button>
-      <button id="deny-install" class="cancel-btn">Não, obrigado</button>
+      <button id="accept-install" class="install-btn"><%= t('index.instalar').html_safe %></button>
+      <button id="deny-install" class="cancel-btn"><%= t('index.nao').html_safe %></button>
     </div>
   </div>
 </div>

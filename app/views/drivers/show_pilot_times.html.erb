@@ -1,22 +1,22 @@
 <h1 class="page-title text-center" data-track="<%= params[:track_name] %>" data-session-date="<%= params[:session_date] %>">
-  Tempos dos Pilotos <br> <%= params[:track_name] %> <br><br> <%= params[:session_date].to_date.strftime('%d/%m/%Y') %>
+  <%= t('show_pilot_times.tempo_piloto').html_safe %> <br> <%= params[:track_name] %> <br><br> <%= params[:session_date].to_date.strftime('%d/%m/%Y') %>
 </h1>
 
 <div class="table-responsive container-lg py-4">
   <table class="table table-custom table-hover align-middle text-center">
     <thead>
       <tr>
-        <th>Nome do Piloto</th>
-        <th>Carro</th>
-        <th>Melhor Volta</th>
-        <th>Volta Média</th>
-        <th>Total de Voltas</th>
-        <th>Tempo</th>
-        <th>Gap</th>
-        <th>Consistência</th>
-        <th>Penalidades</th>
-        <th>Pontos</th>
-        <th>Ações</th>
+        <th><%= t('show_pilot_times.nome').html_safe %></th>
+        <th><%= t('show_pilot_times.carro').html_safe %></th>
+        <th><%= t('show_pilot_times.melhor_volta').html_safe %></th>
+        <th><%= t('show_pilot_times.volta_media').html_safe %></th>
+        <th><%= t('show_pilot_times.total_voltas').html_safe %></th>
+        <th><%= t('show_pilot_times.tempo').html_safe %></th>
+        <th><%= t('show_pilot_times.gap').html_safe %></th>
+        <th><%= t('show_pilot_times.consistencia').html_safe %></th>
+        <th><%= t('show_pilot_times.penalidades').html_safe %></th>
+        <th><%= t('show_pilot_times.pontos').html_safe %></th>
+        <th><%= t('show_pilot_times.acoes').html_safe %></th>
       </tr>
       </thead>
       <tbody>
@@ -77,7 +77,7 @@
             <td class="btn">
               <%= link_to show_lap_times_drivers_path(track_name: params[:track_name], first_name: driver.driver_first_name, last_name: driver.driver_last_name, race_number: driver.race_number, session_date: driver.session_date, session_time: driver.session_time), class: 'Btn', method: :get do %>
               <span class="text">
-                <i class="fas fa-stopwatch"></i> Ver todas as voltas
+                <i class="fas fa-stopwatch"></i> <%= t('show_pilot_times.ver_todas_voltas').html_safe %>
               </span>
               <span class="svgIcon">
                 <svg fill="white" viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg">
