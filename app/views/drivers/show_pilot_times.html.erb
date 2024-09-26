@@ -50,24 +50,7 @@
 
             <!-- Gap -->
             <td>
-              <% driver_total_time = driver.total_time.to_i %>
-              <% leader_total_time = @drivers.first.total_time.to_i %>
-              <% laps_completed_by_driver = driver.lap_count %>
-              <% leader_laps = @drivers.first.laps.is_a?(String) ? JSON.parse(@drivers.first.laps.gsub('=>', ':')) : @drivers.first.laps %>
-
-              <% if leader_laps.present? %>
-                <% leader_time_for_same_laps = leader_laps[0...laps_completed_by_driver].map { |lap| lap["laptime"].to_i }.sum %>
-
-                <% if leader_time_for_same_laps > 0 %>
-                  <% gap = driver_total_time - leader_time_for_same_laps %>
-                  <!-- Exibir o gap formatado -->
-                  <%= gap > 0 ? format_total_laptime(gap) : "0:00.000" %>
-                <% else %>
-                  N/A
-                <% end %>
-              <% else %>
-                N/A
-              <% end %>
+              <%= calculate_gap(driver, index > 0 ? @drivers[index - 1] : nil) %>  <!-- Exibir o gap em relação ao piloto anterior -->
             </td>
 
             <!-- Consistência -->
