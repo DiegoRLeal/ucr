@@ -16,25 +16,16 @@ module ApplicationHelper
 
 
   def format_total_laptime(laptime)
-    return "N/A" if laptime.nil?
-
-    # Verificar se o tempo é negativo
-    negative = laptime < 0
-
-    # Converter para positivo para formatação
-    laptime = laptime.abs
+    # Verificar se o tempo é inválido (muito grande) ou nulo
+    return "N/A" if laptime.nil? || laptime >= 2147483647
 
     minutes = laptime / 60000
     remaining_ms = laptime % 60000
     seconds = remaining_ms / 1000
     milliseconds = remaining_ms % 1000
 
-    formatted_time = format("%d:%02d.%03d", minutes, seconds, milliseconds)
-
-    # Se o tempo for negativo, adicionar o sinal de menos
-    negative ? "-#{formatted_time}" : formatted_time
+    format("%d:%02d.%03d", minutes, seconds, milliseconds)
   end
-
 
 
   def format_track_name(track_name)

@@ -65,31 +65,14 @@ module DriversHelper
   end
 
   def calculate_gap(driver, previous_driver)
-    # Verificar se o piloto tem voltas ou um tempo total inválido
-    return "N/A" if driver.lap_count == 0 || driver.total_time.nil? || driver.total_time.to_i >= 2147483647
-
-    # Se for o primeiro piloto, o gap é zero
-    return "0:00.000" if previous_driver.nil?
+    return "0:00.000" if previous_driver.nil?  # O primeiro piloto sempre tem gap 0
 
     driver_total_time = driver.total_time.to_i
     previous_total_time = previous_driver.total_time.to_i
 
-    if driver.lap_count == previous_driver.lap_count
-      # Se o número de voltas for o mesmo, calculamos diretamente
-      gap = driver_total_time - previous_total_time
-    else
-      # Se o número de voltas for diferente, calcular o tempo até a mesma volta do piloto anterior
-      laps_completed_by_driver = driver.lap_count
-      previous_laps = previous_driver.laps.is_a?(String) ? JSON.parse(previous_driver.laps.gsub('=>', ':')) : previous_driver.laps
+    return "N/A" if driver_total_time == 0 || previous_total_time == 0
 
-      if previous_laps.present?
-        # Somar os tempos das voltas que o piloto anterior completou até o mesmo número de voltas
-        previous_time_for_same_laps = previous_laps[0...laps_completed_by_driver].map { |lap| lap["laptime"].to_i }.sum
-        gap = driver_total_time - previous_time_for_same_laps
-      else
-        return "N/A"
-      end
-    end
+    gap = driver_total_time - previous_total_time
 
     format_total_laptime(gap)
   end
