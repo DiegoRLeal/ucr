@@ -1,5 +1,6 @@
 <h1 class="page-title text-center" data-track="<%= params[:track_name] %>" data-session-date="<%= params[:session_date] %>">
-  <%= t('show_pilot_times.tempo_piloto').html_safe %> <br> <%= params[:track_name] %> <br><br> <%= params[:session_date].to_date.strftime('%d/%m/%Y') %>
+  <%= t('show_pilot_times.tempo_piloto').html_safe %> <br> <%= params[:track_name] %> <br><br> <%= params[:session_date].to_date.strftime('%d/%m/%Y') %> - <%= params[:session_time].to_time.strftime('%H:%M:%S') %>
+
 </h1>
 
 <div class="table-responsive container-lg py-4">
