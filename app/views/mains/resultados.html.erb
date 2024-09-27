@@ -1,9 +1,32 @@
 <%= render 'shared/navbar' %>
+
+<%= line_chart [
+  { name: "Pablo Dutra", data: { "Best Lap" => 90615 } },
+  { name: "Simon Vigneault", data: { "Best Lap" => 91167 } },
+  { name: "halo_slippin", data: { "Best Lap" => 89737 } },
+  { name: "Angel Pacheco", data: { "Best Lap" => 91125 } },
+  { name: "Rayce Carr", data: { "Best Lap" => 93130 } },
+  { name: "desh lvv", data: { "Best Lap" => 92352 } }
+], chart_options: {
+    title: { text: "Melhor Volta por Piloto" },
+    xaxis: { title: { text: "Pilotos" } },
+    yaxis: {
+      title: { text: "Tempo (milissegundos)" },
+      labels: {
+        formatter: "function(val) {
+          var minutes = Math.floor(val / 60000);
+          var seconds = ((val % 60000) / 1000).toFixed(3);
+          return minutes + ':' + ('0' + seconds).slice(-6);
+        }"
+      }
+    }
+} %>
+
+
 <%= render 'shared/footer' %>
 
-<style> 
+<style>
 body {
   background: linear-gradient(to bottom, #485563ba, #29323c);
 }
 </style>
-

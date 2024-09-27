@@ -69,12 +69,13 @@ end
 gem 'pg', '~> 1.2'
 
 gem "devise"
-gem "blazer"
 gem "rails_admin", "3.0"
 gem "sassc-rails"
 gem "dotenv-rails"
 gem 'image_processing', '~> 1.2'
 gem 'simple_form'
+
+gem 'apexcharts'
 
 gem 'google-api-client', '~> 0.53'
 
