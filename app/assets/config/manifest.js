@@ -4,5 +4,3 @@
 //= link_tree ../../../vendor/javascript .js
 
 //= link manifest.json
-
-//= link apexcharts.js
