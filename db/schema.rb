@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_26_203434) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_27_133941) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -91,6 +91,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_26_203434) do
 
   create_table "processed_files", force: :cascade do |t|
     t.string "file_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sponsors", force: :cascade do |t|
+    t.string "nome"
+    t.string "image_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
