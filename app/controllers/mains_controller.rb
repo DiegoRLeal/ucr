@@ -208,6 +208,10 @@ class MainsController < ApplicationController
     @pilots = Pilot.all
   end
 
+  def patrocinio
+    @sponsors = Sponsor.all
+  end
+
   # Método de callback para lidar com o código de autorização retornado pelo Google
   def oauth2callback
     client_id = Google::Auth::ClientId.new(ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'])

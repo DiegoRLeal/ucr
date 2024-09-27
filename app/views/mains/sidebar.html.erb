@@ -25,7 +25,7 @@
               <span class="line"></span>
             </div>
             <li class="item">
-               <a id="drivers" class="link flex" href="javascript:void(0);">
+               <a href="/drivers" class="link flex">
                 <i class="bx bx-home-alt"></i>
                 <span>Race Results</span>
               </a>
@@ -427,24 +427,6 @@ body {
       }
     });
   });
-</script>
-
-<%# DRIVERS PAGE %>
-<script>
-  document.getElementById('drivers').addEventListener('click', function() {
-  $.ajax({
-    url: "/drivers",
-    type: 'GET',
-    dataType: 'html',
-    success: function(data) {
-      document.getElementById('main-content').innerHTML = data;
-    },
-    error: function() {
-      document.getElementById('main-content').innerHTML = '<p>Failed to load content.</p>';
-    }
-  });
-});
-
 </script>
 
 <%# PROFILE PAGE %>

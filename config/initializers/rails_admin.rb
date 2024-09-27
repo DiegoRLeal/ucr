@@ -102,6 +102,17 @@ RailsAdmin.config do |config|
       end
     end
 
+    config.model 'Sponsor' do
+      list do
+        field :nome
+        field :image_url
+      end
+      edit do
+        field :nome
+        field :image_url
+      end
+    end
+
 
     # config.included_models = [ "Seller", "Product", "User" ]
 
