@@ -13,13 +13,13 @@
 
 <footer>
   <div class="footer text-center text-lg-start mt-4">
-    <div class="row">
+    <div id="social" class="row">
       <a href="https://discord.com/invite/DnevxdbDgy"><i class="fa fa-discord"></i></a>
       <a href="https://www.instagram.com/undercontrolracingbr/"><i class="fa fa-instagram"></i></a>
       <a href="#"><i class="fa-brands fa-youtube"></i></a>
     </div>
 
-    <div class="row">
+    <div id="menu" class="row">
       <ul>
         <li><a href="/campeonatos"><%= t('footer.campeonatos').html_safe %></a></li>
         <li><a href="/resultados"><%= t('footer.resultados').html_safe %></a></li>
@@ -35,6 +35,10 @@
 </footer>
 
 <style>
+  #social {
+    justify-content: center;
+    gap: 30px;
+  }
 html, body {
   height: 100%; /* Faz o HTML e o Body preencherem 100% da altura da janela */
   margin: 0;
@@ -83,6 +87,7 @@ a:hover {
   padding: 0.6% 0%;
   color: gray;
   font-size: 0.8em;
+  display: flex;
 }
 
 .footer .row a {
