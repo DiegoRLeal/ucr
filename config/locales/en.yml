@@ -130,3 +130,7 @@ en:
     volta_ideal: "Ideal Lap"
 
   welcome: "WELCOME"
+
+  application:
+    cookies_info: 'This site uses cookies to improve your experience.'
+    aceitar: 'Accept'

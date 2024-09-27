@@ -30,4 +30,5 @@ RUN bundle exec bootsnap precompile --gemfile
 EXPOSE 3000
 
 # Comando para rodar o servidor
-CMD ["rails", "server", "-b", "0.0.0.0"]
+# CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]

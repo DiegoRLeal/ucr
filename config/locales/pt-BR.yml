@@ -130,3 +130,7 @@ pt-BR:
     volta_ideal: "Volta Ideal"
 
   welcome: "SEJA BEM-VINDO"
+
+  application:
+    cookies_info: 'Este site usa cookies para melhorar sua experiência.'
+    aceitar: 'Aceitar'

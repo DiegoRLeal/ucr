@@ -6,8 +6,6 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
-
     <!-- Manifest JSON & icons -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -18,8 +16,6 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag 'apexcharts' %>
-
-
     <%= javascript_importmap_tags %>
   </head>
 
@@ -70,6 +66,26 @@
         pageTitle.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${imageUrl})`;
       });
     </script>
+
+    <div id="cookie-banner" style="position:fixed; bottom:0; background-color:#333; color:white; padding:10px; width:100%; display:none;">
+      <center><%= t('application_cookies_info').html_safe %></a>
+      <br>
+      <button id="accept-cookies" style="background-color:green; color:white; padding:5px 10px; border:1px solid green;"><%= t('application.aceitar').html_safe %></button></center>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        if (!localStorage.getItem('cookiesAccepted')) {
+          document.getElementById('cookie-banner').style.display = 'block';
+        }
+
+        document.getElementById('accept-cookies').addEventListener('click', function() {
+          localStorage.setItem('cookiesAccepted', 'true');
+          document.getElementById('cookie-banner').style.display = 'none';
+        });
+      });
+    </script>
+
   </body>
 </html>
 
