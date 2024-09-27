@@ -70,12 +70,14 @@ module DriversHelper
     driver_total_time = driver.total_time.to_i
     previous_total_time = previous_driver.total_time.to_i
 
-    return "N/A" if driver_total_time == 0 || previous_total_time == 0
+    # Tratar valores muito grandes como inválidos
+    return "N/A" if driver_total_time == 0 || previous_total_time == 0 || driver_total_time >= 2147483647
 
     gap = driver_total_time - previous_total_time
 
     format_total_laptime(gap)
   end
+
 
   def race(track_name, session_date, session_time)
     # Buscar os resultados diretamente da tabela 'drivers'
