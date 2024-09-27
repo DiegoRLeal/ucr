@@ -99,7 +99,6 @@
 
             <div class="data_text">
               <span class="name"><%= current_user.full_name %></span>
-              <br>
               <span class="email"><%= current_user.email %></span>
             </div>
           </div>
@@ -316,6 +315,14 @@ body {
   border-radius: 0 0 8px 8px;
   justify-content: space-between;
 }
+
+.data_text {
+  display: block;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: center;
+}
+
 #sidebar-open {
   font-size: 30px;
   color: #333;
