@@ -106,7 +106,7 @@
       </div>
     </nav>
 
-    <div id="main-content" class="main-content">
+    <div id="main-content" class="main-content" data-turbo="false">
       <!-- O conteúdo da página de edição de usuário será carregado aqui -->
     </div>
 
@@ -141,7 +141,7 @@ body {
 }
 
 /* Sidebar */
-.sidebar {
+/* .sidebar {
   position: fixed;
   top: 0;
   left: 0;
@@ -151,7 +151,34 @@ body {
   padding: 15px 10px;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
   transition: all 0.4s ease;
+} */
+
+ /* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh; /* Altura da viewport completa */
+  width: 270px;
+  background: #212121;
+  padding: 15px 10px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Desabilita qualquer rolagem na sidebar */
 }
+
+/* Conteúdo principal */
+.main-content {
+  margin-left: 270px; /* Espaço deixado pela sidebar fixa */
+  padding: 20px;
+  background-color: #f5f6f8;
+  height: 100vh; /* O conteúdo principal ocupa toda a altura da tela */
+  overflow-y: auto; /* Permite rolagem vertical */
+  overflow-x: hidden; /* Evita rolagem horizontal */
+  width: calc(100% - 270px); /* Calcula a largura restante após a sidebar */
+  box-sizing: border-box; /* Garante que padding seja incluído na largura */
+}
+
+
 .sidebar.close {
   width: calc(55px + 20px);
   color: hsla(242, 88.4%, 56.3%, 1);
@@ -411,21 +438,19 @@ body {
 <%# DRIVERS PAGE %>
 <script>
   document.getElementById('drivers').addEventListener('click', function() {
-    // Faz o AJAX para carregar o conteúdo da página de edição do usuário
-    $.ajax({
-      url: "/drivers", // Caminho da página de edição
-      type: 'GET',
-      dataType: 'html', // O retorno será HTML
-      success: function(data) {
-        // Insere o conteúdo carregado no div da área principal
-        document.getElementById('main-content').innerHTML = data;
-      },
-      error: function() {
-        // Caso ocorra algum erro no carregamento
-        document.getElementById('main-content').innerHTML = '<p>Failed to load user settings.</p>';
-      }
-    });
+  $.ajax({
+    url: "/drivers",
+    type: 'GET',
+    dataType: 'html',
+    success: function(data) {
+      document.getElementById('main-content').innerHTML = data;
+    },
+    error: function() {
+      document.getElementById('main-content').innerHTML = '<p>Failed to load content.</p>';
+    }
   });
+});
+
 </script>
 
 <%# PROFILE PAGE %>
