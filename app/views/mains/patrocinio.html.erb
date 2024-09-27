@@ -353,24 +353,33 @@
   </section> %>
 </div>
 
-<section class="slide-option">
-  <div id="infinite" class="highway-slider">
-    <div class="container highway-barrier">
-      <ul class="highway-lane">
-        <% @sponsors.each do |sponsor| %>
-          <li class="highway-car">
-            <img src="<%= sponsor.image_url %>" alt="Sponsor Logo" />
-          </li>
-        <% end %>
-      </ul>
+  <section class="slide-option">
+    <div id="infinite" class="highway-slider">
+      <div class="container highway-barrier">
+        <ul class="highway-lane">
+          <% @sponsors.each do |sponsor| %>
+            <li class="highway-car">
+              <img src="<%= sponsor.image_url %>" alt="Sponsor Logo" width="150px"; height="auto"/>
+            </li>
+          <% end %>
+
+          <!-- Duplicação para garantir o efeito contínuo -->
+          <% @sponsors.each do |sponsor| %>
+            <li class="highway-car">
+              <img src="<%= sponsor.image_url %>" alt="Sponsor Logo" width="150px"; height="auto"/>
+            </li>
+          <% end %>
+        </ul>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+
 
 
 <%= render 'shared/footer' %>
 
 <style>
+
 section {
 	display:flex;
 	flex-flow:column;
@@ -383,7 +392,7 @@ section {
 	@media (max-width:992px) { padding:0 20px 0 20px; }
 }
 section.slide-option {
-	margin:0 0 0 0;
+	/* margin:0 0 50px 0; */
 	.no-marg { margin:0 0 0 0; }
 }
 
@@ -404,7 +413,7 @@ div.highway-slider {
 			display:flex;
 			justify-content:center;
 			align-items:center;
-			background:#fff;
+			background:black;
 			color:#343434;
 		}
 	}
@@ -428,7 +437,7 @@ div.highway-slider {
 	100% { transform:translateX(calc(-180px * 12));  }
 }
 #infinite div.highway-barrier {
-	background:#fff;
+	background:black;
 	box-shadow:0 3px 10px -3px rgba(0,0,0,0.3);
 	&::before,
 	&::after {
@@ -440,11 +449,11 @@ div.highway-slider {
 	}
 	&::before {
 		top:0;left:0;
-		background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+		background: linear-gradient(to right, hsl(0deg 0% 0%) 0%, rgb(0 0 0 / 0%) 100%)
 	}
 	&::after {
 		top:0;right:0;
-		background: linear-gradient(to left, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+		/* background: linear-gradient(to left, rgb(2 2 2) 0%, rgb(255 255 255 / 0%) 100%) */
 	}
 	ul.highway-lane {
 		width:calc(180px * 24);
@@ -463,10 +472,8 @@ div.highway-slider {
 #yellow { background: #cbba54; }
 #green { background: #69b46e; }
 #blue { background: #6091b0; }
-</style>
 
-<style>
-  @import url(https://fonts.googleapis.com/css?family=Lato:100,300,400|Playfair+Display:400,700,400italic|Libre+Baskerville:400,700,400italic|Muli:300,400|Open+Sans:400,300,700|Oswald:400,700|Raleway:400,100,300,700|Montserrat:400,700|Merriweather:400,300,300italic,400italic,700|Bree+Serif|Vollkorn:400italic,400,700|Abril+Fatface|Cardo:400,400italic);
+@import url(https://fonts.googleapis.com/css?family=Lato:100,300,400|Playfair+Display:400,700,400italic|Libre+Baskerville:400,700,400italic|Muli:300,400|Open+Sans:400,300,700|Oswald:400,700|Raleway:400,100,300,700|Montserrat:400,700|Merriweather:400,300,300italic,400italic,700|Bree+Serif|Vollkorn:400italic,400,700|Abril+Fatface|Cardo:400,400italic);
 
 html {
   box-sizing: border-box;

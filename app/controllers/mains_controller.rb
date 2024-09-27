@@ -204,6 +204,10 @@ class MainsController < ApplicationController
     cleaned_content
   end
 
+  def index
+    @sponsors = Sponsor.all
+  end
+
   def pilotos
     @pilots = Pilot.all
   end
