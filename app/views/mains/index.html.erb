@@ -8,7 +8,12 @@
 <!-- CSS (WebKit) -->
 <div class="banner">
   <h1 class="texto-banner">UNDER CONTROL <br> RACING</h1>
+
+  <blockquote>
+  <p>Acompanhe e gerencie o desempenho da nossa equipe de corrida virtual. Patrocine nossa equipe e exponha sua marca.</p>
+</blockquote>
 </div>
+
 
 <div class="container-menu">
   <div id="campeonatos" class="section">
@@ -20,21 +25,21 @@
   </div>
   <div id="pilotos" class="section">
     <div class="content">
-      <h1><a href="/pilotos" id="link-pilotos"><%= t('index.pilotos') %></a></h1>
+      <h1><a href="/campeonatos" id="link-pilotos"><%= t('index.campeonatos') %></a></h1>
 
     </div>
     <div class="overlay"></div>
   </div>
   <div id="resultados" class="section">
     <div class="content">
-      <h1><a href="/resultados" id="link-resultados"><%= t('index.resultados') %></a></h1>
+      <h1><a href="/campeonatos" id="link-resultados"><%= t('index.campeonatos') %></a></h1>
 
     </div>
     <div class="overlay"></div>
   </div>
   <div id="patrocinio" class="section">
     <div class="content">
-      <h1><a href="/patrocinio" id="link-patrocinio"><%= t('index.patrocinio') %></a></h1>
+      <h1><a href="/campeonatos" id="link-patrocinio"><%= t('index.campeonatos') %></a></h1>
 
     </div>
     <div class="overlay"></div>
@@ -65,6 +70,36 @@
   <%= render 'shared/footer' %>
 
 <style>
+  blockquote {
+    width: 30%;
+  border-left: 5px solid;
+  margin-left: 0;
+  padding: 1rem 0 1rem 2rem;
+  font-size: 2rem;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(35deg, hsl(0deg 100% 65%), hsl(207.69deg 100% 65%));
+
+  p {
+    margin: 0;
+  }
+  }
+  :root {
+  --color-primary: hsl(310, 100%, 65%);
+  --color-secondary: hsl(160, 100%, 65%);
+  --background: hsl(230, 30%, 15%);
+  --text: hsl(310, 100%, 95%);
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color: var(--background);
+  -webkit-text-fill-color: var(--background);
+}
+
+* {
+  box-sizing: border-box;
+}
   /* BANNER */
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,600,800);
 @import url(https://fonts.googleapis.com/css?family=Exo+2:400,100);
@@ -80,15 +115,16 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  background: radial-gradient(circle, #0077ea, #1f4f96, #1b2949, #000);
+  background: hsl(0deg 4.23% 5.43%);
   /* background-image: url("https://edoekv5ukp6.exactdn.com/wp-content/uploads/ACC_CAR-PORSCHE_992_GT3_R-4-1920x1080.jpg?strip=all&lossy=1&webp=92&sharp=1&ssl=1"); */
   background-repeat: no-repeat;
   background-position: right;
   background-size: cover;
+  gap: 70px;
 }
 
 .texto-banner {
-  font-size: 100px;
+  font-size: 75px;
   font-family: 'Intro', sans-serif;
   font-weight: 800;
   text-transform: uppercase;
