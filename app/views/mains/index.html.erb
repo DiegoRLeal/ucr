@@ -1,5 +1,15 @@
 <%= render "shared/loading" %>
 
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,600,800' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Martel+Sans:200,400,800' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Biryani:200,300,400,600,800' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Exo+2:400,100' rel='stylesheet' type='text/css'>
+
+<!-- CSS (WebKit) -->
+<div class="banner">
+  <h1 class="texto-banner">UNDER CONTROL <br> RACING</h1>
+</div>
+
 <div class="container-menu">
   <div id="campeonatos" class="section">
     <div class="content">
@@ -49,6 +59,40 @@
   </section>
 
   <%= render 'shared/footer' %>
+
+<style>
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,600,800);
+@import url(https://fonts.googleapis.com/css?family=Exo+2:400,100);
+body {
+  padding: 50px;
+  background: #121D1D;
+}
+
+.banner {
+  height: 400px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: black;
+  background-image: url("https://edoekv5ukp6.exactdn.com/wp-content/uploads/ACC_CAR-PORSCHE_992_GT3_R-4-1920x1080.jpg?strip=all&lossy=1&webp=92&sharp=1&ssl=1");
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: cover;
+}
+
+.texto-banner {
+  font-size: 100px;
+  font-family: 'Intro', sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: -webkit-linear-gradient(-86deg, #f85b5b 5%, hsla(11, 80%, 31%, 1) 53%, #fa6862 91%);
+  -webkit-background-clip: text;
+  -webkit-text-stroke: 4px transparent;
+  color: hsl(0deg 0% 0% / 87%);
+}
+</style>
 
 <style>
 * {
