@@ -71,7 +71,7 @@
 
 <style>
   blockquote {
-    width: 30%;
+  width: 30%;
   border-left: 5px solid;
   margin-left: 0;
   padding: 1rem 0 1rem 2rem;
@@ -199,8 +199,9 @@ body {
 }
 
 .section:hover .overlay {
-  background-color: rgba(0, 0, 0, 0.95);
+  background-color: hsl(240deg 7% 62% / 0%); /* Um leve tom branco para iluminar */
 }
+
 
 #campeonatos {
   background-image: url(https://simracingsetup.com/wp-content/uploads/2023/03/ACC-Bentley-Continental-GT3.webp);
@@ -218,9 +219,21 @@ body {
   background-image: url(https://images.squarespace-cdn.com/content/v1/5e67c0b15cc05f67605d7d5c/0ccc5dde-dfa0-4517-9d0f-c32dd1072553/porschesport.jpeg);
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 932px) {
+  .banner {
+    display: block;
+    width: auto;
+    height: auto;
+  }
+
   .texto-banner {
     font-size: 50px;
+  }
+
+  blockquote {
+    width: 85%;
+    height: auto;
+    margin: 0;
   }
 
   section.slide-option {
