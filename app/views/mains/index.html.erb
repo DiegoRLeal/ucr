@@ -7,11 +7,22 @@
 
 <!-- CSS (WebKit) -->
 <div class="banner">
-  <h1 class="texto-banner">UNDER CONTROL <br> RACING</h1>
+  <%# <h1 class="texto-banner">UNDER CONTROL <br> RACING</h1> %>
+    <div class="under">
+      <h2 class="text-under">
+        <span>Get ready</span>
+        <span>see beyond...</span>
+        <span>more than just speed!</span>
+        <span>This is motorsport...</span>
+        <span>UNDER CONTROL <br> RACING</span>
+      </h2>      
+    </div>
 
-  <blockquote>
-  <p>Acompanhe e gerencie o desempenho da nossa equipe de corrida virtual. Patrocine nossa equipe e exponha sua marca.</p>
-</blockquote>
+    <div class="">
+      <blockquote>
+        <p>Acompanhe e gerencie o desempenho da nossa equipe de corrida virtual. Patrocine nossa equipe e exponha sua marca.</p>
+      </blockquote>
+    </div>
 </div>
 
 
@@ -69,9 +80,136 @@
 
   <%= render 'shared/footer' %>
 
+  <style>
+    /* TEXTO ANIMADO BANNER */
+  @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,700,900');
+
+.under {
+  /* height: 400px; */
+  width: 100%;
+  /* display: flex;
+  justify-content: left;
+  align-items: center;
+  text-align: center;
+  background: hsl(0deg 4.23% 5.43%); */
+  /* background-image: url("https://edoekv5ukp6.exactdn.com/wp-content/uploads/ACC_CAR-PORSCHE_992_GT3_R-4-1920x1080.jpg?strip=all&lossy=1&webp=92&sharp=1&ssl=1"); */
+  /* background-repeat: no-repeat;
+  background-position: right;
+  background-size: cover; */
+  /* margin-left: 0;
+  padding: 1rem 0 1rem 2rem; */
+}
+
+.text-under {
+  /* height: auto;
+  width: auto; */
+  display: flex;
+  /* justify-content: left; */
+  align-items: center;
+  /* text-align: center; */
+  margin-left: 250px;
+  /* padding: 1rem 0 1rem 2rem; */
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+h2 {
+  position: relative;
+  white-space: nowrap;
+  text-transform: uppercase;
+  max-width: 50vw;
+  text-align: center;
+  font-size: 2.5vw;
+  font-weight: 900;
+  pointer-events: none;
+  user-select: none;
+}
+
+h2 span {
+  position: absolute;
+  left: 5vw;
+  color: transparent;
+  background-image: linear-gradient(90deg, #ff8a00, #c8305f);
+  -webkit-background-clip: text;
+  background-clip: text;
+  opacity: 0;
+  animation: scale 4s cubic-bezier(.5, -.75, .7, 1.25) forwards;
+}
+
+h2 span:nth-child(2) {
+  animation-delay: 2s;
+}
+
+h2 span:nth-child(3) {
+  animation-delay: 4s;
+}
+
+h2 span:nth-child(4) {
+  animation-delay: 6s;
+}
+
+h2 span:nth-child(5) {
+  animation-delay: 8s;
+}
+
+h2 span:last-child {
+  text-shadow: 20px rgba(0, 0, 0, 0.2);
+  animation: fade 2s linear 10s forwards;
+}
+
+
+@keyframes scale {
+  0% {
+    opacity: 0.2;
+    transform: scale(10);
+    filter: blur(10px);
+  }
+
+  50%,
+  85% {
+    opacity: 0.8;
+    transform: scale(1);
+    filter: blur(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: rotateX(90deg);
+    filter: blur(10px);
+  }
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes dash {
+  90% {
+    stroke-dasharray: 0;
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    stroke-dasharray: 3000;
+    stroke-dashoffset: 0;
+  }
+}
+  </style>
+
 <style>
+  /* TEXTO DIREITA BANNER */
   blockquote {
-  width: 30%;
+  width: auto;
   border-left: 5px solid;
   margin-left: 0;
   padding: 1rem 0 1rem 2rem;
@@ -100,7 +238,7 @@
 * {
   box-sizing: border-box;
 }
-  /* BANNER */
+  /* TEXTO ESTATICO BANNER */
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,600,800);
 @import url(https://fonts.googleapis.com/css?family=Exo+2:400,100);
 body {
