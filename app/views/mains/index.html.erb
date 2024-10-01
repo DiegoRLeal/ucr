@@ -9,7 +9,7 @@
 <div class="banner">
     <div class="wrapper">
       <div class="container">
-        <h2>UNDER CONTROL RACING</h2>
+        <h2>UNDER CONTROL <br> RACING</h2>
       </div>
     </div>
 
@@ -104,6 +104,15 @@
   padding: 200px;
 }
 
+@keyframes moveGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
 h2 {
   font-family: "Exo", sans-serif;
   font-size: 15vw;
@@ -113,17 +122,18 @@ h2 {
   width: min-content;
   margin: auto;
   text-transform: uppercase;
-  background: linear-gradient(219deg, #211e1e 19%, /* Preto */ 
-  transparent 19%, transparent 20%, #2c2c2c 20%, /* Grafite escuro */ 
-  #2c2c2c 39%, transparent 39%, transparent 40%, #4a4a4a 40%, /* Grafite claro */ 
-  #4a4a4a 59%, transparent 59%, transparent 60%, #fa6862 60%, /* Vermelho */ 
-  hsla(11, 80%, 38%, 1) 79%, transparent 79%, transparent 80%, hsla(11, 80%, 38%, 1) 80%);
+  background: linear-gradient(219deg, #211e1e 19%, /* Preto */ transparent 19%, transparent 20%, #2c2c2c 20%, /* Grafite escuro */ #2c2c2c 39%, transparent 39%, transparent 40%, #4a4a4a 40%, /* Grafite claro */ #4a4a4a 59%, transparent 59%, transparent 60%, #fa6862 60%, /* Vermelho */ hsla(11, 80%, 38%, 1) 79%, transparent 79%, transparent 80%, hsla(11, 80%, 38%, 1) 80%);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
+  background-size: 200% 200%;
+  animation: moveGradient 10s linear infinite; /* Animação continua em um sentido */
 }
 
+
+
 .container {
+  width: 100%;
   padding: 1.5rem;   
   text-align: center;
   /* background: radial-gradient(circle at 1.4% 1.4%, hsla(0,0%,13%,1) .8%, transparent .8%), 
@@ -145,7 +155,19 @@ h2 {
 
  <style>
   /* TEXTO DIREITA BANNER */
-  blockquote {
+  @keyframes moveGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+blockquote {
   width: auto;
   border-left: 5px solid;
   margin-left: 0;
@@ -154,11 +176,15 @@ h2 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-image: linear-gradient(35deg, hsl(0deg 100% 65%), hsl(207.69deg 100% 65%));
+  background-size: 200% 200%; /* Permite o movimento do gradiente */
+  animation: moveGradient 5s ease infinite; /* Animação do gradiente */
+}
+
 
   p {
     margin: 0;
   }
-  }
+  
   :root {
   --color-primary: hsl(310, 100%, 65%);
   --color-secondary: hsl(160, 100%, 65%);
