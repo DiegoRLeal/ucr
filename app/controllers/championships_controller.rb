@@ -32,7 +32,7 @@ class ChampionshipsController < ApplicationController
     race_results = race(@track_name, @session_date, @session_time)
 
     # Incluindo championships.total_time na consulta para ser usado na view
-    @championships = Championship.joins('LEFT JOIN car_models ON car_models.car_model = championships.car_model')
+    @drivers = Championship.joins('LEFT JOIN car_models ON car_models.car_model = championships.car_model')
                      .where(track_name: @track_name, session_date: @session_date, session_time: @session_time)
                      .select('championships.car_model, championships.driver_first_name, championships.driver_last_name, championships.laps, MIN(best_lap::integer) AS best_lap, MAX(championships.race_number) AS race_number, MAX(championships.lap_count) AS lap_count, car_models.car_name, championships.car_id, championships.total_time, championships.session_date, championships.session_time, championships.penalty_reason, championships.penalty_type, championships.penalty_value, championships.points')
                      .group('championships.car_model, championships.driver_first_name, championships.driver_last_name, championships.laps, car_models.car_name, championships.car_id, championships.total_time, championships.session_date, championships.session_time, championships.penalty_reason, championships.penalty_type, championships.penalty_value, championships.points')
@@ -41,14 +41,14 @@ class ChampionshipsController < ApplicationController
 
   def show_lap_times
     @track_name = params[:track_name]
-    @championship = Championship.find_by(driver_first_name: params[:first_name], driver_last_name: params[:last_name], race_number: params[:race_number], session_date: params[:session_date], session_time: params[:session_time])
+    @drivers = Championship.find_by(driver_first_name: params[:first_name], driver_last_name: params[:last_name], race_number: params[:race_number], session_date: params[:session_date], session_time: params[:session_time])
 
-    if @championship
+    if @driver
       # Se 'laps' estiver serializado como string JSON, converta-o para um array
-      @laps = @championship.laps.is_a?(String) ? JSON.parse(@championship.laps.gsub('=>', ':')) : @championship.laps
+      @laps = @driver.laps.is_a?(String) ? JSON.parse(@driver.laps.gsub('=>', ':')) : @driver.laps
 
       # Debug: imprime o conteúdo de @laps no log
-      puts "Laps content for championship #{@championship.driver_first_name} #{@championship.driver_last_name} on #{params[:session_date]} at #{params[:session_time]}: #{@laps.inspect}"
+      puts "Laps content for championship #{@driver.driver_first_name} #{@driver.driver_last_name} on #{params[:session_date]} at #{params[:session_time]}: #{@laps.inspect}"
 
       # Caso @laps seja nil ou vazio, adicionar uma mensagem de erro
       if @laps.nil? || @laps.empty?

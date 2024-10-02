@@ -1,0 +1,342 @@
+<h1 class="page-title text-center" data-track="<%= params[:track_name] %>">
+  <%= t('lap_times.piloto').html_safe %> <br> <%= @driver.driver_first_name %> <%= @driver.driver_last_name %>
+</h1>
+
+<div class="table-responsive container-lg py-5">
+  <table class="table table-custom table-hover align-middle text-center">
+    <thead>
+      <tr class="title-laps">
+        <th><%= t('lap_times.volta').html_safe %></th>
+        <th><%= t('lap_times.split1').html_safe %></th>
+        <th><%= t('lap_times.split2').html_safe %></th>
+        <th><%= t('lap_times.split3').html_safe %></th>
+        <th><%= t('lap_times.tempo_volta').html_safe %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% # Calcula os menores splits apenas das voltas válidas %>
+      <% best_splits = Array.new(@laps.first['splits'].length, Float::INFINITY) %>
+      <% @laps.each do |lap| %>
+        <% if lap['isValidForBest'] %>
+          <% lap['splits'].each_with_index do |split, index| %>
+            <% best_splits[index] = [best_splits[index], split].min %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <% # Calcula o menor tempo de volta das voltas válidas %>
+      <% best_laptime = @laps.select { |lap| lap['isValidForBest'] }.map { |lap| lap['laptime'] }.min %>
+
+      <% # Calcula o tempo da volta ideal somando os menores splits %>
+      <% ideal_lap_time = best_splits.sum %>
+
+      <% @laps.each_with_index do |lap, lap_index| %>
+        <tr class="<%= lap['isValidForBest'] ? (lap['laptime'] == best_laptime ? 'best-lap' : 'valid-lap') : 'invalid-lap' %>">
+          <td><%= lap_index + 1 %></td>
+          <% lap['splits'].each_with_index do |split, split_index| %>
+            <% is_best_split = lap['isValidForBest'] && split == best_splits[split_index] %>
+            <td class="<%= is_best_split ? 'best-split' : (lap['laptime'] == best_laptime ? 'best-lap-split' : '') %>">
+              <%= format_laptime(split) %>
+            </td>
+          <% end %>
+          <td class="<%= lap['laptime'] == best_laptime ? 'best-laptime' : 'default-laptime' %>">
+            <%= format_laptime(lap['laptime']) %>
+          </td>
+        </tr>
+      <% end %>
+
+      <tr class="ideal-lap">
+        <td colspan="4"><%= t('lap_times.volta_ideal').html_safe %></td>
+        <td><%= format_laptime(ideal_lap_time) %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<button class="button" onclick="history.back()">
+  <div class="button-box">
+    <span class="button-elem">
+      <svg viewBox="0 0 46 40" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"
+        ></path>
+      </svg>
+    </span>
+    <span class="button-elem">
+      <svg viewBox="0 0 46 40">
+        <path
+          d="M46 20.038c0-.7-.3-1.5-.8-2.1l-16-17c-1.1-1-3.2-1.4-4.4-.3-1.2 1.1-1.2 3.3 0 4.4l11.3 11.9H3c-1.7 0-3 1.3-3 3s1.3 3 3 3h33.1l-11.3 11.9c-1 1-1.2 3.3 0 4.4 1.2 1.1 3.3.8 4.4-.3l16-17c.5-.5.8-1.1.8-1.9z"
+        ></path>
+      </svg>
+    </span>
+  </div>
+</button>
+
+<style>
+  /* Estilos Globais */
+  body {
+    background-color: #f0f4f8;
+    font-family: 'Poppins', sans-serif;
+  }
+
+h1  {
+  font-size: 30px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  /* backdrop-filter: blur(5px); */
+  z-index: 1; /* Garante que o cabeçalho fique sobre as linhas da tabela */
+  /* box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1); Adiciona uma sombra leve */
+  /* background-color: #7080909c;
+  border-radius: 5px; */
+}
+
+  /* Título da página */
+.page-title {
+  font-size: 2.2rem;
+  color: #fff;
+  margin-bottom: 30px;
+  font-weight: 600;
+  width: auto;
+  height: 265px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+}
+
+/* Estilo da Tabela */
+  .table-custom {
+    background-color: #0000001a;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    overflow: hidden;
+    width: 45%;
+    text-align: center;
+    padding: 25px;
+    margin: 15px 0 15px 0;
+  }
+
+  .table-custom th {
+    background-color: hsl(0deg 0% 0% / 0%);
+    color: #ecf0f1;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 15px;
+  }
+
+  .table-custom td {
+    padding: 20px;
+    font-size: 1rem;
+    border-radius: 118px 41px 119px 42px;
+    -webkit-border-radius: 118px 41px 119px 42px;
+    -moz-border-radius: 118px 41px 119px 42px;
+    font-weight: 700;
+  }
+
+  .table-custom tr {
+    /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
+  }
+
+  .table-custom tr:hover {
+    /* transform: translateY(-4px); */
+    /* box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); */
+  }
+
+  .title-laps th:hover {
+    transform: none;
+  }
+
+  .table-responsive {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Voltas Válidas e Inválidas */
+
+  .best-lap {
+    background-color: white;
+    color: black;
+  }
+
+  .valid-lap {
+    background-color: white;
+    color: black;
+  }
+
+  .invalid-lap {
+    background-color: red;
+    color: black;
+  }
+
+  .best-split {
+    background-color: purple;
+    color: white;
+  }
+
+  .best-lap-split {
+    background-color: white;
+    color: black;
+  }
+
+  .best-laptime {
+    background-color: #10e627;
+    color: black;
+  }
+
+  .default-laptime {
+    /* background-color: white; */
+    color: black;
+  }
+
+  .ideal-lap {
+    position: relative;
+    color: #ffffff;
+    background: linear-gradient(to right, #C8B3E6 0%, rgba(255, 255, 255, 0.8) 10%, rgba(255, 255, 255, 1) 20%, rgba(255, 255, 255, 0.8) 30%, #C8B3E6 40%);
+    background-size: 200%; /* Controle da área percorrida */
+    background-position: 100%; /* Inicia à direita */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 3s infinite linear;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 24px; /* Ajuste conforme necessário */
+    white-space: nowrap;
+}
+
+/* Animação de brilho da esquerda para a direita */
+@keyframes shine {
+    0% {
+        background-position: 100%; /* Inicia à direita */
+    }
+    100% {
+        background-position: -100%; /* Move para a esquerda */
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   /* Button BACK */
+.button {
+  display: block;
+  position: fixed; /* Fixar o botão na tela */
+  bottom: 20px; /* Distância da parte inferior da página */
+  left: 20px; /* Distância da parte esquerda da página */
+  width: 56px;
+  height: 56px;
+  margin: 0;
+  overflow: hidden;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+  border: 0;
+  z-index: 1000; /* Garante que o botão fique acima de outros elementos */
+}
+
+.button:before,
+.button:after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  inset: 7px;
+}
+
+.button:before {
+  border: 4px solid #f0eeef;
+  transition: opacity 0.4s cubic-bezier(0.77, 0, 0.175, 1) 80ms,
+    transform 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) 80ms;
+}
+
+.button:after {
+  border: 4px solid #96daf0;
+  transform: scale(1.3);
+  transition: opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+    transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0;
+}
+
+.button:hover:before,
+.button:focus:before {
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+    transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.button:hover:after,
+.button:focus:after {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.4s cubic-bezier(0.77, 0, 0.175, 1) 80ms,
+    transform 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) 80ms;
+}
+
+.button-box {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.button-elem {
+  display: block;
+  width: 20px;
+  height: 20px;
+  margin: 17px 18px 0 18px;
+  transform: rotate(180deg);
+  fill: #f0eeef;
+}
+
+.button:hover .button-box,
+.button:focus .button-box {
+  transition: 0.4s;
+  transform: translateX(-56px);
+}
+
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .page-title {
+      font-size: 1.8rem;
+    }
+
+    .table-responsive {
+      width: min-content;
+    font-size: 0.8rem;
+    }
+  }
+</style>
