@@ -10,19 +10,25 @@
     <a href="#" class="menu-item fab fa-youtube" target="_blank" title="YouTube"></a>
 
     <% if user_signed_in? %>
-      <div class="user-menu">
-        <%= link_to sidebar_path, class: "menu-item", id: "user" do %>
-            <i class="menu-item fas fa-user"></i>
-          <% end %>
-      </div>
+  <div class="user-menu">
+    <% if current_user.admin? || current_user.ucrdriver? %>
+      <%= link_to sidebar_path, class: "menu-item", id: "user" do %>
+        <i class="menu-item fas fa-user"></i>
+      <% end %>
     <% else %>
-
-      <div class="login-menu">
-        <%= link_to new_user_session_path, class: "menu-item", id: "login" do %>
-          <i class="menu-item fas fa-sign-in-alt"></i>
-        <% end %>
-      </div>
+      <%= link_to campeonatos_path, class: "menu-item", id: "user" do %>
+        <i class="menu-item fas fa-trophy"></i> <!-- Ícone opcional para campeonato -->
+      <% end %>
     <% end %>
+  </div>
+<% else %>
+  <div class="login-menu">
+    <%= link_to new_user_session_path, class: "menu-item", id: "login" do %>
+      <i class="menu-item fas fa-sign-in-alt"></i>
+    <% end %>
+  </div>
+<% end %>
+
 
   </menu>
 </div>

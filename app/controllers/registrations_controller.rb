@@ -1,11 +1,29 @@
 class RegistrationsController < Devise::RegistrationsController
 
+  # def create
+  #   super do |resource|
+  #     if resource.persisted? # Se o cadastro foi bem-sucedido
+  #       flash[:welcome] = true
+  #       sign_in(resource) # Autentica automaticamente o usuário
+  #       redirect_to sidebar_path and return # Redireciona para a página sidebar e encerra a ação
+  #     end
+  #   end
+  # end
+
   def create
     super do |resource|
       if resource.persisted? # Se o cadastro foi bem-sucedido
         flash[:welcome] = true
         sign_in(resource) # Autentica automaticamente o usuário
-        redirect_to sidebar_path and return # Redireciona para a página sidebar e encerra a ação
+
+        # Verifica as condições para redirecionamento
+        if resource.admin?
+          redirect_to sidebar_path and return
+        elsif resource.ucrdriver?
+          redirect_to sidebar_path and return
+        else
+          redirect_to campeonatos_path and return
+        end
       end
     end
   end

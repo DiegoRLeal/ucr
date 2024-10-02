@@ -12,6 +12,7 @@
       <%= f.input :email, required: true, autofocus: true, label: false, input_html: { id: 'email', autocomplete: "email", placeholder: t('activerecord.attributes.user.email') } %>
       <%= f.input :password, required: true, label: false, input_html: { id: 'password', autocomplete: "new-password", placeholder: t('activerecord.attributes.user.password') } %>
       <%= f.input :password_confirmation, required: true, label: false, input_html: { id: 'password_confirmation', autocomplete: "new-password", placeholder: t('activerecord.attributes.user.password_confirmation') } %>
+      <%= f.input :number, required: true, label: false, input_html: { id: 'number', placeholder: 'Number' } %>
     </div>
       <%= f.button :submit, t('devise.registrations.new.submit'), class: "btn btn-secondary" %>
     <% end %>
