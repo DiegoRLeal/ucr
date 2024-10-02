@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_27_184419) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_02_180748) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,6 +47,36 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_27_184419) do
     t.string "car_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "championships", force: :cascade do |t|
+    t.string "car_id"
+    t.integer "race_number"
+    t.string "car_model"
+    t.string "driver_first_name"
+    t.string "driver_last_name"
+    t.string "best_lap"
+    t.string "total_time"
+    t.integer "lap_count"
+    t.date "session_date"
+    t.time "session_time"
+    t.string "session_type"
+    t.string "track_name"
+    t.text "laps"
+    t.string "penalty_reason"
+    t.string "penalty_type"
+    t.integer "penalty_value"
+    t.integer "penalty_violation_in_lap"
+    t.integer "penalty_cleared_in_lap"
+    t.string "post_race_penalty_reason"
+    t.string "post_race_penalty_type"
+    t.integer "post_race_penalty_value"
+    t.integer "post_race_penalty_violation_in_lap"
+    t.integer "post_race_penalty_cleared_in_lap"
+    t.integer "points"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "year"
   end
 
   create_table "drivers", force: :cascade do |t|
