@@ -35,4 +35,12 @@ Rails.application.routes.draw do
       get 'track_sessions'
     end
   end
+
+  resources :championships, only: [:index] do
+    collection do
+      get 'show_pilot_times'
+      get 'show_lap_times'
+      get 'track_sessions'
+    end
+  end
 end

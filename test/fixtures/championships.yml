@@ -1,0 +1,53 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  car_id: MyString
+  race_number: 1
+  car_model: MyString
+  driver_first_name: MyString
+  driver_last_name: MyString
+  best_lap: MyString
+  total_time: MyString
+  lap_count: 1
+  session_date: 2024-10-02
+  session_time: 2024-10-02 13:35:51
+  session_type: MyString
+  track_name: MyString
+  laps: MyText
+  penalty_reason: MyString
+  penalty_type: MyString
+  penalty_value: 1
+  penalty_violation_in_lap: 1
+  penalty_cleared_in_lap: 1
+  post_race_penalty_reason: MyString
+  post_race_penalty_type: MyString
+  post_race_penalty_value: 1
+  post_race_penalty_violation_in_lap: 1
+  post_race_penalty_cleared_in_lap: 1
+  points: 1
+
+two:
+  car_id: MyString
+  race_number: 1
+  car_model: MyString
+  driver_first_name: MyString
+  driver_last_name: MyString
+  best_lap: MyString
+  total_time: MyString
+  lap_count: 1
+  session_date: 2024-10-02
+  session_time: 2024-10-02 13:35:51
+  session_type: MyString
+  track_name: MyString
+  laps: MyText
+  penalty_reason: MyString
+  penalty_type: MyString
+  penalty_value: 1
+  penalty_violation_in_lap: 1
+  penalty_cleared_in_lap: 1
+  post_race_penalty_reason: MyString
+  post_race_penalty_type: MyString
+  post_race_penalty_value: 1
+  post_race_penalty_violation_in_lap: 1
+  post_race_penalty_cleared_in_lap: 1
+  points: 1
