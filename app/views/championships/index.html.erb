@@ -21,6 +21,8 @@
       <div class="card__info">
         <span class="card__category"> <%= t('drivers.pista').html_safe %> </span>
         <h3 class="card__title"><%= format_track_name(track_name) %></h3>
+<img src="<%= image_path("tracks/#{track_name.downcase.parameterize}.png") %>" alt="<%= track_name %>" class="logo-track">
+
         <% if best_lap_info %>
           <span class="card__by"><strong><%= t('drivers.melhor_volta').html_safe %></strong> <%= best_lap_info.driver_first_name %> <%= best_lap_info.driver_last_name %></span>
 

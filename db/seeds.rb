@@ -71,3 +71,36 @@ car_data.each do |car_model, car_name|
   # Aqui você está usando o car_model (como "0", "1", etc.) e o car_name para criar os registros
   CarModel.create(car_model: car_model, car_name: car_name) # Ajuste a categoria conforme necessário
 end
+
+track_data = {
+  "Spa-Francorchamps" => "Spa-Francorchamps",
+  "Monza" => "Monza",
+  "Misano" => "Misano",
+  "Paul Ricard" => "Paul Ricard",
+  "Silverstone" => "Silverstone",
+  "Barcelona" => "Barcelona",
+  "Brands Hatch" => "Brands Hatch",
+  "Hungaroring" => "Hungaroring",
+  "Zolder" => "Zolder",
+  "Nurburgring" => "Nurburgring",
+  "Mount Panorama" => "Mount Panorama",
+  "Suzuka" => "Suzuka",
+  "Kyalami" => "Kyalami",
+  "Laguna Seca" => "Laguna Seca",
+  "Zandvoort" => "Zandvoort",
+  "Imola" => "Imola",
+  "Donington Park" => "Donington Park",
+  "Oulton Park" => "Oulton Park",
+  "Snetterton" => "Snetterton",
+  "Indianapolis" => "Indianapolis",
+  "Watkins Glen" => "Watkins Glen",
+  "Valencia" => "Valencia",
+  "COTA" => "COTA",
+  "Nordschleife" => "Nordschleife",
+  "Red Bull Ring" => "Red Bull Ring"
+}
+
+# Criar os registros de Track
+track_data.each do |track_name_key, track_name|
+  Track.create(track_name: track_name)
+end
