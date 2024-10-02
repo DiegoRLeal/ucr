@@ -88,6 +88,16 @@ h1  {
   margin-bottom: 15px;
 }
 
+thead th {
+  position: sticky;
+  top: 0;
+  /* backdrop-filter: blur(5px); */
+  z-index: 1; /* Garante que o cabeçalho fique sobre as linhas da tabela */
+  /* box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1); Adiciona uma sombra leve */
+  /* background-color: #7080909c;
+  border-radius: 5px; */
+}
+
   /* Título da página */
 .page-title {
   font-size: 2.2rem;
@@ -195,10 +205,48 @@ h1  {
   }
 
   .ideal-lap {
-    background-color: #379fc1;
+    position: relative;
+    color: #ffffff;
+    background: linear-gradient(to right, dimgray 0%, white 20%, dimgray 40%);
+    background-size: 200%; /* Controle da área percorrida */
+    background-position: 100%; /* Inicia à direita */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 3s infinite linear;
     font-weight: bold;
-    color: black;
-  }
+    text-transform: uppercase;
+    font-size: 24px; /* Ajuste conforme necessário */
+    white-space: nowrap;
+}
+
+/* Animação de brilho da esquerda para a direita */
+@keyframes shine {
+    0% {
+        background-position: 100%; /* Inicia à direita */
+    }
+    100% {
+        background-position: -100%; /* Move para a esquerda */
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
    /* Button BACK */
