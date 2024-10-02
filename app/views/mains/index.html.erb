@@ -15,7 +15,7 @@
 
     <div>
       <blockquote>
-        <p>Acompanhe e gerencie o desempenho da nossa equipe de corrida virtual. <br> Patrocine nossa equipe e exponha sua marca.</p>
+        <p><%= t('index.subtitle') %></p>
       </blockquote>
     </div>
 </div>
@@ -134,15 +134,15 @@ h2 {
 
 .container {
   width: 100%;
-  padding: 1.5rem;   
+  padding: 1.5rem;
   text-align: center;
-  /* background: radial-gradient(circle at 1.4% 1.4%, hsla(0,0%,13%,1) .8%, transparent .8%), 
-  radial-gradient(circle at 5.5% 3%, hsla(11, 80%, 38%, 1) .45%, transparent .45%), 
-  radial-gradient(circle at 2.5% 3.5%, hsl(0deg 0.83% 27.48%) .5%, transparent .5%), 
-  radial-gradient(circle at 4.5% 1.2%, var(--color-4) .25%, transparent .25%), 
-  radial-gradient(circle at 98% 98%, hsl(0deg 0% 17.47%) .8%, transparent .8%), 
-  radial-gradient(circle at 95% 95%, hsla(0, 0%, 13%, 1) .45%, transparent .45%), 
-  radial-gradient(circle at 94.5% 97.5%, hsla(11, 80%, 31%, 1) .5%, transparent .5%), 
+  /* background: radial-gradient(circle at 1.4% 1.4%, hsla(0,0%,13%,1) .8%, transparent .8%),
+  radial-gradient(circle at 5.5% 3%, hsla(11, 80%, 38%, 1) .45%, transparent .45%),
+  radial-gradient(circle at 2.5% 3.5%, hsl(0deg 0.83% 27.48%) .5%, transparent .5%),
+  radial-gradient(circle at 4.5% 1.2%, var(--color-4) .25%, transparent .25%),
+  radial-gradient(circle at 98% 98%, hsl(0deg 0% 17.47%) .8%, transparent .8%),
+  radial-gradient(circle at 95% 95%, hsla(0, 0%, 13%, 1) .45%, transparent .45%),
+  radial-gradient(circle at 94.5% 97.5%, hsla(11, 80%, 31%, 1) .5%, transparent .5%),
   radial-gradient(circle at 98.5% 95.5%, var(--color-4) .25%, transparent .25%); */
 }
 
@@ -184,7 +184,7 @@ blockquote {
   p {
     margin: 0;
   }
-  
+
   :root {
   --color-primary: hsl(310, 100%, 65%);
   --color-secondary: hsl(160, 100%, 65%);
@@ -224,6 +224,7 @@ blockquote {
   justify-content: center;
   align-items: center;
   text-align: center;
+  color: #f83534;
 }
 
 .content h1 {
@@ -453,7 +454,7 @@ a {
   -o-transition: all 0.3s ease 0s;
   transition: all 0.3s ease 0s; }
   a:hover, a:focus {
-    color: #ababab;
+    color: white !important;
     text-decoration: none;
     outline: 0 none; }
 
