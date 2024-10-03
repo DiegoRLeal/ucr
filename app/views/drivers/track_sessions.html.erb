@@ -1,5 +1,11 @@
 <h1 class="page-title text-center" data-track="<%= params[:track_name] %>">
-  <%= t('track_sessions.sessoes').html_safe %> <br> <%= params[:track_name] %>
+  <div>
+    <%= t('track_sessions.sessoes').html_safe %> <br>
+  </div>
+  <div class="flag">
+    <img src="<%= image_path("tracks/#{params[:track_name].downcase.parameterize}.png") %>" alt="<%= params[:track_name] %>" class="logo-track">
+    <%= params[:track_name] %>
+  </div>
 </h1>
 
 <div class="table-responsive container-lg py-4">
@@ -54,6 +60,22 @@
 </button>
 
 <style>
+.flag {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  margin: 0 auto;
+}
+
+.flag img {
+  width: auto; /* Mantém a proporção da imagem */
+  height: 25px; /* Define uma altura fixa */
+  max-width: 45px; /* Limita a largura máxima */
+  object-fit: contain; /* Assegura que a imagem se ajuste dentro da caixa sem distorcer */
+  display: inline-block;
+}
   /* Button BACK */
 .button {
   display: block;
@@ -217,10 +239,19 @@ h1{
   padding: 0;
   margin: 0;
   text-align: center;
-  display: flex;
+  display: grid;
   justify-content: center;
   align-items: center;
   border-radius: 12px;
+}
+
+.page-title {
+  display: grid;
+  grid-template-rows: 180px 0; /* Define a altura exata de cada linha */
+  row-gap: 0; /* Ajusta o espaçamento entre as sessões */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 table{
