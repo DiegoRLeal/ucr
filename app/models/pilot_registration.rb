@@ -1,6 +1,7 @@
 class PilotRegistration < ApplicationRecord
   belongs_to :race_day
   belongs_to :car_number, optional: true
+  validates :pilot_name, presence: true
 
   # validate :check_max_pilots, on: :create
 

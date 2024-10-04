@@ -186,7 +186,11 @@ RailsAdmin.config do |config|
     list do
       field :pilot_name
       field :race_day
-      field :car_number
+      field :car_number do
+        pretty_value do
+          bindings[:object].car_number.number  # Exibe o track_name na listagem
+        end
+      end
     end
 
     edit do

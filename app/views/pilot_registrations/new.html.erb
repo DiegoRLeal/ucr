@@ -4,7 +4,7 @@
   <%= form_with model: [@race_day, @pilot_registration], local: true, data: { turbo: "false" } do |f| %>
     <div>
       <%= f.label :pilot_name, "Nome do Piloto" %>
-      <%= f.text_field :pilot_name %>
+      <%= f.text_field :pilot_name, presence: true %>
     </div>
 
     <div>
