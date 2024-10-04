@@ -1,0 +1,2 @@
+module PilotRegistrationsHelper
+end

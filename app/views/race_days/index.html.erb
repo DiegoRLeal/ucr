@@ -1,0 +1,9 @@
+<h1>Dias de Corrida</h1>
+
+<ul>
+  <% @race_days.each do |race_day| %>
+    <li>
+      <%= link_to "#{race_day.track} - #{race_day.date.strftime('%d/%m/%Y')}", race_day_path(race_day) %>
+    </li>
+  <% end %>
+</ul>

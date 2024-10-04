@@ -1,156 +1,221 @@
 RailsAdmin.config do |config|
   config.asset_source = :sprockets
 
-  ### Popular gems integration
+  config.authenticate_with do
+    warden.authenticate! scope: :user
+  end
+  config.current_user_method(&:current_user)
 
-  ## == Devise ==
-  # config.authenticate_with do
-  #   warden.authenticate! scope: :user
-  # end
-  # config.current_user_method(&:current_user)
-    config.authenticate_with do
-      warden.authenticate! scope: :user
+  config.authorize_with do
+    unless current_user.admin?
+      flash[:alert] = 'Sorry, no admin access for you.'
+      redirect_to main_app.root_path
     end
-    config.current_user_method(&:current_user)
+  end
 
-    config.authorize_with do
-      unless current_user.admin?
-        flash[:alert] = 'Sorry, no admin access for you.'
-        redirect_to main_app.root_path
-      end
+  config.model 'Pilot' do
+    label 'Driver'   # Exibe 'Driver' no singular
+    label_plural 'Drivers'  # Exibe 'Drivers' no plural
+    list do
+      field :name
+      field :instagram
+      field :twitch
+      field :youtube
+      field :categoria
     end
 
-    config.model 'Pilot' do
-      label 'Drivers'  # Isso vai alterar o nome exibido no menu para 'Drivers'
-      list do
-        field :name
-        field :instagram
-        field :twitch
-        field :youtube
-        field :categoria
-      end
-
-      edit do
-        field :name
-        field :instagram
-        field :twitch
-        field :youtube
-        field :image_url
-        field :categoria, :enum do
-          enum do
-            ['PRO', 'SILVER', 'AM']
-          end
+    edit do
+      field :name
+      field :instagram
+      field :twitch
+      field :youtube
+      field :image_url
+      field :categoria, :enum do
+        enum do
+          ['PRO', 'SILVER', 'AM']
         end
       end
-
-      show do
-        field :name
-        field :instagram
-        field :twitch
-        field :youtube
-        field :categoria
-      end
     end
 
-    config.model 'Driver' do
-      label 'Race Results'  # Renomeia para 'Race Results'
+    show do
+      field :name
+      field :instagram
+      field :twitch
+      field :youtube
+      field :categoria
+    end
+  end
 
-      list do
-        field :car_id
-        field :race_number
-        field :car_model
-        field :driver_first_name
-        field :driver_last_name
-        field :best_lap
-        field :total_time
-        field :lap_count
-        field :track_name
-        field :session_date
-        field :session_type
-      end
+  config.model 'Driver' do
+    label 'Race Results'  # Renomeia para 'Race Results'
 
-      edit do
-        field :car_id
-        field :race_number
-        field :car_model
-        field :driver_first_name
-        field :driver_last_name
-        field :best_lap
-        field :total_time
-        field :lap_count
-        field :track_name
-        field :session_date
-        field :session_time
-        field :session_type
-        field :laps, :json  # Exibe o campo 'laps' como JSON no formulário de edição
+    list do
+      field :car_id
+      field :race_number
+      field :car_model do
+        pretty_value do
+          bindings[:object].car_model.car_name  # Exibe o nome do carro corretamente na listagem
+        end
       end
-
-      show do
-        field :car_id
-        field :race_number
-        field :car_model
-        field :driver_first_name
-        field :driver_last_name
-        field :best_lap
-        field :total_time
-        field :lap_count
-        field :track_name
-        field :session_date
-        field :session_time
-        field :session_type
-        field :laps, :json  # Exibe o campo 'laps' como JSON no modo de exibição
-      end
+      field :driver_first_name
+      field :driver_last_name
+      field :best_lap
+      field :total_time
+      field :lap_count
+      field :track_name
+      field :session_date
+      field :session_type
     end
 
-    config.model 'Sponsor' do
-      list do
-        field :nome
-        field :image_url
+    edit do
+      field :car_id
+      field :race_number
+      field :car_model do
+        label "Modelo do Carro"
+        associated_collection_scope do
+          Proc.new { |scope|
+            scope.reorder('car_name ASC')  # Ordena por car_name
+          }
+        end
+
+        # Exibe car_name diretamente na dropdown
+        pretty_value do
+          bindings[:object].car_model.car_name  # Exibe o nome do carro na edição
+        end
       end
-      edit do
-        field :nome
-        field :image_url
-      end
+      field :driver_first_name
+      field :driver_last_name
+      field :best_lap
+      field :total_time
+      field :lap_count
+      field :track_name
+      field :session_date
+      field :session_time
+      field :session_type
+      field :laps, :json
     end
 
-    config.model 'Track' do
-      list do
-        field :track_id
-        field :track_name
-        field :created_at
-        field :updated_at
+    show do
+      field :car_id
+      field :race_number
+      field :car_model do
+        pretty_value do
+          bindings[:object].car_model.car_name  # Exibe o nome correto no modo de exibição
+        end
       end
+      field :driver_first_name
+      field :driver_last_name
+      field :best_lap
+      field :total_time
+      field :lap_count
+      field :track_name
+      field :session_date
+      field :session_time
+      field :session_type
+      field :laps, :json
+    end
+  end
 
-      edit do
-        field :track_id
-        field :track_name
-      end
+  config.model 'Sponsor' do
+    list do
+      field :nome
+      field :image_url
+    end
+    edit do
+      field :nome
+      field :image_url
+    end
+  end
 
-      show do
-        field :track_id
-        field :track_name
-        field :created_at
-        field :updated_at
-      end
+  config.model 'Track' do
+    list do
+      field :track_id
+      field :track_name
+      field :created_at
+      field :updated_at
     end
 
+    edit do
+      field :track_id
+      field :track_name
+    end
 
-    # config.included_models = [ "Seller", "Product", "User" ]
+    show do
+      field :track_id
+      field :track_name
+      field :created_at
+      field :updated_at
+    end
 
-  ## == CancanCan ==
-  # config.authorize_with :cancancan
+    object_label_method :track_name
+  end
 
-  ## == Pundit ==
-  # config.authorize_with :pundit
+  config.model 'RaceDay' do
+    list do
+      field :date
+      field :track do
+        pretty_value do
+          bindings[:object].track.track_name  # Exibe o track_name na listagem
+        end
+      end
+      field :max_pilots
+    end
 
-  ## == PaperTrail ==
-  # config.audit_with :paper_trail, 'User', 'PaperTrail::Version' # PaperTrail >= 3.0.0
+    edit do
+      field :date
 
-  ### More at https://github.com/railsadminteam/rails_admin/wiki/Base-configuration
+      field :track do
+        label "Pista"
 
-  ## == Gravatar integration ==
-  ## To disable Gravatar integration in Navigation Bar set to false
-  # config.show_gravatar = true
+        associated_collection_scope do
+          Proc.new { |scope|
+            scope.select(:id, :track_name)  # Seleciona explicitamente o track_name para a dropdown
+          }
+        end
+
+        help "Escolha a pista"
+      end
+
+      field :max_pilots
+    end
+
+    object_label_method :to_s
+  end
+
+  config.model 'PilotRegistration' do
+    list do
+      field :pilot_name
+      field :race_day
+      field :car_number
+    end
+
+    edit do
+      field :pilot_name
+      field :race_day
+      field :car_number
+    end
+  end
+
+  config.model 'CarNumber' do
+    list do
+      # field :number
+      field :race_day
+    end
+
+    edit do
+      # O campo 'number' será uma enumeração de números de 1 a 999
+      field :number, :enum do
+        enum do
+          (1..999).map { |n| [n, n] }  # Gera uma lista de números de 1 a 999
+        end
+        label "Número do Carro"
+      end
+
+      field :race_day do
+        label "Dia de Corrida"
+      end
+    end
+  end
 
   config.actions do
     dashboard                     # mandatory
@@ -162,9 +227,5 @@ RailsAdmin.config do |config|
     edit
     delete
     show_in_app
-
-    ## With an audit adapter, you can add:
-    # history_index
-    # history_show
   end
 end

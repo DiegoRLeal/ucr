@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2024-10-04
+  track: MyString
+  max_pilots: 1
+
+two:
+  date: 2024-10-04
+  track: MyString
+  max_pilots: 1

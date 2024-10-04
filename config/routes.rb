@@ -43,4 +43,8 @@ Rails.application.routes.draw do
       get 'track_sessions'
     end
   end
+
+  resources :race_days do
+    resources :pilot_registrations, only: [:new, :create]
+  end
 end

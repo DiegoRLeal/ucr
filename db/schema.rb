@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_02_200234) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_04_123944) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,6 +47,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_02_200234) do
     t.string "car_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "car_numbers", force: :cascade do |t|
+    t.integer "number"
+    t.bigint "race_day_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["race_day_id"], name: "index_car_numbers_on_race_day_id"
   end
 
   create_table "championships", force: :cascade do |t|
@@ -108,6 +116,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_02_200234) do
     t.integer "points"
   end
 
+  create_table "pilot_registrations", force: :cascade do |t|
+    t.string "pilot_name"
+    t.bigint "race_day_id", null: false
+    t.bigint "car_number_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["car_number_id"], name: "index_pilot_registrations_on_car_number_id"
+    t.index ["race_day_id"], name: "index_pilot_registrations_on_race_day_id"
+  end
+
   create_table "pilots", force: :cascade do |t|
     t.string "name"
     t.string "instagram"
@@ -123,6 +141,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_02_200234) do
     t.string "file_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "race_days", force: :cascade do |t|
+    t.date "date"
+    t.integer "max_pilots"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "track_id"
+    t.index ["track_id"], name: "index_race_days_on_track_id"
   end
 
   create_table "sponsors", force: :cascade do |t|
@@ -160,4 +187,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_02_200234) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "car_numbers", "race_days"
+  add_foreign_key "pilot_registrations", "car_numbers"
+  add_foreign_key "pilot_registrations", "race_days"
+  add_foreign_key "race_days", "tracks"
 end
