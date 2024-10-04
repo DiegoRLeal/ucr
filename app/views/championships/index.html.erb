@@ -20,9 +20,10 @@
       <% end %>
       <div class="card__info">
         <span class="card__category"> <%= t('drivers.pista').html_safe %> </span>
-        <h3 class="card__title"><%= format_track_name(track_name) %></h3>
-        <img src="<%= image_path("tracks/#{track_name.downcase.parameterize}.png") %>" alt="<%= track_name %>" class="logo-track">
-
+        <div class="flag">
+          <img src="<%= image_path("tracks/#{track_name.downcase.parameterize}.png") %>" alt="<%= track_name %>" class="logo-track">
+          <h3 class="card__title"><%= format_track_name(track_name) %></h3>
+        </div>
         <% if best_lap_info %>
           <span class="card__by"><strong><%= t('drivers.melhor_volta').html_safe %></strong> <%= best_lap_info.driver_first_name %> <%= best_lap_info.driver_last_name %></span>
 
@@ -76,6 +77,22 @@ body {
   -webkit-align-items: center;
   justify-content: center;
   align-items: center;
+}
+
+.flag {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: start;
+  gap: 10px;
+}
+
+.flag img {
+  width: auto; /* Mantém a proporção da imagem */
+  height: 25px; /* Define uma altura fixa */
+  max-width: 45px; /* Limita a largura máxima */
+  object-fit: contain; /* Assegura que a imagem se ajuste dentro da caixa sem distorcer */
+  display: inline-block;
 }
 
 .cards {
