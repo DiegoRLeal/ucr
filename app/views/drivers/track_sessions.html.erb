@@ -4,7 +4,7 @@
   </div>
   <div class="flag">
     <img src="<%= image_path("tracks/#{params[:track_name].downcase.parameterize}.png") %>" alt="<%= params[:track_name] %>" class="logo-track">
-    <%= params[:track_name] %>
+    <%= format_track_name(params[:track_name]) %>
   </div>
 </h1>
 

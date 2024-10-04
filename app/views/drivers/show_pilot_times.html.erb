@@ -4,7 +4,7 @@
   </div>
   <div class="flag">
     <img src="<%= image_path("tracks/#{params[:track_name].downcase.parameterize}.png") %>" alt="<%= params[:track_name] %>" class="logo-track">
-    <%= params[:track_name] %>
+    <%= format_track_name(params[:track_name]) %>
   </div>
   <div class="session-info">
     <%= params[:session_date].to_date.strftime('%d/%m/%Y') %> - <%= params[:session_time].to_time.strftime('%H:%M:%S') %>

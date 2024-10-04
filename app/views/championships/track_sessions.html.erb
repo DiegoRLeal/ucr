@@ -1,5 +1,5 @@
 <h1 class="page-title text-center" data-track="<%= params[:track_name] %>">
-  <%= t('track_sessions.sessoes').html_safe %> <br> <%= params[:track_name] %>
+  <%= t('track_sessions.sessoes').html_safe %> <br> <%= format_track_name(params[:track_name]) %>
 </h1>
 
 <div class="table-responsive container-lg py-4">

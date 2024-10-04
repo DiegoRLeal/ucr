@@ -113,6 +113,27 @@ RailsAdmin.config do |config|
       end
     end
 
+    config.model 'Track' do
+      list do
+        field :track_id
+        field :track_name
+        field :created_at
+        field :updated_at
+      end
+
+      edit do
+        field :track_id
+        field :track_name
+      end
+
+      show do
+        field :track_id
+        field :track_name
+        field :created_at
+        field :updated_at
+      end
+    end
+
 
     # config.included_models = [ "Seller", "Product", "User" ]
 
