@@ -1,17 +1,25 @@
-<h1>Inscrição para <%= @race_day.track %> - <%= @race_day.date.strftime("%d/%m/%Y") %></h1>
+<div class="container mt-5">
+  <h1>Inscrição para <%= @race_day.track %> - <%= @race_day.date.strftime("%d/%m/%Y") %></h1>
 
-<%= form_with model: [@race_day, @pilot_registration], local: true, data: { turbo: "false" } do |f| %>
-  <div>
-    <%= f.label :pilot_name, "Nome do Piloto" %>
-    <%= f.text_field :pilot_name %>
-  </div>
+  <%= form_with model: [@race_day, @pilot_registration], local: true, data: { turbo: "false" } do |f| %>
+    <div>
+      <%= f.label :pilot_name, "Nome do Piloto" %>
+      <%= f.text_field :pilot_name %>
+    </div>
 
-  <div>
-    <%= f.label :car_number_id, "Escolha um Número de Carro" %>
-    <%= f.select :car_number_id, options_for_select(@available_car_numbers.map { |car| [car.number, car.id] }, prompt: "Escolha um número de carro") %>
-  </div>
+    <div>
+      <%= f.label :car_number_id, "Escolha um Número de Carro" %>
+      <%= f.select :car_number_id, options_for_select(@available_car_numbers.map { |car| [car.number, car.id] }, prompt: "Escolha um número de carro") %>
+    </div>
 
-  <div>
-    <%= f.submit "Inscrever-se" %>
-  </div>
-<% end %>
+    <div>
+      <%= f.submit "Inscrever-se", class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>
+
+<style>
+  body{
+    color: white;
+  }
+</style>

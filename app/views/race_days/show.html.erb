@@ -1,19 +1,55 @@
-<h1>Corrida em <%= @race_day.track %> - <%= @race_day.date.strftime("%d/%m/%Y") %></h1>
+<div class="container mt-5">
+  <h1>Corrida em <%= @race_day.track %> - <%= @race_day.date.strftime("%d/%m/%Y") %></h1>
 
-<h2>Pilotos Inscritos:</h2>
-<ol>
-  <% @race_day.pilot_registrations.limit(@race_day.max_pilots).each do |registration| %>
-    <li><%= registration.pilot_name %> - Carro Nº <%= registration.car_number.number %></li>
+  <%= link_to "Inscrever-se", new_race_day_pilot_registration_path(@race_day), class: 'btn btn-primary' %>
+
+  <h2>Pilotos Inscritos:</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nome do Piloto</th>
+        <th>Número do Carro</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @race_day.pilot_registrations.limit(@race_day.max_pilots).each do |registration| %>
+        <tr>
+          <td><%= registration.pilot_name %></td>
+          <td><%= registration.car_number.number %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <% if @race_day.pilot_registrations.count > @race_day.max_pilots %>
+    <h2>Lista de Espera:</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nome do Piloto</th>
+          <th>Número do Carro</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @race_day.pilot_registrations.offset(@race_day.max_pilots).each do |registration| %>
+          <tr>
+            <td><%= registration.pilot_name %></td>
+            <td><%= registration.car_number.number %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   <% end %>
-</ol>
+</div>
 
-<% if @race_day.pilot_registrations.count > @race_day.max_pilots %>
-  <h2>Lista de Espera:</h2>
-  <ol>
-    <% @race_day.pilot_registrations.offset(@race_day.max_pilots).each do |registration| %>
-      <li><%= registration.pilot_name %> - Carro Nº <%= registration.car_number.number %></li>
-    <% end %>
-  </ol>
-<% end %>
+<style>
+body{
+  color: white;
+}
 
-<%= link_to "Inscrever-se", new_race_day_pilot_registration_path(@race_day) %>
+td, tr {
+  color: white;
+}
+
+
+</style>
