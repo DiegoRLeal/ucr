@@ -1,0 +1,39 @@
+<h1>Aplicar Penalidades - Corrida <%= @championship.track_name %> - <%= @championship.session_date %> <%= @championship.session_time %></h1>
+
+<%= form_with url: apply_penalties_championship_path(@championship), method: :patch, data: { turbo: false } do |f| %>
+
+  <%= hidden_field_tag :track_name, @championship.track_name %>
+  <%= hidden_field_tag :session_date, @championship.session_date %>
+  <%= hidden_field_tag :session_time, @championship.session_time %>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Piloto</th>
+        <th>Número do Carro</th>
+        <th>Motivo da Penalidade</th>
+        <th>Tipo de Penalidade</th>
+        <th>Valor (segundos)</th>
+        <th>Volta da Violação</th>
+        <th>Volta da Limpeza</th>
+        <th>Pontos de Penalidade</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @drivers.each do |driver| %>
+        <tr>
+          <td><%= driver.driver_first_name %> <%= driver.driver_last_name %></td>
+          <td><%= driver.race_number %></td>
+          <td><%= f.text_field "penalties[#{driver.id}][penalty_reason]", value: driver.penalty_reason %></td>
+          <td><%= f.select "penalties[#{driver.id}][penalty_type]", options_for_select([['Adição de Tempo', 'time_addition'], ['Desclassificação', 'disqualification']], selected: driver.penalty_type) %></td>
+          <td><%= f.number_field "penalties[#{driver.id}][penalty_value]", value: driver.penalty_value %></td>
+          <td><%= f.number_field "penalties[#{driver.id}][penalty_violation_in_lap]", value: driver.penalty_violation_in_lap %></td>
+          <td><%= f.number_field "penalties[#{driver.id}][penalty_cleared_in_lap]", value: driver.penalty_cleared_in_lap %></td>
+          <td><%= f.number_field "penalties[#{driver.id}][penalty_points]", value: driver.penalty_points %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= f.submit "Aplicar Penalidades" %>
+<% end %>

@@ -11,6 +11,24 @@
   </div>
 </h1>
 
+<% if @drivers.any? %>
+  <!-- Botão de aplicar penalidade fora da tabela, com base no primeiro driver -->
+  <div class="btn-wrapper">
+    <%= link_to penalties_championship_path(id: @drivers.first.id), class: 'Btn', method: :get do %>
+      <span class="text">
+        <i class="fas fa-exclamation-circle"></i> Aplicar Penalidade
+      </span>
+      <span class="svgIcon">
+        <svg fill="white" viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg">
+          <path d="M192 0C121 0 64 57 64 128v64H24c-13.25 0-24 10.75-24 24v272c0 13.25 10.75 24 24 24h336c13.25 0 24-10.75 24-24V216c0-13.25-10.75-24-24-24h-40v-64c0-71-57-128-128-128zm-48 128c0-26.51 21.49-48 48-48s48 21.49 48 48v64H144v-64zM48 448V224h288v224H48z"/>
+        </svg>
+      </span>
+    <% end %>
+  </div>
+<% else %>
+  <p>Nenhum piloto disponível para aplicar penalidades.</p>
+<% end %>
+
 <div class="table-responsive container-lg py-4">
   <table class="table table-custom table-hover align-middle text-center">
     <thead>
@@ -67,7 +85,8 @@
           <td><%= driver.penalties.present? ? driver.penalties.scan(/(\w+ - \w+)/).count : "0" %></td>
 
           <!-- Exibindo Pontos Calculados -->
-          <td><%= calculate_points(index + 1) %></td>
+          <%# <td><%= calculate_points(index + 1)</td> %>
+          <td><%= calculate_points(index + 1, driver.penalty_points || 0) %></td>
 
           <!-- Ações -->
           <td class="btn">

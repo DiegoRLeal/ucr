@@ -42,6 +42,11 @@ Rails.application.routes.draw do
       get 'show_lap_times'
       get 'track_sessions'
     end
+
+    member do
+      get :penalties  # Para exibir os pilotos e aplicar penalidades
+      patch :apply_penalties  # Para aplicar as penalidades selecionadas
+    end
   end
 
   resources :race_days do

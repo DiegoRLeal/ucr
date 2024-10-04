@@ -29,9 +29,21 @@ module DriversHelper
     (consistency * 100).round(2)
   end
 
-  def calculate_points(position)
+  # def calculate_points(position)
+  #   points_table = {1 => 25, 2 => 18, 3 => 15, 4 => 12, 5 => 10, 6 => 8, 7 => 6, 8 => 4, 9 => 2, 10 => 1}
+  #   points_table[position] || 0
+  # end
+  #
+  def calculate_points(position, penalty_points = 0)
+    # Tabela de pontos para cada posição
     points_table = {1 => 25, 2 => 18, 3 => 15, 4 => 12, 5 => 10, 6 => 8, 7 => 6, 8 => 4, 9 => 2, 10 => 1}
-    points_table[position] || 0
+
+    # Calcula os pontos da posição e subtrai os pontos de penalidade
+    total_points = points_table[position] || 0
+    total_points -= penalty_points.to_i # Subtrai os pontos de penalidade
+
+    # Garante que os pontos não sejam negativos
+    [total_points, 0].max
   end
 
    # Define o método calculate_avg_lap

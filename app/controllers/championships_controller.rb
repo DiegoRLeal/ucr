@@ -31,12 +31,12 @@ class ChampionshipsController < ApplicationController
 
     race_results = race(@track_name, @session_date, @session_time)
 
-    # Incluindo championships.total_time na consulta para ser usado na view
+    # Incluindo championships.total_time e penalty_points na consulta para serem usados na view
     @drivers = Championship.joins('LEFT JOIN car_models ON car_models.car_model = championships.car_model')
-                     .where(track_name: @track_name, session_date: @session_date, session_time: @session_time)
-                     .select('championships.car_model, championships.driver_first_name, championships.driver_last_name, championships.laps, MIN(best_lap::integer) AS best_lap, MAX(championships.race_number) AS race_number, MAX(championships.lap_count) AS lap_count, car_models.car_name, championships.car_id, championships.total_time, championships.session_date, championships.session_time, championships.penalty_reason, championships.penalty_type, championships.penalty_value, championships.points')
-                     .group('championships.car_model, championships.driver_first_name, championships.driver_last_name, championships.laps, car_models.car_name, championships.car_id, championships.total_time, championships.session_date, championships.session_time, championships.penalty_reason, championships.penalty_type, championships.penalty_value, championships.points')
-                     .order('MAX(championships.lap_count) DESC, MIN(best_lap::integer) ASC, MAX(championships.total_time) ASC')
+                           .where(track_name: @track_name, session_date: @session_date, session_time: @session_time)
+                           .select('championships.id, championships.car_model, championships.driver_first_name, championships.driver_last_name, championships.laps, MIN(best_lap::integer) AS best_lap, MAX(championships.race_number) AS race_number, MAX(championships.lap_count) AS lap_count, car_models.car_name, championships.car_id, championships.total_time, championships.session_date, championships.session_time, championships.penalty_reason, championships.penalty_type, championships.penalty_value, championships.penalty_points, championships.points') # Adicionando penalty_points
+                           .group('championships.id, championships.car_model, championships.driver_first_name, championships.driver_last_name, championships.laps, car_models.car_name, championships.car_id, championships.total_time, championships.session_date, championships.session_time, championships.penalty_reason, championships.penalty_type, championships.penalty_value, championships.penalty_points, championships.points') # Adicionando penalty_points no group
+                           .order('MAX(championships.lap_count) DESC, MIN(best_lap::integer) ASC, MAX(championships.total_time) ASC')
   end
 
   def show_lap_times
@@ -58,5 +58,47 @@ class ChampionshipsController < ApplicationController
       flash[:alert] = "Piloto não encontrado para esta sessão."
       redirect_to championships_path
     end
+  end
+
+  # Lista todos os pilotos de uma determinada corrida para aplicar penalidades
+  def penalties
+    @championship = Championship.find(params[:id])
+
+    # Seleciona todos os pilotos dessa corrida (session_date e session_time)
+    @drivers = Championship.where(track_name: @championship.track_name, session_date: @championship.session_date, session_time: @championship.session_time)
+  end
+
+  # Aplica as penalidades aos pilotos selecionados
+  def apply_penalties
+    drivers = Championship.where(track_name: params[:track_name], session_date: params[:session_date], session_time: params[:session_time])
+
+    drivers.each do |driver|
+      penalty_params = params[:penalties][driver.id.to_s]
+
+      # Verifica se `penalty_value` é fornecido ou se deseja limpar o campo
+      penalty_value = penalty_params[:penalty_value].presence
+      penalty_points = penalty_params[:penalty_points].presence
+
+      # Atualiza os valores de penalidades, incluindo `penalty_value` e `penalty_points`
+      driver.update(
+        penalty_reason: penalty_params[:penalty_reason],
+        penalty_type: penalty_params[:penalty_type],
+        penalty_value: penalty_value, # Atualizando corretamente o penalty_value
+        penalty_violation_in_lap: penalty_params[:penalty_violation_in_lap],
+        penalty_cleared_in_lap: penalty_params[:penalty_cleared_in_lap],
+        penalty_points: penalty_points # Aplicando os pontos de penalidade
+      )
+    end
+
+    # flash[:notice] = "Penalidades aplicadas com sucesso."
+
+    # Redireciona para a página com os tempos dos pilotos já atualizados
+    redirect_to show_pilot_times_championships_path(track_name: params[:track_name], session_date: params[:session_date], session_time: params[:session_time])
+  end
+
+  private
+
+  def penalty_params
+    params.require(:championship).permit(:penalty_reason, :penalty_type, :penalty_value, :penalty_violation_in_lap, :penalty_cleared_in_lap)
   end
 end
