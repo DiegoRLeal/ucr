@@ -29,11 +29,6 @@ module DriversHelper
     (consistency * 100).round(2)
   end
 
-  # def calculate_points(position)
-  #   points_table = {1 => 25, 2 => 18, 3 => 15, 4 => 12, 5 => 10, 6 => 8, 7 => 6, 8 => 4, 9 => 2, 10 => 1}
-  #   points_table[position] || 0
-  # end
-  #
   def calculate_points(position, penalty_points = 0)
     # Tabela de pontos para cada posição
     points_table = {1 => 25, 2 => 18, 3 => 15, 4 => 12, 5 => 10, 6 => 8, 7 => 6, 8 => 4, 9 => 2, 10 => 1}

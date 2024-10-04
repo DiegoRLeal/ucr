@@ -85,7 +85,6 @@
           <td><%= driver.penalties.present? ? driver.penalties.scan(/(\w+ - \w+)/).count : "0" %></td>
 
           <!-- Exibindo Pontos Calculados -->
-          <%# <td><%= calculate_points(index + 1)</td> %>
           <td><%= calculate_points(index + 1, driver.penalty_points || 0) %></td>
 
           <!-- Ações -->

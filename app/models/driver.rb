@@ -1,6 +1,6 @@
 class Driver < ApplicationRecord
   belongs_to :car_model, foreign_key: 'car_model', primary_key: 'car_model'
-  belongs_to :track
+  # belongs_to :track
 
   def lap_times
     # Verifica se laps está presente e converte o JSON corretamente
