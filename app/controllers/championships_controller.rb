@@ -75,26 +75,38 @@ class ChampionshipsController < ApplicationController
     drivers.each do |driver|
       penalty_params = params[:penalties][driver.id.to_s]
 
-      # Verifica se `penalty_value` é fornecido ou se deseja limpar o campo
-      penalty_value = penalty_params[:penalty_value].presence
-      penalty_points = penalty_params[:penalty_points].presence
+      # Verifica se os parâmetros de penalidade estão presentes
+      if penalty_params
+        # Pega os valores existentes no banco de dados ou inicializa um novo
+        penalty_reason = driver.penalty_reason || ""
+        penalty_value = driver.penalty_value ? driver.penalty_value.to_s : ""
+        penalty_violation_in_lap = driver.penalty_violation_in_lap ? driver.penalty_violation_in_lap.to_s : ""
+        penalty_cleared_in_lap = driver.penalty_cleared_in_lap ? driver.penalty_cleared_in_lap.to_s : ""
+        penalty_points = driver.penalty_points ? driver.penalty_points.to_s : ""
 
-      # Atualiza os valores de penalidades, incluindo `penalty_value` e `penalty_points`
-      driver.update(
-        penalty_reason: penalty_params[:penalty_reason],
-        penalty_type: penalty_params[:penalty_type],
-        penalty_value: penalty_value, # Atualizando corretamente o penalty_value
-        penalty_violation_in_lap: penalty_params[:penalty_violation_in_lap],
-        penalty_cleared_in_lap: penalty_params[:penalty_cleared_in_lap],
-        penalty_points: penalty_points # Aplicando os pontos de penalidade
-      )
+        # Concatena os novos valores aos valores existentes, separados por vírgula
+        new_penalty_reason = [penalty_reason, penalty_params[:penalty_reason]].reject(&:empty?).join(", ")
+        new_penalty_value = [penalty_value, penalty_params[:penalty_value]].reject(&:empty?).join(", ")
+        new_penalty_violation_in_lap = [penalty_violation_in_lap, penalty_params[:penalty_violation_in_lap]].reject(&:empty?).join(", ")
+        new_penalty_cleared_in_lap = [penalty_cleared_in_lap, penalty_params[:penalty_cleared_in_lap]].reject(&:empty?).join(", ")
+        new_penalty_points = [penalty_points, penalty_params[:penalty_points]].reject(&:empty?).join(", ")
+
+        # Atualiza o driver com os novos valores concatenados
+        driver.update(
+          penalty_reason: new_penalty_reason,
+          penalty_value: new_penalty_value,
+          penalty_violation_in_lap: new_penalty_violation_in_lap,
+          penalty_cleared_in_lap: new_penalty_cleared_in_lap,
+          penalty_points: new_penalty_points
+        )
+      end
     end
-
-    # flash[:notice] = "Penalidades aplicadas com sucesso."
 
     # Redireciona para a página com os tempos dos pilotos já atualizados
     redirect_to show_pilot_times_championships_path(track_name: params[:track_name], session_date: params[:session_date], session_time: params[:session_time])
   end
+
+
 
   private
 
