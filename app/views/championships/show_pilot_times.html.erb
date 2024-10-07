@@ -83,7 +83,12 @@
           <td><%= calculate_consistency(driver.laps) %> %</td>
 
           <!-- Penalidades -->
-          <td><%= driver.penalty_reason.present? ? driver.penalty_reason.split(',').size : 0 %></td>
+          <td>
+            <% reason_count = driver.penalty_reason.present? ? driver.penalty_reason.split(',').size : 0 %>
+            <% penalty_points_count = driver.penalty_points.present? ? driver.penalty_points.split(',').reject { |p| p == "0" }.size : 0 %>
+            <%= reason_count + penalty_points_count %>
+          </td>
+
 
           <!-- Exibindo Pontos Calculados -->
           <td><%= calculate_points(index + 1, driver.penalty_points || []) %></td>

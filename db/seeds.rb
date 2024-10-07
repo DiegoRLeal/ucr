@@ -8,7 +8,7 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-User.create(full_name: 'Diego Leal', email: 'leal.goedi@gmail.com', password: '123456')
+User.create(full_name: 'Diego Leal', email: 'leal.goedi@gmail.com', password: '123456', admin: true)
 
 car_data = {
   "0" => "Porsche 991 GT3 R 2018",

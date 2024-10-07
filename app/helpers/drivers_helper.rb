@@ -36,12 +36,14 @@ module DriversHelper
     # Calcula os pontos da posição
     total_points = points_table[position] || 0
 
-    # Se penalty_points for uma string separada por vírgulas, somar todos os valores
-    if penalty_points.is_a?(String)
-      penalty_total = penalty_points.split(',').map(&:to_i).sum
-    else
-      penalty_total = penalty_points.to_i
-    end
+    # Verifica se penalty_points é uma string ou array e processa de acordo
+    penalty_total = if penalty_points.is_a?(String)
+                      penalty_points.split(',').map(&:to_i).sum
+                    elsif penalty_points.is_a?(Array)
+                      penalty_points.map(&:to_i).sum
+                    else
+                      penalty_points.to_i
+                    end
 
     # Subtrai os pontos de penalidade do total
     total_points -= penalty_total
@@ -49,6 +51,7 @@ module DriversHelper
     # Garante que os pontos não sejam negativos
     [total_points, 0].max
   end
+
 
   # def calculate_penalty_info(driver)
   #   penalty_count = driver.penalty_reason.present? ? 1 : 0
