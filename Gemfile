@@ -78,3 +78,5 @@ gem 'rails-i18n'
 
 gem 'sidekiq'
 gem 'sidekiq-cron'
+
+gem 'byebug', group: [:development, :test]

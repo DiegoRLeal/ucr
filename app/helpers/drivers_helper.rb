@@ -31,7 +31,23 @@ module DriversHelper
 
   def calculate_points(position, penalty_points = 0)
     # Tabela de pontos para cada posição
-    points_table = {1 => 25, 2 => 18, 3 => 15, 4 => 12, 5 => 10, 6 => 8, 7 => 6, 8 => 4, 9 => 2, 10 => 1}
+    points_table = {
+      1 => 40,
+      2 => 37,
+      3 => 34,
+      4 => 31,
+      5 => 28,
+      6 => 26,
+      7 => 24,
+      8 => 22,
+      9 => 20,
+      10 => 18,
+      11 => 17,
+      12 => 16,
+      13 => 15,
+      14 => 14,
+      15 => 13
+    }
 
     # Calcula os pontos da posição
     total_points = points_table[position] || 0
@@ -51,17 +67,6 @@ module DriversHelper
     # Garante que os pontos não sejam negativos
     [total_points, 0].max
   end
-
-
-  # def calculate_penalty_info(driver)
-  #   penalty_count = driver.penalty_reason.present? ? 1 : 0
-  #   total_penalty_points = driver.penalty_points.to_i
-
-  #   {
-  #     penalty_count: penalty_count,
-  #     total_penalty_points: total_penalty_points
-  #   }
-  # end
 
    # Define o método calculate_avg_lap
   def calculate_avg_lap(driver_laps)
