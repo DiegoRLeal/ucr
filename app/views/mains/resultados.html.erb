@@ -702,10 +702,18 @@
     min-height: 100%;
     overflow-y: auto;
   }
+
+  html {
+    width: 100%;
+  }
   
   section.container {
       height: auto;
       overflow: visible;
+  }
+
+  .container {
+    width: 100%;
   }
   
   body {
@@ -714,6 +722,7 @@
       font-family: 'Raleway', sans-serif;
       font-weight: 300;
       font-size: 16px;
+      width: 100%;
   }
 
   h1 {
@@ -2518,9 +2527,15 @@
 
 @media (min-width: 992px) {
   .col-md-4 {
-    width: 25.333333%;
+    width: 15.333333%;
   }
 }
+
+/* @media (min-width: 1200px) and (min-width: 992px) and (min-width: 768px) {
+  .container {
+    width: 100% !important;
+  }
+} */
 </style>
 
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
