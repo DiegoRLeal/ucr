@@ -15,10 +15,10 @@
   <!-- Botão de aplicar penalidade fora da tabela, com base no primeiro driver -->
   <div class="btn-wrapper">
     <%= link_to penalties_championship_path(id: @drivers.first.id), class: 'Btn', method: :get do %>
-      <span class="text">
+      <span id="btn-penal-1" class="text">
         <i class="fas fa-exclamation-circle"></i> Aplicar Penalidade
       </span>
-      <span class="svgIcon">
+      <span id="btn-penal-2" class="svgIcon">
         <svg fill="white" viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg">
           <path d="M192 0C121 0 64 57 64 128v64H24c-13.25 0-24 10.75-24 24v272c0 13.25 10.75 24 24 24h336c13.25 0 24-10.75 24-24V216c0-13.25-10.75-24-24-24h-40v-64c0-71-57-128-128-128zm-48 128c0-26.51 21.49-48 48-48s48 21.49 48 48v64H144v-64zM48 448V224h288v224H48z"/>
         </svg>
@@ -134,6 +134,27 @@
 
 
 <style>
+.btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+#btn-penal-1 {
+  background-color: #f83534;
+  font-size: 15px;
+  gap: 10px;
+}
+
+#btn-penal-2 {
+  background-color: #d72700;
+}
+
+#btn-penal-1:hover, #btn-penal-2:hover {
+  transform: scale(1.03);
+  
+}
+
 .flag {
   display: flex;
   justify-content: flex-start;
