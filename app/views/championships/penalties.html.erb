@@ -18,7 +18,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @drivers.each do |driver| %>
+      <% @drivers.sort_by { |driver| driver.driver_first_name.downcase }.each do |driver| %>
         <% substitute_options = @drivers.reject { |d| d.id == driver.id }.sort_by { |d| d.driver_first_name }.map { |d| ["#{d.driver_first_name} #{d.driver_last_name}", d.id] } %>
 
         <% penalty_points = driver.penalty_points.present? ? driver.penalty_points.split(',').reject { |p| p == "0" } : [] %>
@@ -30,10 +30,10 @@
             <td>
               <%= f.select "penalties[#{driver.id}][0][driver_id]", options_for_select(substitute_options), class: 'pilot-dropdown' %>
             </td>
-            <td><%= f.text_field "penalties[#{driver.id}][0][penalty_reason]", value: "" %></td>
-            <td><%= f.number_field "penalties[#{driver.id}][0][penalty_value]", value: "" %></td>
-            <td><%= f.number_field "penalties[#{driver.id}][0][penalty_violation_in_lap]", value: "" %></td>
-            <td><%= f.number_field "penalties[#{driver.id}][0][penalty_cleared_in_lap]", value: "" %></td>
+            <td><%= f.text_field "penalties[#{driver.id}][0][penalty_reason]", value: driver.penalty_reason %></td>
+            <td><%= f.number_field "penalties[#{driver.id}][0][penalty_value]", value: driver.penalty_value %></td>
+            <td><%= f.number_field "penalties[#{driver.id}][0][penalty_violation_in_lap]", value: driver.penalty_violation_in_lap %></td>
+            <td><%= f.number_field "penalties[#{driver.id}][0][penalty_cleared_in_lap]", value: driver.penalty_cleared_in_lap %></td>
             <td><%= f.number_field "penalties[#{driver.id}][0][penalty_points]", value: "", class: 'form-control' %></td>
             <td>
               <button type="button" class="add-penalty-btn btn btn-success" data-driver-id="<%= driver.id %>">+</button>
@@ -52,8 +52,12 @@
               <td><%= f.number_field "penalties[#{driver.id}][#{i}][penalty_cleared_in_lap]", value: driver.penalty_cleared_in_lap %></td>
               <td><%= f.number_field "penalties[#{driver.id}][#{i}][penalty_points]", value: penalty_point, class: 'form-control' %></td>
               <td>
-                <button type="button" class="add-penalty-btn btn btn-success" data-driver-id="<%= driver.id %>" data-substitutes="<%= substitute_options.map { |opt| ["#{opt[0]}", opt[1]] }.to_json %>">+</button>
-                <button type="button" class="remove-penalty-btn btn btn-danger" data-driver-id="<%= driver.id %>">-</button>
+                <button type="button" class="add-penalty-btn btn btn-success"
+                        data-driver-id="<%= driver.id %>"
+                        data-substitutes="<%= (substitute_options || []).map { |opt| [opt[0], opt[1]] }.to_json.html_safe %>">+</button>
+
+                <button type="button" class="remove-penalty-btn btn btn-danger"
+                        data-driver-id="<%= driver.id %>">-</button>
               </td>
             </tr>
           <% end %>
@@ -88,95 +92,122 @@
   </tr>
 </template>
 
-
-
-<!-- JavaScript para adicionar/remover penalidades -->
 <script>
 document.addEventListener('turbo:load', () => {
   const penaltyIndexes = {}; // Manter o índice de penalidades para cada piloto
 
-  // Adiciona uma nova linha de penalidade ao clicar no botão '+'
-  document.addEventListener('click', function(event) {
-    if (event.target.classList.contains('add-penalty-btn')) {
-      const driverRow = event.target.closest('tr');
+  // Verifica se os eventos já foram registrados para evitar múltiplos disparos
+  if (!window.penaltyEventsRegistered) {
+    window.penaltyEventsRegistered = true; // Marcar como registrado
 
-      if (!driverRow) {
-        console.error("Elemento 'driverRow' não encontrado");
-        return; // Evita erro se o elemento não estiver presente
-      }
+    // Adiciona uma nova linha de penalidade ao clicar no botão '+'
+    document.addEventListener('click', function(event) {
+      if (event.target.classList.contains('add-penalty-btn')) {
+        event.preventDefault(); // Previne comportamento padrão
 
-      const driverId = event.target.dataset.driverId;
-      const driverName = driverRow.querySelector('td:first-child')?.textContent;
-      const raceNumber = driverRow.querySelector('td:nth-child(2)')?.textContent;
+        console.log("Botão + clicado");
 
-      if (!driverName || !raceNumber) {
-        console.error("Nome do piloto ou número da corrida não encontrado");
-        return; // Evita erro se não encontrar o nome ou número
-      }
-
-      const template = document.querySelector('#penalty-template').content.cloneNode(true);
-
-      // Inicializa o índice de penalidades para o piloto, se necessário
-      if (!penaltyIndexes[driverId]) {
-        penaltyIndexes[driverId] = 0;
-      }
-
-      penaltyIndexes[driverId]++; // Incrementa o índice de penalidades para o piloto atual
-
-      // Atualiza os ids do piloto no template clonado e garante que cada campo tenha um índice único
-      template.querySelectorAll('input').forEach(input => {
-        input.name = input.name.replace('[]', `[${driverId}][${penaltyIndexes[driverId]}]`);
-      });
-
-      // Insere o nome do piloto e o número do carro dinamicamente
-      template.querySelector('.driver-name').textContent = driverName;
-      template.querySelector('.race-number').textContent = raceNumber;
-
-      const select = template.querySelector('.pilot-dropdown');
-      if (select) {
-        const substituteOptions = JSON.parse(event.target.dataset.substitutes);
-        substituteOptions.forEach(option => {
-          const optionElement = document.createElement('option');
-          optionElement.value = option[1];
-          optionElement.textContent = option[0];
-          select.appendChild(optionElement);
-        });
-      }
-
-      driverRow.insertAdjacentElement('afterend', template.firstElementChild);
-    }
-  });
-
-  // Remove uma linha de penalidade ao clicar no botão '-'
-  document.addEventListener('click', function(event) {
-    if (event.target.classList.contains('remove-penalty-btn')) {
-      const row = event.target.closest('tr');
-      const driverId = event.target.dataset.driverId;
-      const allRows = document.querySelectorAll(`#penalty-fields-${driverId}`);
-
-      if (allRows.length > 1) {
-        // Adicionar um campo oculto para informar que a penalidade foi removida
-        const penaltyId = row.querySelector('input[name*="penalty_points"]')?.name;
-        if (penaltyId) {
-          const input = document.createElement('input');
-          input.type = 'hidden';
-          input.name = `${penaltyId.replace('penalty_points', '_destroy')}`;
-          input.value = '1';
-          row.appendChild(input);
+        const driverRow = event.target.closest('tr');
+        if (!driverRow) {
+          console.error("Elemento 'driverRow' não encontrado");
+          return;
         }
 
-        row.style.display = 'none'; // Esconde a linha, mas deixa no DOM para envio ao backend
-      } else {
-        alert('O piloto precisa ter pelo menos uma linha de penalidade visível.');
+        const driverId = event.target.dataset.driverId;
+        const driverName = driverRow.querySelector('td:first-child')?.textContent;
+        const raceNumber = driverRow.querySelector('td:nth-child(2)')?.textContent;
+
+        console.log("Driver ID:", driverId);
+        console.log("Driver Name:", driverName);
+        console.log("Race Number:", raceNumber);
+
+        if (!driverName || !raceNumber) {
+          console.error("Nome do piloto ou número da corrida não encontrado");
+          return;
+        }
+
+        const template = document.querySelector('#penalty-template').content.cloneNode(true);
+
+        // Inicializa o índice de penalidades para o piloto, se necessário
+        if (!penaltyIndexes[driverId]) {
+          penaltyIndexes[driverId] = 0;
+        }
+
+        penaltyIndexes[driverId]++; // Incrementa o índice de penalidades para o piloto atual
+        console.log("Índice de penalidades para o piloto:", penaltyIndexes[driverId]);
+
+        // Atualiza os ids do piloto no template clonado e garante que cada campo tenha um índice único
+        template.querySelectorAll('input').forEach(input => {
+          input.name = input.name.replace('[]', `[${driverId}][${penaltyIndexes[driverId]}]`);
+        });
+
+        // Insere o nome do piloto e o número do carro dinamicamente
+        template.querySelector('.driver-name').textContent = driverName;
+        template.querySelector('.race-number').textContent = raceNumber;
+
+        const select = template.querySelector('.pilot-dropdown');
+        if (select) {
+          const substitutes = event.target.getAttribute('data-substitutes');
+          console.log("Substitutes:", substitutes);
+
+          if (substitutes && substitutes !== "undefined") {
+            try {
+              const substituteOptions = JSON.parse(substitutes);
+              substituteOptions.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option[1];
+                optionElement.textContent = option[0];
+                select.appendChild(optionElement);
+              });
+            } catch (error) {
+              console.error("Erro ao analisar substitutes:", error);
+            }
+          } else {
+            console.warn("Dataset 'substitutes' indefinido ou vazio.");
+          }
+        }
+
+        // Adiciona a nova linha após a linha atual do driver
+        driverRow.insertAdjacentElement('afterend', template.firstElementChild);
+        console.log("Nova linha de penalidade adicionada.");
       }
-    }
-  });
+    });
+
+    // Remove uma linha de penalidade ao clicar no botão '-'
+    document.addEventListener('click', function(event) {
+      if (event.target.classList.contains('remove-penalty-btn')) {
+        const row = event.target.closest('tr');
+        const driverId = event.target.dataset.driverId;
+
+        // Busca todas as linhas de penalidade visíveis (que ainda não foram escondidas)
+        const visibleRows = Array.from(document.querySelectorAll(`tr.penalty-fields`)).filter(row => row.style.display !== 'none');
+
+        console.log("Linhas visíveis:", visibleRows.length);
+
+        // Impede que a primeira linha visível seja removida
+        if (visibleRows.length > 1 && visibleRows[0] !== row) {
+          // Adicionar um campo oculto para informar que a penalidade foi removida
+          const penaltyId = row.querySelector('input[name*="penalty_points"]')?.name;
+          if (penaltyId) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = `${penaltyId.replace('penalty_points', '_destroy')}`;
+            input.value = '1';
+            row.appendChild(input);
+          }
+
+          row.style.display = 'none'; // Esconde a linha, mas deixa no DOM para envio ao backend
+          console.log("Linha removida.");
+        } else if (visibleRows[0] === row) {
+          alert('A primeira linha de penalidade não pode ser removida.');
+        } else {
+          alert('O piloto precisa ter pelo menos uma linha de penalidade visível.');
+        }
+      }
+    });
+  }
 });
-
 </script>
-
-
-
 
 <style>
   td, tr {
