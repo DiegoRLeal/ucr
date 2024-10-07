@@ -18,8 +18,8 @@
 <body>
 <section class="container">
     <div class="page-header">
-        <h1>Material cards<br>
-            <small>material cards with a simple jquery script</small></h1>
+        <h1>Categoria PRO<br>
+            <%# <small>material cards with a simple jquery script</small></h1> %>
     </div>
     <div class="row active-with-click">
         <div class="col-md-4 col-sm-6 col-xs-12">
@@ -58,8 +58,8 @@
 
 <section class="container">
     <div class="page-header">
-        <h1>Material cards<br>
-            <small>material cards with a simple jquery script</small></h1>
+        <h1>Categoria SILVER<br>
+            <%# <small>material cards with a simple jquery script</small></h1> %>
     </div>
     <div class="row active-with-click">
           <div class="col-md-4 col-sm-6 col-xs-12">
@@ -97,8 +97,8 @@
 
 <section class="container">
     <div class="page-header">
-        <h1>Material cards<br>
-            <small>material cards with a simple jquery script</small></h1>
+        <h1>Categoria AM<br>
+            <%# <small>material cards with a simple jquery script</small></h1> %>
     </div>
     <div class="row active-with-click">
           <div class="col-md-4 col-sm-6 col-xs-12">
@@ -654,8 +654,13 @@
       font-weight: 300;
       font-size: 16px;
   }
+
+  h1 {
+    font-weight: 800;
+    color: gainsboro;
+  }
   
-  h1, h2, h3 {
+  h2, h3 {
       font-weight: 200;
   }
   
@@ -2439,6 +2444,12 @@
 .materializr(@colorVar; @accent: '500'; @type: background-color) {
     @colorCalc: %('gm-%s-%s', replace(@colorVar, ' ', '-'), replace(@accent, ' ', '-'));
     @{type}: @@colorCalc;
+}
+
+@media (min-width: 992px) {
+  .col-md-4 {
+    width: 25.333333%;
+  }
 }
 </style>
 
