@@ -29,6 +29,11 @@ class MainsController < ApplicationController
     # Retornar as credenciais para serem usadas no serviço do Google Drive
     credentials
   end
+  
+    def resultados
+      @pilots = Pilot.all # ou algum filtro específico, como Pilot.where(...)
+    end
+  
 
   # def job
   #   # Inicializar o serviço Google Drive
