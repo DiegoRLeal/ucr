@@ -33,13 +33,32 @@ module DriversHelper
     # Tabela de pontos para cada posição
     points_table = {1 => 25, 2 => 18, 3 => 15, 4 => 12, 5 => 10, 6 => 8, 7 => 6, 8 => 4, 9 => 2, 10 => 1}
 
-    # Calcula os pontos da posição e subtrai os pontos de penalidade
+    # Calcula os pontos da posição
     total_points = points_table[position] || 0
-    total_points -= penalty_points.to_i # Subtrai os pontos de penalidade
+
+    # Se penalty_points for uma string separada por vírgulas, somar todos os valores
+    if penalty_points.is_a?(String)
+      penalty_total = penalty_points.split(',').map(&:to_i).sum
+    else
+      penalty_total = penalty_points.to_i
+    end
+
+    # Subtrai os pontos de penalidade do total
+    total_points -= penalty_total
 
     # Garante que os pontos não sejam negativos
     [total_points, 0].max
   end
+
+  # def calculate_penalty_info(driver)
+  #   penalty_count = driver.penalty_reason.present? ? 1 : 0
+  #   total_penalty_points = driver.penalty_points.to_i
+
+  #   {
+  #     penalty_count: penalty_count,
+  #     total_penalty_points: total_penalty_points
+  #   }
+  # end
 
    # Define o método calculate_avg_lap
   def calculate_avg_lap(driver_laps)

@@ -49,6 +49,7 @@
     </thead>
     <tbody>
       <% @drivers.each_with_index do |driver, index| %>
+      <%# <% penalty_info = calculate_penalty_info(driver) %>
         <tr>
           <td><%= driver.driver_first_name %> <%= driver.driver_last_name %> # <%= driver.race_number %></td>
           <!-- Coluna separada para a logo do carro -->
@@ -82,14 +83,14 @@
           <td><%= calculate_consistency(driver.laps) %> %</td>
 
           <!-- Penalidades -->
-          <td><%= driver.penalties.present? ? driver.penalties.scan(/(\w+ - \w+)/).count : "0" %></td>
+          <td><%= driver.penalty_reason.present? ? driver.penalty_reason.split(',').size : 0 %></td>
 
           <!-- Exibindo Pontos Calculados -->
-          <td><%= calculate_points(index + 1, driver.penalty_points || 0) %></td>
+          <td><%= calculate_points(index + 1, driver.penalty_points || []) %></td>
 
           <!-- Ações -->
           <td class="btn">
-            <%= link_to show_lap_times_championships_path(track_name: params[:track_name], first_name: driver.driver_first_name, last_name: driver.driver_last_name, race_number: driver.race_number, session_date: driver.session_date, session_time: driver.session_time), class: 'Btn', method: :get do %>
+            <%= link_to show_lap_times_drivers_path(track_name: params[:track_name], first_name: driver.driver_first_name, last_name: driver.driver_last_name, race_number: driver.race_number, session_date: driver.session_date, session_time: driver.session_time), class: 'Btn', method: :get do %>
             <span class="text">
               <i class="fas fa-stopwatch"></i> <%= t('show_pilot_times.ver_todas_voltas').html_safe %>
             </span>

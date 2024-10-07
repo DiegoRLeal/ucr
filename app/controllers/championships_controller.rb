@@ -70,43 +70,36 @@ class ChampionshipsController < ApplicationController
 
   # Aplica as penalidades aos pilotos selecionados
   def apply_penalties
-    drivers = Championship.where(track_name: params[:track_name], session_date: params[:session_date], session_time: params[:session_time])
+    params[:penalties].each do |driver_id, penalty_params|
+      driver = Championship.find(driver_id)
 
-    drivers.each do |driver|
-      penalty_params = params[:penalties][driver.id.to_s]
-
-      # Verifica se os parâmetros de penalidade estão presentes
       if penalty_params
-        # Pega os valores existentes no banco de dados ou inicializa um novo
-        penalty_reason = driver.penalty_reason || ""
-        penalty_value = driver.penalty_value ? driver.penalty_value.to_s : ""
-        penalty_violation_in_lap = driver.penalty_violation_in_lap ? driver.penalty_violation_in_lap.to_s : ""
-        penalty_cleared_in_lap = driver.penalty_cleared_in_lap ? driver.penalty_cleared_in_lap.to_s : ""
-        penalty_points = driver.penalty_points ? driver.penalty_points.to_s : ""
+        updated_penalty_points = []
 
-        # Concatena os novos valores aos valores existentes, separados por vírgula
-        new_penalty_reason = [penalty_reason, penalty_params[:penalty_reason]].reject(&:empty?).join(", ")
-        new_penalty_value = [penalty_value, penalty_params[:penalty_value]].reject(&:empty?).join(", ")
-        new_penalty_violation_in_lap = [penalty_violation_in_lap, penalty_params[:penalty_violation_in_lap]].reject(&:empty?).join(", ")
-        new_penalty_cleared_in_lap = [penalty_cleared_in_lap, penalty_params[:penalty_cleared_in_lap]].reject(&:empty?).join(", ")
-        new_penalty_points = [penalty_points, penalty_params[:penalty_points]].reject(&:empty?).join(", ")
+        penalty_params.each do |index, penalty_data|
+          if penalty_data[:_destroy] == "1"
+            # Penalidade marcada para remoção, não adicionar aos pontos
+            next
+          else
+            # Adicionar penalidade apenas se o valor for diferente de 0 ou vazio
+            new_penalty_points = penalty_data[:penalty_points]
+            updated_penalty_points << new_penalty_points unless new_penalty_points.to_i == 0
+          end
+        end
 
-        # Atualiza o driver com os novos valores concatenados
-        driver.update(
-          penalty_reason: new_penalty_reason,
-          penalty_value: new_penalty_value,
-          penalty_violation_in_lap: new_penalty_violation_in_lap,
-          penalty_cleared_in_lap: new_penalty_cleared_in_lap,
-          penalty_points: new_penalty_points
-        )
+        # Atualiza os penalty_points com os novos valores
+        if updated_penalty_points.empty?
+          # Se nenhuma penalidade for válida, garante que o campo seja atualizado com "0"
+          driver.update(penalty_points: "0")
+        else
+          driver.update(penalty_points: updated_penalty_points.join(','))
+        end
       end
     end
 
-    # Redireciona para a página com os tempos dos pilotos já atualizados
+    # Redireciona de volta para a view `show_pilot_times`
     redirect_to show_pilot_times_championships_path(track_name: params[:track_name], session_date: params[:session_date], session_time: params[:session_time])
   end
-
-
 
   private
 
