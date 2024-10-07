@@ -30,7 +30,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @drivers.each_with_index do |driver, index| %>
+      <% @drivers.sort_by { |driver| driver.id }.each_with_index do |driver, index| %>
         <tr>
           <td><%= driver.driver_first_name %> <%= driver.driver_last_name %> # <%= driver.race_number %></td>
           <!-- Coluna separada para a logo do carro -->
