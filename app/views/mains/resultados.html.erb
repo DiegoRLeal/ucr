@@ -59,7 +59,7 @@ h1, h2, h3 {
     </div>
     <div class="row active-with-click">
         <div class="col-md-4 col-sm-6 col-xs-12">
-            <article class="material-card Red">
+            <article class="material-card PRO">
                 <h2>
                     <span style="color: black;">A. Crepaldi</span>
                     <strong style="color: black;">
@@ -90,12 +90,12 @@ h1, h2, h3 {
             </article>
         </div>
         <div class="col-md-4 col-sm-6 col-xs-12">
-            <article class="material-card Pink">
+            <article class="material-card SILVER">
                 <h2>
-                    <span style="color: black;">D. Leal</span>
+                    <span style="color: white;">D. Leal</span>
                     <strong>
                         <%# <i class="fa fa-fw fa-star"></i> %>
-                        SIlver
+                        Silver
                     </strong>
                 </h2>
                 <div class="mc-content">
@@ -120,7 +120,7 @@ h1, h2, h3 {
             </article>
         </div>
         <div class="col-md-4 col-sm-6 col-xs-12">
-            <article class="material-card Purple">
+            <article class="material-card AM">
                 <h2>
                     <span>I. Leal</span>
                     <strong>
@@ -147,7 +147,7 @@ h1, h2, h3 {
                     <a class="fa fa-fw fa-youtube"></a>
                     <a class="fa fa-fw fa-instagram"></a>
                 </div>
-            </article>
+            <%# </article>
         </div>
         <div class="col-md-4 col-sm-6 col-xs-12">
             <article class="material-card Deep-Purple">
@@ -643,7 +643,7 @@ h1, h2, h3 {
                     <a class="fa fa-fw fa-linkedin"></a>
                     <a class="fa fa-fw fa-google-plus"></a>
                 </div>
-            </article>
+            </article> %>
         </div>
     </div>
 </section>
@@ -916,55 +916,153 @@ h1, h2, h3 {
 .material-card.mc-active .mc-footer h4 {
   top: -32px;
 }
-.material-card.Red h2 {
+.material-card.PRO h2 {
   background-color: white;
 }
-.material-card.Red h2:after {
+.material-card.PRO h2:after {
   border-top-color: white;
   border-right-color: white;
   border-bottom-color: transparent;
   border-left-color: transparent;
 }
-.material-card.Red h2:before {
+.material-card.PRO h2:before {
   border-top-color: transparent;
   border-right-color: white;
   border-bottom-color: white;
   border-left-color: transparent;
 }
-.material-card.Red.mc-active h2:before {
+.material-card.PRO.mc-active h2:before {
   border-top-color: transparent;
   border-right-color: white;
   border-bottom-color: white;
   border-left-color: transparent;
 }
-.material-card.Red.mc-active h2:after {
+.material-card.PRO.mc-active h2:after {
   border-top-color: white;
   border-right-color: white;
   border-bottom-color: transparent;
   border-left-color: transparent;
 }
-.material-card.Red .mc-btn-action {
+.material-card.PRO .mc-btn-action {
   background-color: black;
 }
-.material-card.Red .mc-btn-action:hover {
-  background-color: #000000cc;
+.material-card.PRO .mc-btn-action:hover {
+  background-color: #212121;
 }
-.material-card.Red .mc-footer h4 {
+.material-card.PRO .mc-footer h4 {
   color: black;
 }
-.material-card.Red .mc-footer a {
+.material-card.PRO .mc-footer a {
   background-color: black;
 }
-.material-card.Red.mc-active .mc-content {
-  background-color: #FFEBEE;
+.material-card.PRO.mc-active .mc-content {
+  /* background-color: #FFEBEE; */
 }
-.material-card.Red.mc-active .mc-footer {
+.material-card.PRO.mc-active .mc-footer {
   background-color: #fbfbfb;
 }
-.material-card.Red.mc-active .mc-btn-action {
-  border-color: #FFEBEE;
+.material-card.PRO.mc-active .mc-btn-action {
+  border-color: white;
 }
-.material-card.Blue-Grey h2 {
+
+.material-card.SILVER h2 {
+  background-color: gray;
+}
+.material-card.SILVER h2:after {
+  border-top-color: gray;
+  border-right-color: gray;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+.material-card.SILVER h2:before {
+  border-top-color: transparent;
+  border-right-color: gray;
+  border-bottom-color: gray;
+  border-left-color: transparent;
+}
+.material-card.SILVER.mc-active h2:before {
+  border-top-color: transparent;
+  border-right-color: gray;
+  border-bottom-color: gray;
+  border-left-color: transparent;
+}
+.material-card.SILVER.mc-active h2:after {
+  border-top-color: gray;
+  border-right-color: gray;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+.material-card.SILVER .mc-btn-action {
+  background-color: gray;
+}
+.material-card.SILVER .mc-btn-action:hover {
+  background-color: #74747b;
+}
+.material-card.SILVER .mc-footer h4 {
+  color: black;
+}
+.material-card.SILVER .mc-footer a {
+  background-color: #00000080;
+}
+.material-card.SILVER.mc-active .mc-content {
+  /* background-color: #FCE4EC; */
+}
+.material-card.SILVER.mc-active .mc-footer {
+  background-color: gray;
+}
+.material-card.SILVER.mc-active .mc-btn-action {
+  border-color: white;
+}
+
+.material-card.AM h2 {
+  background-color: #cb2424;
+}
+.material-card.AM h2:after {
+  border-top-color: #cb2424;
+  border-right-color: #cb2424;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+.material-card.AM h2:before {
+  border-top-color: transparent;
+  border-right-color: #cb2424;
+  border-bottom-color: #cb2424;
+  border-left-color: transparent;
+}
+.material-card.AM.mc-active h2:before {
+  border-top-color: transparent;
+  border-right-color: #cb2424;
+  border-bottom-color: #cb2424;
+  border-left-color: transparent;
+}
+.material-card.AM.mc-active h2:after {
+  border-top-color: #cb2424;
+  border-right-color: #cb2424;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+}
+.material-card.AM .mc-btn-action {
+  background-color: #cb2424;
+}
+.material-card.AM .mc-btn-action:hover {
+  background-color: red;
+}
+.material-card.AM .mc-footer h4 {
+  color: black;
+}
+.material-card.AM .mc-footer a {
+  background-color: #992121;
+}
+.material-card.AM.mc-active .mc-content {
+  /* background-color: #F3E5F5; */
+}
+.material-card.AM.mc-active .mc-footer {
+  background-color: #d17272;
+}
+.material-card.AM.mc-active .mc-btn-action {
+  border-color: white;
+}
+/* .material-card.Blue-Grey h2 {
   background-color: #607D8B;
 }
 .material-card.Blue-Grey h2:after {
@@ -1010,105 +1108,9 @@ h1, h2, h3 {
   background-color: #CFD8DC;
 }
 .material-card.Blue-Grey.mc-active .mc-btn-action {
-  border-color: #ECEFF1;
-}
-.material-card.Pink h2 {
-  background-color: gray;
-}
-.material-card.Pink h2:after {
-  border-top-color: gray;
-  border-right-color: gray;
-  border-bottom-color: transparent;
-  border-left-color: transparent;
-}
-.material-card.Pink h2:before {
-  border-top-color: transparent;
-  border-right-color: gray;
-  border-bottom-color: gray;
-  border-left-color: transparent;
-}
-.material-card.Pink.mc-active h2:before {
-  border-top-color: transparent;
-  border-right-color: gray;
-  border-bottom-color: gray;
-  border-left-color: transparent;
-}
-.material-card.Pink.mc-active h2:after {
-  border-top-color: gray;
-  border-right-color: gray;
-  border-bottom-color: transparent;
-  border-left-color: transparent;
-}
-.material-card.Pink .mc-btn-action {
-  background-color: gray;
-}
-.material-card.Pink .mc-btn-action:hover {
-  background-color: #808080a1;
-}
-.material-card.Pink .mc-footer h4 {
-  color: black;
-}
-.material-card.Pink .mc-footer a {
-  background-color: black;
-}
-.material-card.Pink.mc-active .mc-content {
-  background-color: #FCE4EC;
-}
-.material-card.Pink.mc-active .mc-footer {
-  background-color: gray;
-}
-.material-card.Pink.mc-active .mc-btn-action {
-  border-color: #FCE4EC;
-}
-.material-card.Purple h2 {
-  background-color: #cb2424;
-}
-.material-card.Purple h2:after {
-  border-top-color: #cb2424;
-  border-right-color: #cb2424;
-  border-bottom-color: transparent;
-  border-left-color: transparent;
-}
-.material-card.Purple h2:before {
-  border-top-color: transparent;
-  border-right-color: #cb2424;
-  border-bottom-color: #cb2424;
-  border-left-color: transparent;
-}
-.material-card.Purple.mc-active h2:before {
-  border-top-color: transparent;
-  border-right-color: #cb2424;
-  border-bottom-color: #cb2424;
-  border-left-color: transparent;
-}
-.material-card.Purple.mc-active h2:after {
-  border-top-color: #cb2424;
-  border-right-color: #cb2424;
-  border-bottom-color: transparent;
-  border-left-color: transparent;
-}
-.material-card.Purple .mc-btn-action {
-  background-color: #cb2424;
-}
-.material-card.Purple .mc-btn-action:hover {
-  background-color: red;
-}
-.material-card.Purple .mc-footer h4 {
-  color: black;
-}
-.material-card.Purple .mc-footer a {
-  background-color: black;
-}
-.material-card.Purple.mc-active .mc-content {
-  background-color: #F3E5F5;
-}
-.material-card.Purple.mc-active .mc-footer {
-  background-color: #d17272;
-}
-.material-card.Purple.mc-active .mc-btn-action {
-  border-color: #F3E5F5;
-}
-.material-card.Deep-Purple h2 {
+  border-color: white;
+} */
+/* .material-card.Deep-Purple h2 {
   background-color: #673AB7;
 }
 .material-card.Deep-Purple h2:after {
@@ -1154,7 +1156,7 @@ h1, h2, h3 {
   background-color: #D1C4E9;
 }
 .material-card.Deep-Purple.mc-active .mc-btn-action {
-  border-color: #EDE7F6;
+  border-color: white;
 }
 .material-card.Indigo h2 {
   background-color: #3F51B5;
@@ -1202,7 +1204,7 @@ h1, h2, h3 {
   background-color: #C5CAE9;
 }
 .material-card.Indigo.mc-active .mc-btn-action {
-  border-color: #E8EAF6;
+  border-color: white;
 }
 .material-card.Blue h2 {
   background-color: #2196F3;
@@ -1250,7 +1252,7 @@ h1, h2, h3 {
   background-color: #BBDEFB;
 }
 .material-card.Blue.mc-active .mc-btn-action {
-  border-color: #E3F2FD;
+  border-color: white;
 }
 .material-card.Light-Blue h2 {
   background-color: #03A9F4;
@@ -1298,7 +1300,7 @@ h1, h2, h3 {
   background-color: #B3E5FC;
 }
 .material-card.Light-Blue.mc-active .mc-btn-action {
-  border-color: #E1F5FE;
+  border-color: white;
 }
 .material-card.Cyan h2 {
   background-color: #00BCD4;
@@ -1827,7 +1829,7 @@ h1, h2, h3 {
 }
 .material-card.Grey.mc-active .mc-btn-action {
   border-color: #FAFAFA;
-}
+} */
 
 @gm-Red-50: #FFEBEE;
 @gm-Red-100: #FFCDD2;
