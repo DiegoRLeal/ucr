@@ -8,7 +8,7 @@
       <tr>
         <th>Piloto</th>
         <th>Número do Carro</th>
-        <th>Substituto</th>
+        <th>Adversário</th>
         <th>Motivo da Penalidade</th>
         <th>Valor (segundos)</th>
         <th>Volta da Violação</th>
@@ -52,7 +52,7 @@
               <td><%= f.number_field "penalties[#{driver.id}][#{i}][penalty_cleared_in_lap]", value: driver.penalty_cleared_in_lap %></td>
               <td><%= f.number_field "penalties[#{driver.id}][#{i}][penalty_points]", value: penalty_point, class: 'form-control' %></td>
               <td>
-                <button type="button" class="add-penalty-btn btn btn-success" data-driver-id="<%= driver.id %>">+</button>
+                <button type="button" class="add-penalty-btn btn btn-success" data-driver-id="<%= driver.id %>" data-substitutes="<%= substitute_options.map { |opt| ["#{opt[0]}", opt[1]] }.to_json %>">+</button>
                 <button type="button" class="remove-penalty-btn btn btn-danger" data-driver-id="<%= driver.id %>">-</button>
               </td>
             </tr>
@@ -93,7 +93,7 @@
 <!-- JavaScript para adicionar/remover penalidades -->
 <script>
 document.addEventListener('turbo:load', () => {
-  let penaltyIndex = 0; // Manter o índice das penalidades
+  const penaltyIndexes = {}; // Manter o índice de penalidades para cada piloto
 
   // Adiciona uma nova linha de penalidade ao clicar no botão '+'
   document.addEventListener('click', function(event) {
@@ -116,10 +116,16 @@ document.addEventListener('turbo:load', () => {
 
       const template = document.querySelector('#penalty-template').content.cloneNode(true);
 
+      // Inicializa o índice de penalidades para o piloto, se necessário
+      if (!penaltyIndexes[driverId]) {
+        penaltyIndexes[driverId] = 0;
+      }
+
+      penaltyIndexes[driverId]++; // Incrementa o índice de penalidades para o piloto atual
+
       // Atualiza os ids do piloto no template clonado e garante que cada campo tenha um índice único
-      penaltyIndex++; // Incrementa o índice para novas penalidades
       template.querySelectorAll('input').forEach(input => {
-        input.name = input.name.replace('[]', `[${driverId}][${penaltyIndex}]`);
+        input.name = input.name.replace('[]', `[${driverId}][${penaltyIndexes[driverId]}]`);
       });
 
       // Insere o nome do piloto e o número do carro dinamicamente
@@ -128,7 +134,13 @@ document.addEventListener('turbo:load', () => {
 
       const select = template.querySelector('.pilot-dropdown');
       if (select) {
-        select.innerHTML = event.target.dataset.substitutes;
+        const substituteOptions = JSON.parse(event.target.dataset.substitutes);
+        substituteOptions.forEach(option => {
+          const optionElement = document.createElement('option');
+          optionElement.value = option[1];
+          optionElement.textContent = option[0];
+          select.appendChild(optionElement);
+        });
       }
 
       driverRow.insertAdjacentElement('afterend', template.firstElementChild);
