@@ -47,9 +47,12 @@
               <h4>
                 <%# Social %>
               </h4>
-                <a class="fa fa-fw fa-twitch"></a>
-                <a class="fa fa-fw fa-youtube"></a>
-                <a class="fa fa-fw fa-instagram"></a>
+                <a href="<%= pilot.twitch %>" target="_blank" title="Twitch">
+                  <i class="fab fa-twitch" id="social" aria-hidden="true"></i>
+                <a href="<%= pilot.youtube %>" target="_blank" title="YouTube">
+                  <i class="fab fa-youtube" id="social" aria-hidden="true"></i>
+                <a href="<%= pilot.instagram %>" target="_blank" title="Instagram">
+                  <i class="fab fa-instagram" id="social" aria-hidden="true"></i>
             </div>
           </article>
         </div>
@@ -91,9 +94,12 @@
               <h4>
                 <%# Social %>
               </h4>
-                <a class="fa fa-fw fa-twitch"></a>
-                <a class="fa fa-fw fa-youtube"></a>
-                <a class="fa fa-fw fa-instagram"></a>
+                <a href="<%= pilot.twitch %>" target="_blank" title="Twitch">
+                  <i class="fab fa-twitch" id="social" aria-hidden="true"></i>
+                <a href="<%= pilot.youtube %>" target="_blank" title="YouTube">
+                  <i class="fab fa-youtube" id="social" aria-hidden="true"></i>
+                <a href="<%= pilot.instagram %>" target="_blank" title="Instagram">
+                  <i class="fab fa-instagram" id="social" aria-hidden="true"></i>
             </div>
           </article>
         </div>
@@ -134,9 +140,12 @@
               <h4>
                 <%# Social %>
               </h4>
-                <a class="fa fa-fw fa-twitch"></a>
-                <a class="fa fa-fw fa-youtube"></a>
-                <a class="fa fa-fw fa-instagram"></a>
+                <a href="<%= pilot.twitch %>" target="_blank" title="Twitch">
+                  <i class="fab fa-twitch" id="social" aria-hidden="true"></i>
+                <a href="<%= pilot.youtube %>" target="_blank" title="YouTube">
+                  <i class="fab fa-youtube" id="social" aria-hidden="true"></i>
+                <a href="<%= pilot.instagram %>" target="_blank" title="Instagram">
+                  <i class="fab fa-instagram" id="social" aria-hidden="true"></i>
             </div>
           </article>
         </div>
@@ -994,6 +1003,9 @@
 }
 .material-card.mc-active .mc-footer a {
   top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .material-card.mc-active .mc-footer h4 {
   top: -32px;
