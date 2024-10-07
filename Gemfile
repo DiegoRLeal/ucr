@@ -75,3 +75,6 @@ gem 'image_processing', '~> 1.2'
 gem 'simple_form'
 gem 'google-api-client', '~> 0.53'
 gem 'rails-i18n'
+
+gem 'sidekiq'
+gem 'sidekiq-cron'
