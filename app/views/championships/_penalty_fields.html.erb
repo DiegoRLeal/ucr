@@ -1,0 +1,8 @@
+<tr class="penalty-fields">
+  <td><%= f.text_field :penalty_reason, placeholder: 'Motivo da Penalidade' %></td>
+  <td><%= f.number_field :penalty_value, placeholder: 'Valor (segundos)' %></td>
+  <td><%= f.number_field :penalty_violation_in_lap, placeholder: 'Volta da Violação' %></td>
+  <td><%= f.number_field :penalty_cleared_in_lap, placeholder: 'Volta da Limpeza' %></td>
+  <td><%= f.number_field :penalty_points, placeholder: 'Pontos de Penalidade', class: 'form-control' %></td>
+  <td><%= link_to 'Remover', '#', class: 'remove-penalty-btn btn btn-danger' %></td>
+</tr>
