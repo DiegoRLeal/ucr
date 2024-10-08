@@ -2,6 +2,12 @@
 
 <nav>
   <ul class="menu">
+    <li class="logo">
+      <%= link_to root_path do %>
+        <%= image_tag 'logo.png', alt: 'Logo', class: 'logo-image' %>
+      <% end %>
+    </li>
+
     <% if user_signed_in? %>
       <li>
         <% if current_user.admin? || current_user.ucrdriver? %>
@@ -10,7 +16,7 @@
           <% end %>
         <% else %>
           <%= link_to campeonatos_path, class: "menu-item", id: "user" do %>
-            <i class="menu-item fas fa-trophy"></i> Campeonatos
+            <i class="menu-item fas fa-trophy"></i>
           <% end %>
         <% end %>
       </li>
@@ -23,6 +29,7 @@
     <% end %>
   </ul>
 </nav>
+
 
 
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,600,800' rel='stylesheet' type='text/css'>
@@ -126,14 +133,18 @@ html {
 nav {
   background-color: black;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-around;
   align-items: center;
+  width: 100%;
+  gap: 1750px;
+  padding: 55px;
 }
+
 .menu {
-  display: flex;
+  display: contents;
   justify-content: center;
   align-items: center;
-  max-width: 720px;
+  /* max-width: 720px; */
   margin: 0;
   height: 10vh;
   list-style: none;
@@ -165,7 +176,7 @@ nav {
   }
 
   &:not(:last-child) {
-    margin-right: 30px;
+    /* margin-right: 30px; */
   }
 }
 
@@ -174,6 +185,34 @@ nav {
     background-position-x: 390px;
   }
 }
+
+.logo-image {
+  height: 100px; /* Ajuste o tamanho conforme necessário */
+  width: auto;
+}
+
+.menu li {
+  /* margin-right: 20px; Espaçamento entre os itens do menu */
+}
+
+.menu li.logo {
+  /* margin-right: auto; Deixa a logo à esquerda e os outros itens à direita */
+}
+
+@media screen and (max-width: 1000px) {
+  nav {
+    gap: 0;
+  }
+
+  .fas {
+    font-size: 35px;
+  }
+
+  .loading-text {
+    margin-left: -40px;
+  }
+}
+
 </style>
 
 <style>
