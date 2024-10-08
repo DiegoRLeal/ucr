@@ -56,11 +56,6 @@
                         data-driver-id="<%= driver.id %>"
                         data-substitutes="<%= (substitute_options || []).map { |opt| [opt[0], opt[1]] }.to_json.html_safe %>">+</button>
 
-                <button type="button" class="add-penalty-btn btn btn-success"
-                        data-driver-id="<%= driver.id %>"
-                        data-substitutes="<%= raw(substitute_options.to_json) %>">+</button>
-
-
                 <button type="button" class="remove-penalty-btn btn btn-danger"
                         data-driver-id="<%= driver.id %>">-</button>
               </td>
