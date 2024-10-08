@@ -7,29 +7,29 @@
 <nav id="menu">
   <div class="menu-item">
     <div class="menu-text">
-      <a href="#" onclick="loadContent1('/drivers')">Race Results</a>
+      <a href="#" onclick="loadContent('/drivers'); return false;">Race Results</a>
     </div>
-    <div class="sub-menu">
+    <%# <div class="sub-menu">
       <div class="icon-box">
         <div class="icon"><i class="fa-solid fa-square-poll-vertical"></i></div>
-        <div class="text">
-          <div class="title">
-            <a href="/drivers">Race Results <i class="far fa-arrow-right"></i></a>
-          </div>
-          <div class="sub-text">
+        <div class="text"> %>
+          <%# <div class="title"> %>
+            <%# <a href="/drivers">Race Results <i class="far fa-arrow-right"></i></a> %>
+          <%# </div> %>
+          <%# <div class="sub-text">
             <a href="/drivers">Check the latest race results</a>
           </div>
-        </div>
-      </div>
+        </div> %>
+      <%# </div>
       <div class="sub-menu-holder"></div>
-    </div>
+    </div> %>
   </div>
 
   <div class="menu-item">
     <div class="menu-text">
-      <a href="#" onclick="loadContent2('/championships')">Championship Results</a>
+      <a href="#" onclick="loadContent('/championships'); return false;">Championship Results</a>
     </div>
-    <div class="sub-menu">
+    <%# <div class="sub-menu">
       <div class="icon-box">
         <div class="icon"><i class="fa-solid fa-trophy"></i></i></div>
         <div class="text">
@@ -42,14 +42,14 @@
         </div>
       </div>
       <div class="sub-menu-holder"></div>
-    </div>
+    </div> %>
   </div>
 
   <div class="menu-item highlight">
     <div class="menu-text">
-      <a href="#" onclick="loadContent3('/users/edit')">Profile</a>
+      <a href="#" onclick="loadContent('/users/edit'); return false;">Profile</a>
     </div>
-    <div class="sub-menu">
+    <%# <div class="sub-menu">
       <div class="icon-box">
         <div class="icon"><i class="fa-solid fa-user"></i></div>
         <div class="text">
@@ -62,7 +62,7 @@
         </div>
       </div>
       <div class="sub-menu-holder"></div>
-    </div>
+    </div> %>
   </div>
 
   <% if current_user && current_user.admin? %>
@@ -611,55 +611,14 @@ nav .menu-item.highlight:hover ~ #sub-menu-container #sub-menu-holder #sub-menu-
   });
 </script>
 
-<%# RACE RESULTS %>
 <script>
-  function loadContent1(url) {
+  function loadContent(url) {
     fetch(url, {
-      headers: { 'X-Requested-With': 'XMLHttpRequest' }
-    })
-    .then(response => {
-      if (response.ok) {
-        return response.text();
-      } else {
-        throw new Error('Failed to load content');
+      method: 'GET',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type': 'text/html'
       }
-    })
-    .then(data => {
-      document.getElementById('sidebar-content').innerHTML = data;
-    })
-    .catch(error => {
-      console.error('Error loading content:', error);
-    });
-  }
-</script>
-
-<%# CHAMPIONSHIPS %>
-<script>
-  function loadContent2(url) {
-    fetch(url, {
-      headers: { 'X-Requested-With': 'XMLHttpRequest' }
-    })
-    .then(response => {
-      if (response.ok) {
-        return response.text();
-      } else {
-        throw new Error('Failed to load content');
-      }
-    })
-    .then(data => {
-      document.getElementById('sidebar-content').innerHTML = data;
-    })
-    .catch(error => {
-      console.error('Error loading content:', error);
-    });
-  }
-</script>
-
-<%# PROFILE %>
-<script>
-  function loadContent3(url) {
-    fetch(url, {
-      headers: { 'X-Requested-With': 'XMLHttpRequest' }
     })
     .then(response => {
       if (response.ok) {
