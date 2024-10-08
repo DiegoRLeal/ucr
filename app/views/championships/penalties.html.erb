@@ -103,8 +103,6 @@ document.addEventListener('turbo:load', () => {
       if (event.target.classList.contains('add-penalty-btn')) {
         event.preventDefault(); // Previne comportamento padrão
 
-        console.log("Botão + clicado");
-
         const driverRow = event.target.closest('tr');
         if (!driverRow) {
           console.error("Elemento 'driverRow' não encontrado");
@@ -112,18 +110,6 @@ document.addEventListener('turbo:load', () => {
         }
 
         const driverId = event.target.dataset.driverId;
-        const driverName = driverRow.querySelector('td:first-child')?.textContent;
-        const raceNumber = driverRow.querySelector('td:nth-child(2)')?.textContent;
-
-        console.log("Driver ID:", driverId);
-        console.log("Driver Name:", driverName);
-        console.log("Race Number:", raceNumber);
-
-        if (!driverName || !raceNumber) {
-          console.error("Nome do piloto ou número da corrida não encontrado");
-          return;
-        }
-
         const template = document.querySelector('#penalty-template').content.cloneNode(true);
 
         // Inicializa o índice de penalidades para o piloto, se necessário
@@ -132,43 +118,14 @@ document.addEventListener('turbo:load', () => {
         }
 
         penaltyIndexes[driverId]++; // Incrementa o índice de penalidades para o piloto atual
-        console.log("Índice de penalidades para o piloto:", penaltyIndexes[driverId]);
 
         // Atualiza os ids do piloto no template clonado e garante que cada campo tenha um índice único
         template.querySelectorAll('input').forEach(input => {
           input.name = input.name.replace('[]', `[${driverId}][${penaltyIndexes[driverId]}]`);
         });
 
-        // Insere o nome do piloto e o número do carro dinamicamente
-        template.querySelector('.driver-name').textContent = driverName;
-        template.querySelector('.race-number').textContent = raceNumber;
-
-        const select = template.querySelector('.pilot-dropdown');
-        if (select) {
-          const substitutes = event.target.getAttribute('data-substitutes');
-          console.log("Substitutes data:", event.target.getAttribute('data-substitutes'));
-
-
-          if (substitutes && substitutes !== "undefined") {
-            try {
-              const substituteOptions = JSON.parse(substitutes);
-              substituteOptions.forEach(option => {
-                const optionElement = document.createElement('option');
-                optionElement.value = option[1];
-                optionElement.textContent = option[0];
-                select.appendChild(optionElement);
-              });
-            } catch (error) {
-              console.error("Erro ao analisar substitutes:", error);
-            }
-          } else {
-            console.warn("Dataset 'substitutes' indefinido ou vazio.");
-          }
-        }
-
         // Adiciona a nova linha após a linha atual do driver
         driverRow.insertAdjacentElement('afterend', template.firstElementChild);
-        console.log("Nova linha de penalidade adicionada.");
       }
     });
 
@@ -176,36 +133,21 @@ document.addEventListener('turbo:load', () => {
     document.addEventListener('click', function(event) {
       if (event.target.classList.contains('remove-penalty-btn')) {
         const row = event.target.closest('tr');
-        const driverId = event.target.dataset.driverId;
+        const penaltyId = row.querySelector('input[name*="penalty_points"]').name;
 
-        // Busca todas as linhas de penalidade visíveis (que ainda não foram escondidas)
-        const visibleRows = Array.from(document.querySelectorAll(`tr.penalty-fields`)).filter(row => row.style.display !== 'none');
+        // Adicionar um campo oculto para informar que a penalidade foi removida
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = `${penaltyId.replace('penalty_points', '_destroy')}`;
+        input.value = '1';
+        row.appendChild(input);
 
-        console.log("Linhas visíveis:", visibleRows.length);
-
-        // Impede que a primeira linha visível seja removida
-        if (visibleRows.length > 1 && visibleRows[0] !== row) {
-          // Adicionar um campo oculto para informar que a penalidade foi removida
-          const penaltyId = row.querySelector('input[name*="penalty_points"]')?.name;
-          if (penaltyId) {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = `${penaltyId.replace('penalty_points', '_destroy')}`;
-            input.value = '1';
-            row.appendChild(input);
-          }
-
-          row.style.display = 'none'; // Esconde a linha, mas deixa no DOM para envio ao backend
-          console.log("Linha removida.");
-        } else if (visibleRows[0] === row) {
-          alert('A primeira linha de penalidade não pode ser removida.');
-        } else {
-          alert('O piloto precisa ter pelo menos uma linha de penalidade visível.');
-        }
+        row.style.display = 'none'; // Esconde a linha, mas deixa no DOM para envio ao backend
       }
     });
   }
 });
+
 </script>
 
 <style>

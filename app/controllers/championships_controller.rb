@@ -75,32 +75,30 @@ class ChampionshipsController < ApplicationController
       driver = Championship.find(driver_id)
 
       if penalty_params
-        # Recupera as penalidades atuais do banco de dados
-        existing_penalty_points = driver.penalty_points.present? ? driver.penalty_points.split(',').map(&:to_i) : []
-
-        new_penalty_points = []
+        # Recupera as penalidades atuais do banco de dados, removendo qualquer '0'
+        existing_penalty_points = driver.penalty_points.present? ? driver.penalty_points.split(',').map(&:to_i).reject { |p| p == 0 } : []
 
         # Itera sobre cada penalidade para o driver
         penalty_params.each do |index, penalty_data|
           if penalty_data[:_destroy] == "1"
             # Penalidade marcada para remoção
             penalty_to_remove = penalty_data[:penalty_points].to_i
-            existing_penalty_points.delete(penalty_to_remove) # Remove penalidade existente
+            existing_penalty_points.delete(penalty_to_remove) # Remove a penalidade existente
           else
             # Adicionar penalidade se o valor for diferente de 0 ou vazio e ainda não existir
             new_penalty_point = penalty_data[:penalty_points].to_i
             unless new_penalty_point == 0 || existing_penalty_points.include?(new_penalty_point)
-              new_penalty_points << new_penalty_point
+              existing_penalty_points << new_penalty_point
             end
           end
         end
 
-        # Combina as penalidades existentes com as novas (sem duplicatas)
-        combined_penalty_points = (existing_penalty_points + new_penalty_points).join(',')
+        # Remove duplicatas e '0', se ainda houver penalidades válidas
+        combined_penalty_points = existing_penalty_points.uniq.reject { |p| p == 0 }.join(',')
 
-        # Atualiza o campo penalty_points com as penalidades acumuladas
+        # Atualiza o campo penalty_points
         if combined_penalty_points.blank?
-          driver.update(penalty_points: "0")
+          driver.update(penalty_points: "0") # Se não houver penalidades válidas, salva como "0"
         else
           driver.update(penalty_points: combined_penalty_points)
         end
