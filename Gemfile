@@ -68,9 +68,12 @@ end
 
 gem 'pg', '~> 1.2'
 gem "devise"
+gem 'omniauth'
+gem 'omniauth-steam'
+
 gem "rails_admin", "3.0"
 gem "sassc-rails"
-gem "dotenv-rails"
+gem "dotenv-rails", groups: [:development, :test]
 gem 'image_processing', '~> 1.2'
 gem 'simple_form'
 gem 'google-api-client', '~> 0.53'

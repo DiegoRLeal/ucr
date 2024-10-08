@@ -29,9 +29,8 @@ module DriversHelper
     (consistency * 100).round(2)
   end
 
-  def calculate_points(position, penalty_points = 0)
+  def calculate_points(position, penalty_points = "0")
     puts "------------------Posição: #{position}, Penalty Points: #{penalty_points}"
-    @substitute_options = Championship.all.map { |driver| [driver.driver_first_name, driver.id] }
 
     # Tabela de pontos para cada posição
     points_table = {
@@ -52,17 +51,18 @@ module DriversHelper
       15 => 13
     }
 
-    # Calcula os pontos da posição
+    # Calcula os pontos da posição, verificando se a posição é válida
     total_points = points_table[position] || 0
 
-    # Verifica se penalty_points é uma string ou array e processa de acordo
-    penalty_total = if penalty_points.is_a?(String)
+    # Processa o campo penalty_points como string
+    # Caso a string esteja vazia ou contenha apenas "0", considera sem penalidade
+    penalty_total = if penalty_points.present? && penalty_points != "0"
                       penalty_points.split(',').map(&:to_i).sum
-                    elsif penalty_points.is_a?(Array)
-                      penalty_points.map(&:to_i).sum
                     else
-                      penalty_points.to_i
+                      0
                     end
+
+    puts "--------------------Total de penalidades calculadas: #{penalty_total}"
 
     # Subtrai os pontos de penalidade do total
     total_points -= penalty_total

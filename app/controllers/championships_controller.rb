@@ -63,6 +63,7 @@ class ChampionshipsController < ApplicationController
   # Lista todos os pilotos de uma determinada corrida para aplicar penalidades
   def penalties
     @championship = Championship.find(params[:id])
+    @driver = Championship.find_by(id: params[:id])
 
     # Seleciona todos os pilotos dessa corrida (session_date e session_time)
     @drivers = Championship.where(track_name: @championship.track_name, session_date: @championship.session_date, session_time: @championship.session_time)
@@ -74,25 +75,34 @@ class ChampionshipsController < ApplicationController
       driver = Championship.find(driver_id)
 
       if penalty_params
-        updated_penalty_points = []
+        # Recupera as penalidades atuais do banco de dados
+        existing_penalty_points = driver.penalty_points.present? ? driver.penalty_points.split(',').map(&:to_i) : []
 
+        new_penalty_points = []
+
+        # Itera sobre cada penalidade para o driver
         penalty_params.each do |index, penalty_data|
           if penalty_data[:_destroy] == "1"
-            # Penalidade marcada para remoção, não adicionar aos pontos
-            next
+            # Penalidade marcada para remoção
+            penalty_to_remove = penalty_data[:penalty_points].to_i
+            existing_penalty_points.delete(penalty_to_remove) # Remove penalidade existente
           else
-            # Adicionar penalidade apenas se o valor for diferente de 0 ou vazio
-            new_penalty_points = penalty_data[:penalty_points]
-            updated_penalty_points << new_penalty_points unless new_penalty_points.to_i == 0
+            # Adicionar penalidade se o valor for diferente de 0 ou vazio e ainda não existir
+            new_penalty_point = penalty_data[:penalty_points].to_i
+            unless new_penalty_point == 0 || existing_penalty_points.include?(new_penalty_point)
+              new_penalty_points << new_penalty_point
+            end
           end
         end
 
-        # Atualiza os penalty_points com os novos valores
-        if updated_penalty_points.empty?
-          # Se nenhuma penalidade for válida, garante que o campo seja atualizado com "0"
+        # Combina as penalidades existentes com as novas (sem duplicatas)
+        combined_penalty_points = (existing_penalty_points + new_penalty_points).join(',')
+
+        # Atualiza o campo penalty_points com as penalidades acumuladas
+        if combined_penalty_points.blank?
           driver.update(penalty_points: "0")
         else
-          driver.update(penalty_points: updated_penalty_points.join(','))
+          driver.update(penalty_points: combined_penalty_points)
         end
       end
     end

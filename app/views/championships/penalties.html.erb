@@ -18,52 +18,47 @@
       </tr>
     </thead>
     <tbody>
-      <% @drivers.sort_by { |driver| driver.driver_first_name.downcase }.each do |driver| %>
-        <% substitute_options = @drivers.reject { |d| d.id == driver.id }.sort_by { |d| d.driver_first_name }.map { |d| ["#{d.driver_first_name} #{d.driver_last_name}", d.id] } %>
+      <% substitute_options = @drivers.reject { |d| d.id == @driver.id }.sort_by { |d| d.driver_first_name }.map { |d| ["#{d.driver_first_name} #{d.driver_last_name}", d.id] } %>
 
-        <% penalty_points = driver.penalty_points.present? ? driver.penalty_points.split(',').reject { |p| p == "0" } : [] %>
+      <% penalty_points = @driver.penalty_points.present? ? @driver.penalty_points.split(',').reject { |p| p == "0" } : [] %>
 
-        <% if penalty_points.empty? %>
-          <tr class="penalty-fields" id="penalty-fields-<%= driver.id %>">
-            <td><%= driver.driver_first_name %> <%= driver.driver_last_name %></td>
-            <td><%= driver.race_number %></td>
+      <% if penalty_points.empty? %>
+        <tr class="penalty-fields" id="penalty-fields-<%= @driver.id %>">
+          <td><%= @driver.driver_first_name %> <%= @driver.driver_last_name %></td>
+          <td><%= @driver.race_number %></td>
+          <td>
+            <%= f.select "penalties[#{@driver.id}][0][driver_id]", options_for_select(substitute_options), class: 'pilot-dropdown' %>
+          </td>
+          <td><%= f.text_field "penalties[#{@driver.id}][0][penalty_reason]", value: @driver.penalty_reason %></td>
+          <td><%= f.number_field "penalties[#{@driver.id}][0][penalty_value]", value: @driver.penalty_value %></td>
+          <td><%= f.number_field "penalties[#{@driver.id}][0][penalty_violation_in_lap]", value: @driver.penalty_violation_in_lap %></td>
+          <td><%= f.number_field "penalties[#{@driver.id}][0][penalty_cleared_in_lap]", value: @driver.penalty_cleared_in_lap %></td>
+          <td><%= f.number_field "penalties[#{@driver.id}][0][penalty_points]", value: "", class: 'form-control' %></td>
+          <td>
+            <button type="button" class="add-penalty-btn btn btn-success" data-driver-id="<%= @driver.id %>">+</button>
+            <button type="button" class="remove-penalty-btn btn btn-danger" data-driver-id="<%= @driver.id %>">-</button>
+          </td>
+        </tr>
+      <% else %>
+        <% penalty_points.each_with_index do |penalty_point, i| %>
+          <tr class="penalty-fields" id="penalty-fields-<%= @driver.id %>">
+            <td><%= @driver.driver_first_name %> <%= @driver.driver_last_name %></td>
+            <td><%= @driver.race_number %></td>
+            <td><%= f.select "penalties[#{@driver.id}][#{i}][driver_id]", options_for_select(substitute_options), class: 'pilot-dropdown' %></td>
+            <td><%= f.text_field "penalties[#{@driver.id}][#{i}][penalty_reason]", value: @driver.penalty_reason %></td>
+            <td><%= f.number_field "penalties[#{@driver.id}][#{i}][penalty_value]", value: @driver.penalty_value %></td>
+            <td><%= f.number_field "penalties[#{@driver.id}][#{i}][penalty_violation_in_lap]", value: @driver.penalty_violation_in_lap %></td>
+            <td><%= f.number_field "penalties[#{@driver.id}][#{i}][penalty_cleared_in_lap]", value: @driver.penalty_cleared_in_lap %></td>
+            <td><%= f.number_field "penalties[#{@driver.id}][#{i}][penalty_points]", value: penalty_point, class: 'form-control' %></td>
             <td>
-              <%= f.select "penalties[#{driver.id}][0][driver_id]", options_for_select(substitute_options), class: 'pilot-dropdown' %>
-            </td>
-            <td><%= f.text_field "penalties[#{driver.id}][0][penalty_reason]", value: driver.penalty_reason %></td>
-            <td><%= f.number_field "penalties[#{driver.id}][0][penalty_value]", value: driver.penalty_value %></td>
-            <td><%= f.number_field "penalties[#{driver.id}][0][penalty_violation_in_lap]", value: driver.penalty_violation_in_lap %></td>
-            <td><%= f.number_field "penalties[#{driver.id}][0][penalty_cleared_in_lap]", value: driver.penalty_cleared_in_lap %></td>
-            <td><%= f.number_field "penalties[#{driver.id}][0][penalty_points]", value: "", class: 'form-control' %></td>
-            <td>
-              <button type="button" class="add-penalty-btn btn btn-success" data-driver-id="<%= driver.id %>">+</button>
-              <button type="button" class="remove-penalty-btn btn btn-danger" data-driver-id="<%= driver.id %>">-</button>
+              <button type="button" class="add-penalty-btn btn btn-success"
+                      data-driver-id="<%= @driver.id %>"
+                      data-substitutes="<%= (substitute_options || []).map { |opt| [opt[0], opt[1]] }.to_json.html_safe %>">+</button>
+
+              <button type="button" class="remove-penalty-btn btn btn-danger"
+                      data-driver-id="<%= @driver.id %>">-</button>
             </td>
           </tr>
-        <% else %>
-          <% penalty_points.each_with_index do |penalty_point, i| %>
-            <tr class="penalty-fields" id="penalty-fields-<%= driver.id %>">
-              <td><%= driver.driver_first_name %> <%= driver.driver_last_name %></td>
-              <td><%= driver.race_number %></td>
-              <td><%= f.select "penalties[#{driver.id}][#{i}][driver_id]", options_for_select(substitute_options), class: 'pilot-dropdown' %></td>
-              <td><%= f.text_field "penalties[#{driver.id}][#{i}][penalty_reason]", value: driver.penalty_reason %></td>
-              <td><%= f.number_field "penalties[#{driver.id}][#{i}][penalty_value]", value: driver.penalty_value %></td>
-              <td><%= f.number_field "penalties[#{driver.id}][#{i}][penalty_violation_in_lap]", value: driver.penalty_violation_in_lap %></td>
-              <td><%= f.number_field "penalties[#{driver.id}][#{i}][penalty_cleared_in_lap]", value: driver.penalty_cleared_in_lap %></td>
-              <td><%= f.number_field "penalties[#{driver.id}][#{i}][penalty_points]", value: penalty_point, class: 'form-control' %></td>
-              <td>
-
-
-                <button type="button" class="add-penalty-btn btn btn-success"
-                        data-driver-id="<%= driver.id %>"
-                        data-substitutes="<%= raw(substitute_options.to_json) %>">+</button>
-
-
-                <button type="button" class="remove-penalty-btn btn btn-danger"
-                        data-driver-id="<%= driver.id %>">-</button>
-              </td>
-            </tr>
-          <% end %>
         <% end %>
       <% end %>
     </tbody>
@@ -215,6 +210,6 @@ document.addEventListener('turbo:load', () => {
 
 <style>
   td, tr {
-    color: white;
+    color: black;
   }
 </style>

@@ -5,7 +5,7 @@ require "fileutils"
 require "json"
 
 class MainsController < ApplicationController
-  before_action :authenticate_user!, only: [:sidebar]
+  # before_action :authenticate_user!, only: [:sidebar]
 
   OOB_URI = "http://localhost:3000/job/oauth2callback".freeze
   APPLICATION_NAME = "Google Drive API Ruby".freeze
@@ -29,11 +29,11 @@ class MainsController < ApplicationController
     # Retornar as credenciais para serem usadas no serviço do Google Drive
     credentials
   end
-  
+
     def resultados
       @pilots = Pilot.all # ou algum filtro específico, como Pilot.where(...)
     end
-  
+
 
   # def job
   #   # Inicializar o serviço Google Drive

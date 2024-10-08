@@ -1,5 +1,9 @@
 <%= render "shared/loading" %>
 
+<div>
+  <%= link_to 'Login with Steam', user_steam_omniauth_authorize_path %>
+</div>
+
 <nav>
   <ul class="menu">
     <% if user_signed_in? %>

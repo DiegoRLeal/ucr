@@ -11,23 +11,23 @@
   </div>
 </h1>
 
-<% if @drivers.any? %>
+<%# <% if @drivers.any? %>
   <!-- Botão de aplicar penalidade fora da tabela, com base no primeiro driver -->
-  <div class="btn-wrapper">
-    <%= link_to penalties_championship_path(id: @drivers.first.id), class: 'Btn', method: :get do %>
-      <span id="btn-penal-1" class="text">
-        <i class="fas fa-exclamation-circle"></i> Aplicar Penalidade
-      </span>
-      <span id="btn-penal-2" class="svgIcon">
-        <svg fill="white" viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg">
-          <path d="M192 0C121 0 64 57 64 128v64H24c-13.25 0-24 10.75-24 24v272c0 13.25 10.75 24 24 24h336c13.25 0 24-10.75 24-24V216c0-13.25-10.75-24-24-24h-40v-64c0-71-57-128-128-128zm-48 128c0-26.51 21.49-48 48-48s48 21.49 48 48v64H144v-64zM48 448V224h288v224H48z"/>
-        </svg>
-      </span>
-    <% end %>
-  </div>
-<% else %>
-  <p>Nenhum piloto disponível para aplicar penalidades.</p>
-<% end %>
+  <%# <div class="btn-wrapper"> %>
+    <%# <%= link_to penalties_championship_path(id: @drivers.first.id), class: 'Btn', method: :get do %>
+      <%# <span id="btn-penal-1" class="text"> %>
+        <%# <i class="fas fa-exclamation-circle"></i> Aplicar Penalidade %>
+      <%# </span> %>
+      <%# <span id="btn-penal-2" class="svgIcon"> %>
+        <%# <svg fill="white" viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg"> %>
+          <%# <path d="M192 0C121 0 64 57 64 128v64H24c-13.25 0-24 10.75-24 24v272c0 13.25 10.75 24 24 24h336c13.25 0 24-10.75 24-24V216c0-13.25-10.75-24-24-24h-40v-64c0-71-57-128-128-128zm-48 128c0-26.51 21.49-48 48-48s48 21.49 48 48v64H144v-64zM48 448V224h288v224H48z"/> %>
+        <%# </svg> %>
+      <%# </span> %>
+    <%# <% end %>
+  <%# </div> %>
+<%# <% else %>
+  <%# <p>Nenhum piloto disponível para aplicar penalidades.</p> %>
+<%# <% end %>
 
 <div class="table-responsive container-lg py-4">
   <table class="table table-custom table-hover align-middle text-center">
@@ -35,7 +35,7 @@
       <tr>
         <th><%= t('show_pilot_times.piloto').html_safe %></th>
         <th class="car-marca"><%= t('show_pilot_times.marca').html_safe %></th> <!-- Coluna para a logo do carro -->
-        <th><%= t('show_pilot_times.carro').html_safe %></th> <!-- Coluna para o nome do carro -->
+        <th><%= t('show_pilot_times.carro').html_safe %></th>
         <th><%= t('show_pilot_times.melhor_volta').html_safe %></th>
         <th><%= t('show_pilot_times.volta_media').html_safe %></th>
         <th><%= t('show_pilot_times.total_voltas').html_safe %></th>
@@ -45,27 +45,20 @@
         <th><%= t('show_pilot_times.penalidades').html_safe %></th>
         <th><%= t('show_pilot_times.pontos').html_safe %></th>
         <th><%= t('show_pilot_times.acoes').html_safe %></th>
+        <th><%= t('show_pilot_times.aplicar_penalidade').html_safe %></th> <!-- Nova coluna para o botão de penalidade -->
       </tr>
     </thead>
     <tbody>
       <% @drivers.sort_by { |driver| driver.id }.each_with_index do |driver, index| %>
         <tr>
           <td><%= driver.driver_first_name %> <%= driver.driver_last_name %> # <%= driver.race_number %></td>
-          <!-- Coluna separada para a logo do carro -->
           <td>
             <img src="<%= car_image_path(driver.car_model.car_model) %>" alt="<%= driver.car_model.car_name %>" class="logo-car">
           </td>
-          <!-- Coluna separada para o nome do carro -->
           <td><%= driver.car_model.car_name %></td>
           <td><%= driver.best_lap.to_i < 2147483647 ? format_laptime(driver.best_lap.to_i) : "N/A" %></td>
-
-          <!-- Cálculo da volta média -->
           <td><%= driver.lap_count > 0 ? format_laptime(driver.average_laptime) : "N/A" %></td>
-
-          <!-- Total de voltas -->
           <td><%= driver.lap_count %></td>
-
-          <!-- Tempo total -->
           <td>
             <% if driver.total_time.present? %>
               <%= format_total_laptime(driver.total_time.to_i) %>
@@ -73,42 +66,49 @@
               N/A
             <% end %>
           </td>
-
-          <!-- Gap -->
           <td><%= calculate_gap(driver, index > 0 ? @drivers[index - 1] : nil) %></td>
-
-          <!-- Consistência -->
           <td><%= calculate_consistency(driver.laps) %> %</td>
-
-          <!-- Penalidades -->
           <td>
             <% reason_count = driver.penalty_reason.present? ? driver.penalty_reason.split(',').size : 0 %>
             <% penalty_points_count = driver.penalty_points.present? ? driver.penalty_points.split(',').reject { |p| p == "0" }.size : 0 %>
             <%= reason_count + penalty_points_count %>
           </td>
+          <td>
+            <%= puts "Penalty points for driver #{driver.driver_first_name} #{driver.driver_last_name}: #{driver.penalty_points}" %>
+            <%= calculate_points(index + 1, driver.penalty_points || "0") %>
+          </td>
 
-          <!-- Exibindo Pontos Calculados -->
-          <%= puts "---------------------Calculando pontos para #{driver.driver_first_name} com Penalidades: #{driver.penalty_points}" %>
-          <td><%= calculate_points(index + 1, driver.penalty_points || []) %></td>
-
-          <!-- Ações -->
           <td class="btn">
             <%= link_to show_lap_times_championships_path(track_name: params[:track_name], first_name: driver.driver_first_name, last_name: driver.driver_last_name, race_number: driver.race_number, session_date: driver.session_date, session_time: driver.session_time), class: 'Btn', method: :get do %>
-            <span class="text">
-              <i class="fas fa-stopwatch"></i> <%= t('show_pilot_times.ver_todas_voltas').html_safe %>
-            </span>
-            <span class="svgIcon">
-              <svg fill="white" viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg">
-                <path d="M280 64h40c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128C0 92.7 28.7 64 64 64h40 9.6C121 27.5 153.3 0 192 0s71 27.5 78.4 64H280zM64 112c-8.8 0-16 7.2-16 16V448c0 8.8 7.2 16 16 16H320c8.8 0 16-7.2 16-16V128c0-8.8-7.2-16-16-16H304v24c0 13.3-10.7 24-24 24H192 104c-13.3 0-24-10.7-24-24V112H64zm128-8a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"></path>
-              </svg>
-            </span>
-          <% end %>
+              <span class="text">
+                <i class="fas fa-stopwatch"></i> <%= t('show_pilot_times.ver_todas_voltas').html_safe %>
+              </span>
+              <span class="svgIcon">
+                <svg fill="white" viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M280 64h40c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128C0 92.7 28.7 64 64 64h40 9.6C121 27.5 153.3 0 192 0s71 27.5 78.4 64H280zM64 112c-8.8 0-16 7.2-16 16V448c0 8.8 7.2 16 16 16H320c8.8 0 16-7.2 16-16V128c0-8.8-7.2-16-16-16H304v24c0 13.3-10.7 24-24 24H192 104c-13.3 0-24-10.7-24-24V112H64zm128-8a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"></path>
+                </svg>
+              </span>
+            <% end %>
+          </td>
+          <!-- Botão de aplicar penalidade para o piloto -->
+          <td>
+            <%= link_to penalties_championship_path(id: driver.id), class: 'Btn', method: :get do %>
+              <span id="btn-penal-1" class="text">
+                <i class="fas fa-exclamation-circle"></i> Aplicar Penalidade
+              </span>
+              <span id="btn-penal-2" class="svgIcon">
+                <svg fill="white" viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M192 0C121 0 64 57 64 128v64H24c-13.25 0-24 10.75-24 24v272c0 13.25 10.75 24 24 24h336c13.25 0 24-10.75 24-24V216c0-13.25-10.75-24-24-24h-40v-64c0-71-57-128-128-128zm-48 128c0-26.51 21.49-48 48-48s48 21.49 48 48v64H144v-64zM48 448V224h288v224H48z"/>
+                </svg>
+              </span>
+            <% end %>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
 </div>
+
 
 
 <button class="button" onclick="history.back()">
