@@ -30,6 +30,9 @@ module DriversHelper
   end
 
   def calculate_points(position, penalty_points = 0)
+    puts "------------------Posição: #{position}, Penalty Points: #{penalty_points}"
+    @substitute_options = Championship.all.map { |driver| [driver.driver_first_name, driver.id] }
+
     # Tabela de pontos para cada posição
     points_table = {
       1 => 40,
@@ -111,7 +114,6 @@ module DriversHelper
 
     format_total_laptime(gap)
   end
-
 
   def race(track_name, session_date, session_time)
     # Buscar os resultados diretamente da tabela 'drivers'

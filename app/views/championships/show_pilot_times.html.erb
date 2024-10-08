@@ -49,7 +49,6 @@
     </thead>
     <tbody>
       <% @drivers.sort_by { |driver| driver.id }.each_with_index do |driver, index| %>
-      <%# <% penalty_info = calculate_penalty_info(driver) %>
         <tr>
           <td><%= driver.driver_first_name %> <%= driver.driver_last_name %> # <%= driver.race_number %></td>
           <!-- Coluna separada para a logo do carro -->
@@ -68,7 +67,6 @@
 
           <!-- Tempo total -->
           <td>
-            <% driver = @drivers[index] %>
             <% if driver.total_time.present? %>
               <%= format_total_laptime(driver.total_time.to_i) %>
             <% else %>
@@ -89,8 +87,8 @@
             <%= reason_count + penalty_points_count %>
           </td>
 
-
           <!-- Exibindo Pontos Calculados -->
+          <%= puts "---------------------Calculando pontos para #{driver.driver_first_name} com Penalidades: #{driver.penalty_points}" %>
           <td><%= calculate_points(index + 1, driver.penalty_points || []) %></td>
 
           <!-- Ações -->

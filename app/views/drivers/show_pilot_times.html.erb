@@ -88,7 +88,6 @@
   </table>
 </div>
 
-
 <button class="button" onclick="history.back()">
   <div class="button-box">
     <span class="button-elem">
@@ -107,7 +106,6 @@
     </span>
   </div>
 </button>
-
 
 <style>
 .flag {
@@ -459,7 +457,7 @@ section{
 
 <script>
   $(window).on("load resize ", function() {
-  var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
-  $('.tbl-header').css({'padding-right':scrollWidth});
-}).resize();
+    var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
+    $('.tbl-header').css({'padding-right':scrollWidth});
+  }).resize();
 </script>
