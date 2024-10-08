@@ -15,6 +15,7 @@
   <table class="table table-custom table-hover align-middle text-center">
     <thead>
       <tr>
+        <th>Posição</th>
         <th><%= t('show_pilot_times.piloto').html_safe %></th>
         <th class="car-marca"><%= t('show_pilot_times.marca').html_safe %></th> <!-- Coluna para a logo do carro -->
         <th><%= t('show_pilot_times.carro').html_safe %></th> <!-- Coluna para o nome do carro -->
@@ -30,8 +31,10 @@
       </tr>
     </thead>
     <tbody>
-      <% @drivers.sort_by { |driver| driver.id }.each_with_index do |driver, index| %>
+      <% @drivers.sort_by { |driver| [-driver.lap_count.to_i, driver.total_time.to_i] }.each_with_index do |driver, index| %>
+
         <tr>
+          <td><%= index + 1 %></td>
           <td><%= driver.driver_first_name %> <%= driver.driver_last_name %> # <%= driver.race_number %></td>
           <!-- Coluna separada para a logo do carro -->
           <td>
