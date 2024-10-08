@@ -100,7 +100,7 @@
             <span><%= current_user.full_name %> | <%= current_user.email %></span>
           </div>
           <div class="sub-text">
-            <a href="<%= destroy_user_session_path %>" data-method="delete" data-turbo="false">Logout</a>
+            <%= button_to "Logout", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "btn btn-danger" %>
           </div>
         </div>
       </div>
@@ -235,7 +235,7 @@ nav .menu-text a:hover {
 }
 
 nav .menu-item:hover ~ #sub-menu-container #sub-menu-holder {
-    animation: clipPath 0.25s ease-out 1 forwards;        
+    animation: clipPath 0.25s ease-out 1 forwards;
     transition: clip-path 0.25s ease-out, left 0.15s ease-out, height 0.15s ease-out;
     opacity: 1;
     right: auto;
@@ -335,7 +335,7 @@ nav .menu-item:nth-of-type(4):hover ~ #sub-menu-container #sub-menu-holder {
     100% {
         transform: rotateX(0deg) scale(1);
         top: 4.5em;
-        opacity: 1;        
+        opacity: 1;
     }
 }
 
