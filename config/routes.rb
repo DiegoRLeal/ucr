@@ -16,7 +16,6 @@ Rails.application.routes.draw do
   get "campeonatos", to: 'mains#campeonatos', as: 'campeonatos'
   get "patrocinio", to: 'mains#patrocinio', as: 'patrocinio'
   get "pilotos", to: 'mains#pilotos', as: 'pilotos'
-  get "pilotos2", to: 'mains#pilotos2', as: 'pilotos2'
   get "resultados", to: 'mains#resultados', as: 'resultados'
   get "setups", to: 'mains#setups', as: 'setups'
   get "sidebar", to: 'mains#sidebar', as: 'sidebar'
