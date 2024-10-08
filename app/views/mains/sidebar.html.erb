@@ -7,7 +7,7 @@
 <nav id="menu">
   <div class="menu-item">
     <div class="menu-text">
-      <a href="/drivers">Race Results</a>
+      <a href="#" onclick="loadContent1('/drivers')">Race Results</a>
     </div>
     <div class="sub-menu">
       <div class="icon-box">
@@ -27,7 +27,7 @@
 
   <div class="menu-item">
     <div class="menu-text">
-      <a href="/championships">Championship Results</a>
+      <a href="#" onclick="loadContent2('/championships')">Championship Results</a>
     </div>
     <div class="sub-menu">
       <div class="icon-box">
@@ -47,7 +47,7 @@
 
   <div class="menu-item highlight">
     <div class="menu-text">
-      <a href="/users/edit">Profile</a>
+      <a href="#" onclick="loadContent3('/users/edit')">Profile</a>
     </div>
     <div class="sub-menu">
       <div class="icon-box">
@@ -94,13 +94,13 @@
     </div>
     <div class="sub-menu">
       <div class="icon-box">
-        <div class="icon"><i class="fa-regular fa-user"></i></div>
+        <div class="icon"><i class="fa-solid fa-user"></i></div>
         <div class="text">
           <div class="title">
             <span><%= current_user.full_name %> | <%= current_user.email %></span>
           </div>
           <div class="sub-text">
-            <%= button_to "Logout", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "btn btn-danger" %>
+            <a href="<%= destroy_user_session_path %>" data-method="delete" data-turbo="false">Logout</a>
           </div>
         </div>
       </div>
@@ -111,9 +111,10 @@
 
 </nav>
 
-<div id="main-content" class="main-content" data-turbo="false">
-  <!-- O conteúdo da página será carregado aqui -->
+<div id="sidebar-content">
+  <!-- O conteúdo será carregado aqui dinamicamente -->
 </div>
+
 
 <button class="button" onclick="history.back()">
   <div class="button-box">
@@ -161,8 +162,8 @@ body {
     background-color: #283e51d4;
     font-family: 'Roboto', sans-serif;
     height: 100vh;
-    overflow: hidden;
     width: 100vw;
+    display: flow-root;
 }
 
 nav {
@@ -593,4 +594,70 @@ nav .menu-item.highlight:hover ~ #sub-menu-container #sub-menu-holder #sub-menu-
   document.getElementById('race-results-link').addEventListener('click', function() {
     window.location.href = "/drivers"; // Redireciona para a página de resultados
   });
+</script>
+
+<%# RACE RESULTS %>
+<script>
+  function loadContent1(url) {
+    fetch(url, {
+      headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.text();
+      } else {
+        throw new Error('Failed to load content');
+      }
+    })
+    .then(data => {
+      document.getElementById('sidebar-content').innerHTML = data;
+    })
+    .catch(error => {
+      console.error('Error loading content:', error);
+    });
+  }
+</script>
+
+<%# CHAMPIONSHIPS %>
+<script>
+  function loadContent2(url) {
+    fetch(url, {
+      headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.text();
+      } else {
+        throw new Error('Failed to load content');
+      }
+    })
+    .then(data => {
+      document.getElementById('sidebar-content').innerHTML = data;
+    })
+    .catch(error => {
+      console.error('Error loading content:', error);
+    });
+  }
+</script>
+
+<%# PROFILE %>
+<script>
+  function loadContent3(url) {
+    fetch(url, {
+      headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.text();
+      } else {
+        throw new Error('Failed to load content');
+      }
+    })
+    .then(data => {
+      document.getElementById('sidebar-content').innerHTML = data;
+    })
+    .catch(error => {
+      console.error('Error loading content:', error);
+    });
+  }
 </script>
