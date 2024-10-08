@@ -508,6 +508,11 @@ h2 {
   opacity: 1;
 }
 
+.fa {
+  opacity: 0;
+  transition: opacity 1s;
+}
+
 .icons {
   position: absolute;
   fill: #fff;
@@ -521,12 +526,18 @@ h2 {
   justify-content: space-around;
 }
 
+#social {
+  color: white;
+}
+
 /* Estilos dinâmicos com nth-child */
 .card:nth-child(odd) {
   background-color: rgba(255, 255, 255, 0.1);
+  background-size: cover;
 }
 
 .card:nth-child(even) {
   background-color: rgba(0, 0, 0, 0.1);
+  background-size: cover;
 }
 </style>
