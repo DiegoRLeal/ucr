@@ -1,8 +1,17 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_admin_locale
   before_action :set_locale
 
   private
+
+  def set_admin_locale
+    if request.fullpath.start_with?("/admin")  # Detecta se está acessando o RailsAdmin
+      I18n.locale = :en  # Define o idioma para inglês ao acessar o RailsAdmin
+    else
+      I18n.locale = I18n.default_locale  # Mantém o idioma padrão para o restante da aplicação
+    end
+  end
 
   def set_locale
     if params[:locale]
