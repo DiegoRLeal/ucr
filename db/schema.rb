@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_07_171802) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_09_215145) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -71,11 +71,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_07_171802) do
     t.string "session_type"
     t.string "track_name"
     t.text "laps"
-    t.string "penalty_reason"
-    t.string "penalty_type"
-    t.integer "penalty_value"
-    t.integer "penalty_violation_in_lap"
-    t.integer "penalty_cleared_in_lap"
+    t.string "penalty_reason", default: [], array: true
+    t.string "penalty_type", default: [], array: true
+    t.integer "penalty_value", default: [], array: true
+    t.integer "penalty_violation_in_lap", default: [], array: true
+    t.integer "penalty_cleared_in_lap", default: [], array: true
     t.string "post_race_penalty_reason"
     t.string "post_race_penalty_type"
     t.integer "post_race_penalty_value"
@@ -85,7 +85,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_07_171802) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "year"
-    t.string "penalty_points"
+    t.integer "penalty_points", default: [], array: true
     t.string "season"
   end
 

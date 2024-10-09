@@ -15,11 +15,11 @@ class Championship < ApplicationRecord
     lap_count > 0 ? total_laptime / lap_count : 0
   end
 
-  def penalties
-    if penalty_reason.present? || penalty_type.present? || penalty_value.present?
-      "#{penalty_reason} - #{penalty_type} (#{penalty_value})"
-    else
-      "0"
-    end
-  end
+  # def penalties
+  #   if penalty_reason.present? || penalty_type.present? || penalty_value.present?
+  #     "#{penalty_reason} - #{penalty_type} (#{penalty_value})"
+  #   else
+  #     "0"
+  #   end
+  # end
 end

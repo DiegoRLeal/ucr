@@ -1,6 +1,7 @@
 class ChampionshipsController < ApplicationController
   include ApplicationHelper  # Incluir o ApplicationHelper para usar format_laptime
   include DriversHelper  # Incluir o ApplicationHelper para usar race
+  before_action :set_championship, only: [:edit, :update, :add_penalty, :apply_penalties, :destroy]
 
   def index
     @tracks = Championship.distinct.order(:track_name).pluck(:track_name)
@@ -69,49 +70,61 @@ class ChampionshipsController < ApplicationController
     @drivers = Championship.where(track_name: @championship.track_name, session_date: @championship.session_date, session_time: @championship.session_time)
   end
 
-  # Aplica as penalidades aos pilotos selecionados
-  def apply_penalties
-    params[:penalties].each do |driver_id, penalty_params|
-      driver = Championship.find(driver_id)
+  def add_penalty
+    # Adicionando uma nova penalidade
+    @championship.penalty_reason << "Nova Penalidade"
+    @championship.penalty_value << 5
+    @championship.penalty_violation_in_lap << 3
+    @championship.penalty_cleared_in_lap << 5
+    @championship.penalty_points = [@championship.penalty_points, "10"].compact.join(',')
 
-      if penalty_params
-        # Recupera as penalidades atuais do banco de dados, removendo qualquer '0'
-        existing_penalty_points = driver.penalty_points.present? ? driver.penalty_points.split(',').map(&:to_i).reject { |p| p == 0 } : []
-
-        # Itera sobre cada penalidade para o driver
-        penalty_params.each do |index, penalty_data|
-          if penalty_data[:_destroy] == "1"
-            # Penalidade marcada para remoção
-            penalty_to_remove = penalty_data[:penalty_points].to_i
-            existing_penalty_points.delete(penalty_to_remove) # Remove a penalidade existente
-          else
-            # Adicionar penalidade se o valor for diferente de 0 ou vazio e ainda não existir
-            new_penalty_point = penalty_data[:penalty_points].to_i
-            unless new_penalty_point == 0 || existing_penalty_points.include?(new_penalty_point)
-              existing_penalty_points << new_penalty_point
-            end
-          end
-        end
-
-        # Remove duplicatas e '0', se ainda houver penalidades válidas
-        combined_penalty_points = existing_penalty_points.uniq.reject { |p| p == 0 }.join(',')
-
-        # Atualiza o campo penalty_points
-        if combined_penalty_points.blank?
-          driver.update(penalty_points: "0") # Se não houver penalidades válidas, salva como "0"
-        else
-          driver.update(penalty_points: combined_penalty_points)
-        end
-      end
+    if @championship.save
+      redirect_to edit_championship_path(@championship), notice: 'Penalidade adicionada com sucesso.'
+    else
+      render :edit
     end
+  end
 
-    # Redireciona de volta para a view `show_pilot_times`
-    redirect_to show_pilot_times_championships_path(track_name: params[:track_name], session_date: params[:session_date], session_time: params[:session_time])
+  def apply_penalties
+    championship = Championship.find(params[:id])
+  end
+
+  def new
+    @championship = Championship.new
+  end
+
+  def edit
+  end
+
+  def update
+    puts params[:championship] # Adiciona esta linha para inspecionar os parâmetros no log
+    if @championship.update(championship_params)
+      redirect_to show_pilot_times_championships_path(session_date: @championship.session_date, session_time: @championship.session_time, track_name: @championship.track_name), notice: 'Campeonato atualizado com sucesso.'
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @championship.destroy
+    redirect_to championships_url, notice: 'Campeonato deletado com sucesso.'
   end
 
   private
 
-  def penalty_params
-    params.require(:championship).permit(:penalty_reason, :penalty_type, :penalty_value, :penalty_violation_in_lap, :penalty_cleared_in_lap)
+  def set_championship
+    @championship = Championship.find(params[:id])
   end
+
+  def championship_params
+    params.require(:championship).permit(
+      penalty_reason: [],
+      penalty_type: [],
+      penalty_value: [],
+      penalty_violation_in_lap: [],
+      penalty_cleared_in_lap: [],
+      penalty_points: []
+    )
+  end
+
 end

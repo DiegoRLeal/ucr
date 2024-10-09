@@ -36,7 +36,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :championships, only: [:index] do
+  resources :championships do
     collection do
       get 'show_pilot_times'
       get 'show_lap_times'
@@ -46,6 +46,7 @@ Rails.application.routes.draw do
     member do
       get :penalties  # Para exibir os pilotos e aplicar penalidades
       patch :apply_penalties  # Para aplicar as penalidades selecionadas
+      get 'add_penalty'
     end
   end
 

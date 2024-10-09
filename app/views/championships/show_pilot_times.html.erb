@@ -70,15 +70,20 @@
           </td>
           <td><%= calculate_gap(driver, index > 0 ? @drivers[index - 1] : nil) %></td>
           <td><%= calculate_consistency(driver.laps) %> %</td>
-          <td>
-            <% reason_count = driver.penalty_reason.present? ? driver.penalty_reason.split(',').size : 0 %>
-            <% penalty_points_count = driver.penalty_points.present? ? driver.penalty_points.split(',').reject { |p| p == "0" }.size : 0 %>
-            <%= reason_count + penalty_points_count %>
-          </td>
-          <td>
-            <%= puts "Penalty points for driver #{driver.driver_first_name} #{driver.driver_last_name}: #{driver.penalty_points}" %>
-            <%= calculate_points(index + 1, driver.penalty_points || "0") %>
-          </td>
+
+        <td>
+         <% reason_count = driver.penalty_reason.is_a?(Array) ? driver.penalty_reason.reject(&:blank?).size : driver.penalty_reason.to_s.split(',').reject(&:blank?).size %>
+<% penalty_points_count = driver.penalty_points.is_a?(Array) ? driver.penalty_points.reject { |p| p.blank? || p.to_i == 0 }.size : driver.penalty_points.to_s.split(',').reject { |p| p.blank? || p.to_i == 0 }.size %>
+
+
+        </td>
+
+
+          <td><%= calculate_points(index + 1, driver.penalty_points || "0") %></td>
+
+
+
+
 
           <td class="btn">
             <%= link_to show_lap_times_championships_path(track_name: params[:track_name], first_name: driver.driver_first_name, last_name: driver.driver_last_name, race_number: driver.race_number, session_date: driver.session_date, session_time: driver.session_time), class: 'Btn', method: :get do %>

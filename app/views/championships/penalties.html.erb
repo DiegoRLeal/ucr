@@ -1,15 +1,10 @@
-<%= form_with url: apply_penalties_championship_path(@championship), method: :patch, data: { turbo: false } do |f| %>
-  <%= hidden_field_tag :track_name, @championship.track_name %>
-  <%= hidden_field_tag :session_date, @championship.session_date %>
-  <%= hidden_field_tag :session_time, @championship.session_time %>
-
+<%= form_with model: @championship, local: true, data: { turbo: false } do |f| %>
+  <h3>Penalidades</h3>
   <table>
     <thead>
       <tr>
-        <th>Piloto</th>
-        <th>Número do Carro</th>
-        <th>Adversário</th>
         <th>Motivo da Penalidade</th>
+        <th>Tipo da Penalidade</th>
         <th>Valor (segundos)</th>
         <th>Volta da Violação</th>
         <th>Volta da Limpeza</th>
@@ -17,140 +12,81 @@
         <th>Ações</th>
       </tr>
     </thead>
-    <tbody>
-      <% substitute_options = @drivers.reject { |d| d.id == @driver.id }.sort_by { |d| d.driver_first_name }.map { |d| ["#{d.driver_first_name} #{d.driver_last_name}", d.id] } %>
+    <tbody id="penalty-fields">
+      <% penalty_reasons = @championship.penalty_reason || [] %>
+      <% penalty_types = @championship.penalty_type || [] %>
+      <% penalty_values = @championship.penalty_value || [] %>
+      <% penalty_violation_in_laps = @championship.penalty_violation_in_lap || [] %>
+      <% penalty_cleared_in_laps = @championship.penalty_cleared_in_lap || [] %>
+      <% penalty_points = @championship.penalty_points || [] %>
 
-      <% penalty_points = @driver.penalty_points.present? ? @driver.penalty_points.split(',').reject { |p| p == "0" } : [] %>
-
-      <% if penalty_points.empty? %>
-        <tr class="penalty-fields" id="penalty-fields-<%= @driver.id %>">
-          <td><%= @driver.driver_first_name %> <%= @driver.driver_last_name %></td>
-          <td><%= @driver.race_number %></td>
+      <% penalty_reasons.each_with_index do |reason, index| %>
+        <tr class="penalty-row">
+          <td><%= f.text_field "penalty_reason[]", value: reason %></td>
+          <td><%= f.text_field "penalty_type[]", value: penalty_types[index] %></td>
+          <td><%= f.number_field "penalty_value[]", value: penalty_values[index] %></td>
+          <td><%= f.number_field "penalty_violation_in_lap[]", value: penalty_violation_in_laps[index] %></td>
+          <td><%= f.number_field "penalty_cleared_in_lap[]", value: penalty_cleared_in_laps[index] %></td>
+          <td><%= f.number_field "penalty_points[]", value: penalty_points[index], class: 'penalty-points-field' %></td>
           <td>
-            <%= f.select "penalties[#{@driver.id}][0][driver_id]", options_for_select(substitute_options), class: 'pilot-dropdown' %>
-          </td>
-          <td><%= f.text_field "penalties[#{@driver.id}][0][penalty_reason]", value: @driver.penalty_reason %></td>
-          <td><%= f.number_field "penalties[#{@driver.id}][0][penalty_value]", value: @driver.penalty_value %></td>
-          <td><%= f.number_field "penalties[#{@driver.id}][0][penalty_violation_in_lap]", value: @driver.penalty_violation_in_lap %></td>
-          <td><%= f.number_field "penalties[#{@driver.id}][0][penalty_cleared_in_lap]", value: @driver.penalty_cleared_in_lap %></td>
-          <td><%= f.number_field "penalties[#{@driver.id}][0][penalty_points]", value: "", class: 'form-control' %></td>
-          <td>
-            <button type="button" class="add-penalty-btn btn btn-success" data-driver-id="<%= @driver.id %>">+</button>
-            <button type="button" class="remove-penalty-btn btn btn-danger" data-driver-id="<%= @driver.id %>">-</button>
+            <%= link_to 'Remover', '#', class: 'remove-penalty btn btn-danger', data: { index: index } %>
           </td>
         </tr>
-      <% else %>
-        <% penalty_points.each_with_index do |penalty_point, i| %>
-          <tr class="penalty-fields" id="penalty-fields-<%= @driver.id %>">
-            <td><%= @driver.driver_first_name %> <%= @driver.driver_last_name %></td>
-            <td><%= @driver.race_number %></td>
-            <td><%= f.select "penalties[#{@driver.id}][#{i}][driver_id]", options_for_select(substitute_options), class: 'pilot-dropdown' %></td>
-            <td><%= f.text_field "penalties[#{@driver.id}][#{i}][penalty_reason]", value: @driver.penalty_reason %></td>
-            <td><%= f.number_field "penalties[#{@driver.id}][#{i}][penalty_value]", value: @driver.penalty_value %></td>
-            <td><%= f.number_field "penalties[#{@driver.id}][#{i}][penalty_violation_in_lap]", value: @driver.penalty_violation_in_lap %></td>
-            <td><%= f.number_field "penalties[#{@driver.id}][#{i}][penalty_cleared_in_lap]", value: @driver.penalty_cleared_in_lap %></td>
-            <td><%= f.number_field "penalties[#{@driver.id}][#{i}][penalty_points]", value: penalty_point, class: 'form-control' %></td>
-            <td>
-              <button type="button" class="add-penalty-btn btn btn-success"
-                      data-driver-id="<%= @driver.id %>"
-                      data-substitutes="<%= (substitute_options || []).map { |opt| [opt[0], opt[1]] }.to_json.html_safe %>">+</button>
-
-              <button type="button" class="remove-penalty-btn btn btn-danger"
-                      data-driver-id="<%= @driver.id %>">-</button>
-            </td>
-          </tr>
-        <% end %>
       <% end %>
     </tbody>
   </table>
 
-  <%= f.submit "Aplicar Penalidades" %>
+  <h4>Total de Pontos Subtraídos: <span id="total-points"><%= penalty_points.sum %></span></h4>
+
+  <!-- Botão para adicionar nova linha de penalidade -->
+  <%= link_to 'Adicionar Penalidade', '#', id: 'add-penalty', class: 'btn btn-success' %>
+
+  <!-- Botão de submit -->
+  <%= f.submit 'Salvar Penalidades', class: 'btn btn-primary' %>
 <% end %>
 
-<!-- Template escondido para nova linha de penalidade -->
-<template id="penalty-template">
-  <tr class="penalty-fields">
-    <td class="driver-name"></td>
-    <td class="race-number"></td>
-    <td>
-      <select class="pilot-dropdown">
-        <!-- Será preenchido dinamicamente pelo JavaScript -->
-      </select>
-    </td>
-    <td><input type="text" name="penalties[][penalty_reason]" value=""></td>
-    <td><input type="number" name="penalties[][penalty_value]" value=""></td>
-    <td><input type="number" name="penalties[][penalty_violation_in_lap]" value=""></td>
-    <td><input type="number" name="penalties[][penalty_cleared_in_lap]" value=""></td>
-    <td>
-      <input type="number" name="penalties[][penalty_points]" value="" class="penalty-points-input">
-    </td>
-    <td>
-      <button type="button" class="remove-penalty-btn btn btn-danger">-</button>
-    </td>
-  </tr>
-</template>
-
 <script>
-document.addEventListener('turbo:load', () => {
-  const penaltyIndexes = {}; // Manter o índice de penalidades para cada piloto
-
-  // Verifica se os eventos já foram registrados para evitar múltiplos disparos
-  if (!window.penaltyEventsRegistered) {
-    window.penaltyEventsRegistered = true; // Marcar como registrado
-
-    // Adiciona uma nova linha de penalidade ao clicar no botão '+'
-    document.addEventListener('click', function(event) {
-      if (event.target.classList.contains('add-penalty-btn')) {
-        event.preventDefault(); // Previne comportamento padrão
-
-        const driverRow = event.target.closest('tr');
-        if (!driverRow) {
-          console.error("Elemento 'driverRow' não encontrado");
-          return;
+  document.addEventListener('DOMContentLoaded', () => {
+    function recalculateTotalPoints() {
+      let total = 0;
+      document.querySelectorAll('.penalty-points-field').forEach(field => {
+        const value = parseInt(field.value);
+        if (!isNaN(value) && value !== 0) {
+          total += value;
         }
+      });
+      document.getElementById('total-points').textContent = total;
+    }
 
-        const driverId = event.target.dataset.driverId;
-        const template = document.querySelector('#penalty-template').content.cloneNode(true);
-
-        // Inicializa o índice de penalidades para o piloto, se necessário
-        if (!penaltyIndexes[driverId]) {
-          penaltyIndexes[driverId] = 0;
-        }
-
-        penaltyIndexes[driverId]++; // Incrementa o índice de penalidades para o piloto atual
-
-        // Atualiza os ids do piloto no template clonado e garante que cada campo tenha um índice único
-        template.querySelectorAll('input').forEach(input => {
-          input.name = input.name.replace('[]', `[${driverId}][${penaltyIndexes[driverId]}]`);
-        });
-
-        // Adiciona a nova linha após a linha atual do driver
-        driverRow.insertAdjacentElement('afterend', template.firstElementChild);
+    // Adiciona evento para recalcular os pontos quando valores mudam
+    document.addEventListener('input', function (e) {
+      if (e.target && e.target.matches('.penalty-points-field')) {
+        recalculateTotalPoints();
       }
     });
 
-    // Remove uma linha de penalidade ao clicar no botão '-'
-    document.addEventListener('click', function(event) {
-      if (event.target.classList.contains('remove-penalty-btn')) {
-        const row = event.target.closest('tr');
-        const penaltyId = row.querySelector('input[name*="penalty_points"]').name;
+    document.getElementById('add-penalty').addEventListener('click', (e) => {
+      e.preventDefault();
+      const newPenaltyRow = `
+        <tr class="penalty-row">
+          <td><input type="text" name="championship[penalty_reason][]" value="" /></td>
+          <td><input type="text" name="championship[penalty_type][]" value="" /></td>
+          <td><input type="number" name="championship[penalty_value][]" value="0" /></td>
+          <td><input type="number" name="championship[penalty_violation_in_lap][]" value="0" /></td>
+          <td><input type="number" name="championship[penalty_cleared_in_lap][]" value="0" /></td>
+          <td><input type="number" name="championship[penalty_points][]" value="0" class="penalty-points-field" /></td>
+          <td><a href="#" class="remove-penalty btn btn-danger">Remover</a></td>
+        </tr>`;
+      document.getElementById('penalty-fields').insertAdjacentHTML('beforeend', newPenaltyRow);
+      recalculateTotalPoints();
+    });
 
-        // Adicionar um campo oculto para informar que a penalidade foi removida
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = `${penaltyId.replace('penalty_points', '_destroy')}`;
-        input.value = '1';
-        row.appendChild(input);
-
-        row.style.display = 'none'; // Esconde a linha, mas deixa no DOM para envio ao backend
+    document.addEventListener('click', function (e) {
+      if (e.target && e.target.matches('.remove-penalty')) {
+        e.preventDefault();
+        e.target.closest('.penalty-row').remove();
+        recalculateTotalPoints();
       }
     });
-  }
-});
+  });
 </script>
-
-<style>
-  td, tr {
-    color: black;
-  }
-</style>
