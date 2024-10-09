@@ -694,7 +694,6 @@
 
 </body>
 </html>
-
 <%= render 'shared/footer' %>
 
 <style type="text/css">
@@ -751,6 +750,10 @@
 </style>
 
 <style>
+  #social:hover {
+    color: red;
+  }
+
   .fa-spin-fast {
   -webkit-animation: fa-spin-fast 0.2s infinite linear;
   animation: fa-spin-fast 0.2s infinite linear;
@@ -1036,6 +1039,13 @@
   border-bottom-color: white;
   border-left-color: transparent;
 }
+
+.material-card.PRO.mc-active,
+.material-card.SILVER.mc-active,
+.material-card.AM.mc-active {
+  height: 277px;
+}
+
 .material-card.PRO.mc-active h2:before {
   border-top-color: transparent;
   border-right-color: white;
