@@ -213,7 +213,7 @@ nav {
   }
 
   .loading-text {
-    margin-left: -40px;
+    /* margin-left: -40px; */
   }
 }
 
@@ -999,7 +999,17 @@ textarea, label {
     }
   }
 
-@media screen and (min-width: 2560px) {
+  @media screen and (max-width: 1000px) {
+    .container-menu {
+      display: grid;
+    }
+    
+    .footer {
+      display: grid;
+    }
+  }
+
+  @media screen and (min-width: 2560px) {
   .row {
     width: 50% !important;
   }
