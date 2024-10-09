@@ -174,11 +174,11 @@
 
   /* Estilização para as logos dos carros */
 .logo-car {
-    width: auto; /* Mantém a proporção da imagem */
-    height: 25px; /* Define uma altura fixa */
-    max-width: 45px; /* Limita a largura máxima */
-    object-fit: contain; /* Assegura que a imagem se ajuste dentro da caixa sem distorcer */
-    display: inline-block;
+  width: auto; /* Mantém a proporção da imagem */
+  height: 25px; /* Define uma altura fixa */
+  max-width: 45px; /* Limita a largura máxima */
+  object-fit: contain; /* Assegura que a imagem se ajuste dentro da caixa sem distorcer */
+  display: inline-block;
 }
 
 .car-marca {
@@ -364,20 +364,23 @@ h1{
   text-align: center;
 }
 
-table{
+table {
   width:100%;
   table-layout: fixed;
 }
-.tbl-header{
+
+.tbl-header {
   background-color: rgba(255,255,255,0.3);
  }
-.tbl-content{
+
+.tbl-content  {
   height:300px;
   overflow-x:auto;
   margin-top: 0px;
   border: 1px solid rgba(255,255,255,0.3);
 }
-th{
+
+th  {
   padding: 20px 15px;
   text-align: center;
   font-weight: 900;
@@ -385,7 +388,7 @@ th{
   color: #fff;
   text-transform: uppercase;
 }
-td{
+td  {
   padding: 15px;
   text-align: center;
   vertical-align:middle;
@@ -402,45 +405,19 @@ td{
   display: flex;
 }
 
-/* tr:last-of-type td {
-	box-shadow: inset 0 -1px 0 #fff;
-}
-
-tr:last-of-type td:first-child {
-	box-shadow: inset 1px -1px 0 #fff;
-}
-
-tr:last-of-type td:last-child {
-	box-shadow: inset -1px -1px 0 #fff;
-}	 */
-
-tbody:hover td {
-	/* color: transparent; */
-	/* text-shadow: 0 0 3px #fff; */
-}
-
-tbody:hover tr:hover td {
-	color: #fff;
-	text-shadow: 0 1px 0 #fff;
-  font-size: 15px;
-}
-
-tbody:hover tr:hover td .Btn {
-  font-size: 12px;
-}
-
-
 /* demo styles */
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
 html {
   height: -webkit-fill-available
 }
+
 body{
   background-color: #283e51d4;
   font-family: 'Roboto', sans-serif;
   /* height: 100vh; */
 }
+
 section{
   margin: 50px;
 }
@@ -483,22 +460,22 @@ section{
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 }
 
-  /* Responsividade */
-  @media (max-width: 768px) {
-    .page-title {
-      font-size: 1.8rem;
-    }
-
-    .table-custom td {
-      font-size: 0.85rem;
-    }
+/* Responsividade */
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 1.8rem;
   }
 
-  @media (min-width: 2560px) {
-    .text {
-      width: 85%;
-    }
+  .table-custom td {
+    font-size: 0.85rem;
   }
+}
+
+@media (min-width: 2560px) {
+  .text {
+    width: 85%;
+  }
+}
 </style>
 
 
