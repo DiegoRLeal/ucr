@@ -213,7 +213,7 @@ nav {
   }
 
   .loading-text {
-    margin-left: -40px;
+    /* margin-left: -40px; */
   }
 }
 
@@ -609,7 +609,7 @@ a {
   -moz-transition: all 0.3s ease 0s;
   -o-transition: all 0.3s ease 0s;
   transition: all 0.3s ease 0s; }
-  a:hover, a:focus {
+  h1 a:hover, h1 a:focus {
     color: white !important;
     text-decoration: none;
     outline: 0 none; }
@@ -999,7 +999,17 @@ textarea, label {
     }
   }
 
-@media screen and (min-width: 2560px) {
+  @media screen and (max-width: 1000px) {
+    .container-menu {
+      display: grid;
+    }
+    
+    .footer {
+      display: grid;
+    }
+  }
+
+  @media screen and (min-width: 2560px) {
   .row {
     width: 50% !important;
   }

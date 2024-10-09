@@ -393,6 +393,10 @@ section.slide-option {
 	.no-marg { margin:0 0 0 0; }
 }
 
+.slide-option {
+  background-color: black;
+}
+
 div.highway-slider {
 	display:flex;
 	justify-content:center;
@@ -743,7 +747,7 @@ button {
 }
 
 body {
-  background: linear-gradient(to bottom, #485563ba, #29323c);
+  background: linear-gradient(to bottom, #29323c, #485563ba);
 }
 
 
@@ -977,6 +981,20 @@ header {
   .lists .list svg {
     height: 1rem;
     width: 1rem;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .card {
+      width: 300px;
+    }
+
+  .mega {
+    margin-top: 300px;
+  }
+
+  .planos {
+    margin: 0;
   }
 }
 

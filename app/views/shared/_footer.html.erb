@@ -29,7 +29,7 @@
     </div>
 
     <div class="row">
-      Under Control Racing® • Copyright © <%= Time.now.year %>  - All rights reserved <br> Developed By: Leal Coding
+      Under Control Racing® • Copyright © <%= Time.now.year %>  - All rights reserved <br> Developed by: Leal Coding
     </div>
   </div>
 </footer>
@@ -63,7 +63,7 @@ body {
 }
 
 a:hover {
-  color: #FF5733 !important;
+  /* color: #FF5733 !important; */
   text-decoration: underline;
   transition: color 0.3s ease;
 }
@@ -88,6 +88,7 @@ a:hover {
   color: gray;
   font-size: 0.8em;
   display: flex;
+  justify-content: center;
 }
 
 .footer .row a {
@@ -97,7 +98,7 @@ a:hover {
 }
 
 .footer .row a:hover {
-  color: #fff;
+  color: red;
 }
 
 .footer .row ul {
@@ -135,4 +136,11 @@ a:hover {
     margin: 0% 3%;
   }
 }
+
+  @media screen and (max-width: 1000px) {
+  .footer {
+      display: grid;
+      font-size: 0.8em;
+    }
+  }
 </style>
