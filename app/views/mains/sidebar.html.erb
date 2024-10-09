@@ -7,68 +7,68 @@
 <nav id="menu">
   <div class="menu-item">
     <div class="menu-text">
-      <a href="#" onclick="loadContent('/drivers'); return false;">Race Results</a>
+      <a href="#">Race Results</a>
     </div>
-    <%# <div class="sub-menu">
+    <div class="sub-menu">
       <div class="icon-box">
         <div class="icon"><i class="fa-solid fa-square-poll-vertical"></i></div>
-        <div class="text"> %>
-          <%# <div class="title"> %>
-            <%# <a href="/drivers">Race Results <i class="far fa-arrow-right"></i></a> %>
-          <%# </div> %>
-          <%# <div class="sub-text">
-            <a href="/drivers">Check the latest race results</a>
+        <div class="text">
+           <div class="title">
+             <a href="/drivers" data-dynamic="true">Race Results <i class="far fa-arrow-right"></i></a>
+           </div>
+           <div class="sub-text">
+            <a href="/drivers" data-dynamic="true">Check the latest Race Results</a>
           </div>
-        </div> %>
-      <%# </div>
+        </div>
+       </div>
       <div class="sub-menu-holder"></div>
-    </div> %>
+    </div>
   </div>
 
   <div class="menu-item">
     <div class="menu-text">
-      <a href="#" onclick="loadContent('/championships'); return false;">Championship Results</a>
+      <a href="#">Championship Results</a>
     </div>
-    <%# <div class="sub-menu">
+    <div class="sub-menu">
       <div class="icon-box">
         <div class="icon"><i class="fa-solid fa-trophy"></i></i></div>
         <div class="text">
           <div class="title">
-            <a href="/championships">Championship Results <i class="far fa-arrow-right"></i></a>
+            <a href="/championships" data-dynamic="true">Championship Results <i class="far fa-arrow-right"></i></a>
           </div>
           <div class="sub-text">
-            <a href="/championships">Check the championship standings</a>
+            <a href="/championships" data-dynamic="true">Check the championship standings</a>
           </div>
         </div>
       </div>
       <div class="sub-menu-holder"></div>
-    </div> %>
+    </div>
   </div>
 
   <div class="menu-item highlight">
     <div class="menu-text">
-      <a href="#" onclick="loadContent('/users/edit'); return false;">Profile</a>
+      <a href="#">Profile</a>
     </div>
-    <%# <div class="sub-menu">
+    <div class="sub-menu">
       <div class="icon-box">
         <div class="icon"><i class="fa-solid fa-user"></i></div>
         <div class="text">
           <div class="title">
-            <a href="/users/edit">User Profile <i class="far fa-arrow-right"></i></a>
+            <a href="/users/edit" data-dynamic="true">User Profile <i class="far fa-arrow-right"></i></a>
           </div>
           <div class="sub-text">
-            <a href="/users/edit">Manage your profile and settings</a>
+            <a href="/users/edit" data-dynamic="true">Manage your profile and settings</a>
           </div>
         </div>
       </div>
       <div class="sub-menu-holder"></div>
-    </div> %>
+    </div>
   </div>
 
   <% if current_user && current_user.admin? %>
     <div class="menu-item highlight">
       <div class="menu-text">
-        <a href="/admin" target="_blank">Admin</a>
+        <a href="#">Admin</a>
       </div>
       <div class="sub-menu">
         <div class="icon-box">
@@ -604,37 +604,41 @@ nav .menu-item.highlight:hover ~ #sub-menu-container #sub-menu-holder #sub-menu-
 </style>
 
 <script>
-  // Função para redirecionar para a página de resultados das corridas
-  document.getElementById('race-results').addEventListener('click', function() {
-    window.location.href = "/drivers"; // Redireciona para a página de resultados
-  });
-
-  document.getElementById('race-results-link').addEventListener('click', function() {
-    window.location.href = "/drivers"; // Redireciona para a página de resultados
-  });
-</script>
-
-<script>
-  function loadContent(url) {
-    fetch(url, {
-      method: 'GET',
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-        'Content-Type': 'text/html'
-      }
-    })
-    .then(response => {
-      if (response.ok) {
-        return response.text();
-      } else {
-        throw new Error('Failed to load content');
-      }
-    })
-    .then(data => {
-      document.getElementById('sidebar-content').innerHTML = data;
-    })
-    .catch(error => {
-      console.error('Error loading content:', error);
-    });
+function loadContent(url) {
+  // Verifica se o conteúdo já está carregado para evitar recarregar desnecessariamente
+  if (document.getElementById('sidebar-content').getAttribute('data-loaded') === url) {
+    return; // Se já foi carregado, não faz nada
   }
+
+  fetch(url, {
+    method: 'GET',
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+      'Content-Type': 'text/html'
+    }
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.text();
+    } else {
+      throw new Error('Failed to load content');
+    }
+  })
+  .then(data => {
+    document.getElementById('sidebar-content').innerHTML = data;
+    document.getElementById('sidebar-content').setAttribute('data-loaded', url); // Marca o conteúdo como carregado
+  })
+  .catch(error => {
+    console.error('Error loading content:', error);
+  });
+}
+
+// Prevenir o comportamento padrão e carregar conteúdo sem redirecionar
+document.querySelectorAll('a[data-dynamic="true"]').forEach(link => {
+  link.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevenir que o link redirecione
+    loadContent(this.getAttribute('href')); // Carregar o conteúdo
+  });
+});
+
 </script>
