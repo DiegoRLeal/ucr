@@ -21,13 +21,13 @@
           </div>
           <div class="icons">
             <a href="<%= pilot.instagram %>" target="_blank" title="Instagram">
-              <i class="fab fa-instagram" id="social" aria-hidden="true"></i>
+              <i class="fab fa-instagram" style="color: white;" id="social" aria-hidden="true"></i>
             </a>
             <a href="<%= pilot.twitch %>" target="_blank" title="Twitch">
-              <i class="fab fa-twitch" id="social" aria-hidden="true"></i>
+              <i class="fab fa-twitch" style="color: white;" id="social" aria-hidden="true"></i>
             </a>
             <a href="<%= pilot.youtube %>" target="_blank" title="YouTube">
-              <i class="fab fa-youtube" id="social" aria-hidden="true"></i>
+              <i class="fab fa-youtube" style="color: white;" id="social" aria-hidden="true"></i>
             </a>
           </div>
         </div>
@@ -48,13 +48,13 @@
           </div>
           <div class="icons">
             <a href="<%= pilot.instagram %>" target="_blank" title="Instagram">
-              <i class="fab fa-instagram" id="social" aria-hidden="true"></i>
+              <i class="fab fa-instagram" style="color: white;" id="social" aria-hidden="true"></i>
             </a>
             <a href="<%= pilot.twitch %>" target="_blank" title="Twitch">
-              <i class="fab fa-twitch" id="social" aria-hidden="true"></i>
+              <i class="fab fa-twitch" style="color: white;" id="social" aria-hidden="true"></i>
             </a>
             <a href="<%= pilot.youtube %>" target="_blank" title="YouTube">
-              <i class="fab fa-youtube" id="social" aria-hidden="true"></i>
+              <i class="fab fa-youtube" style="color: white;" id="social" aria-hidden="true"></i>
             </a>
           </div>
         </div>
@@ -75,13 +75,13 @@
           </div>
           <div class="icons">
             <a href="<%= pilot.instagram %>" target="_blank" title="Instagram">
-              <i class="fab fa-instagram" id="social" aria-hidden="true"></i>
+              <i class="fab fa-instagram" style="color: white;" id="social" aria-hidden="true"></i>
             </a>
             <a href="<%= pilot.twitch %>" target="_blank" title="Twitch">
-              <i class="fab fa-twitch" id="social" aria-hidden="true"></i>
+              <i class="fab fa-twitch" style="color: white;" id="social" aria-hidden="true"></i>
             </a>
             <a href="<%= pilot.youtube %>" target="_blank" title="YouTube">
-              <i class="fab fa-youtube" id="social" aria-hidden="true"></i>
+              <i class="fab fa-youtube" style="color: white;" id="social" aria-hidden="true"></i>
             </a>
           </div>
         </div>
@@ -110,24 +110,22 @@ html {
     -o-font-feature-settings: "liga", "dlig";
     font-feature-settings: "liga", "dlig";
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+
+h1,h2,h3,h4,h5,h6 {
   line-height: 1;
   margin-top: 0;
   color: #fff;
 	display: inline-block;
 	position: relative;
 }
+
 p{
   margin-top: 4rem;
   color: #fff;
   font-size: 0.9rem;
   line-height: 1
 }
+
 .gigantic{font-size: 11rem;}
 .supersize{font-size: 8rem;}
 .tera {
@@ -224,9 +222,11 @@ p{
 	top:50%;
 	margin-bottom: -4px;
 }
+
 .thick-header-line:before{
 	left: -7.5rem;
 }
+
 .thick-header-line:after{
 	right: -7.5rem;
 }
@@ -241,12 +241,15 @@ p{
 	top:50%;
 	margin-bottom: -1px;
 }
+
 .thin-header-line:before{
 	left: -7.5rem;
 }
+
 .thin-header-line:after{
 	right: -7rem;
 }
+
 .line-after-heading:before{
 	content: "";
 	display: block;
@@ -259,8 +262,8 @@ p{
 	left: 0;
 	right: 0;
 	bottom: -2rem;
-
 }
+
 .double-header-line:before, .double-header-line:after{
 	content: "";
 	display: block;
@@ -273,12 +276,15 @@ p{
 	top: 50%;
 	margin-bottom: -4px;
 }
+
 .double-header-line:before{
 	left: -7.5rem;
 }
+
 .double-header-line:after{
 	right: -7.5rem;
 }
+
 .decorative-span{
   display: inline-block;
     font-size: 30px;
@@ -288,6 +294,7 @@ p{
     vertical-align: middle;
 	color: #fff;
 }
+
 .decorative-span:before, .decorative-span:after{
     background-color: #fff;
     bottom: 100%;
@@ -297,6 +304,7 @@ p{
     position: absolute;
     right: 0;
 }
+
 .decorative-span:after {
     top: 96%;
 }
@@ -316,7 +324,7 @@ p{
 	transform: translateY(-50%);
 	line-height: 50px;
 	text-align: center;
-	color:#f0ad00;
+	/* color: #f0ad00; */
 	font-family: 'bree serif';
 	font-style: normal;
 	font-size: 1.3rem;
@@ -326,7 +334,6 @@ p{
 }
 
 /* ==== General styles ==== */
-
 .wrapper{
 	max-width: 53.33rem;
 	margin: 0 auto;
@@ -336,8 +343,6 @@ p{
 	top:15%;
 	text-align: center;
 }
-
-
 </style>
 
 <style>
@@ -482,10 +487,6 @@ footer {
   opacity: 1;
 }
 
-.card:hover .fa {
-  opacity: 1;
-}
-
 h2 {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: white;
@@ -510,8 +511,21 @@ h2 {
 
 .fa {
   opacity: 0;
-  transition: opacity 1s;
+  transition: opacity 1s, color 0.3s ease; /* Transição suave para visibilidade e cor */
 }
+
+.card:hover .fa {
+  opacity: 1; /* Mostra os ícones quando o card está em hover */
+}
+
+/* .fa:hover {
+  color: red !important; 
+} */
+
+#social:hover {
+  color: red !important; /* Muda a cor para vermelho no hover */
+}
+
 
 .icons {
   position: absolute;
@@ -526,8 +540,13 @@ h2 {
   justify-content: space-around;
 }
 
-#social {
-  color: white;
+.icons {
+  opacity: 0;
+  transition: opacity 0.8s ease; /* Animação suave para exibir as icons */
+}
+
+.card:hover .icons {
+  opacity: 1; /* Mostra as icons no hover */
 }
 
 /* Estilos dinâmicos com nth-child */
