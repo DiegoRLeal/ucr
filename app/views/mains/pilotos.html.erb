@@ -21,13 +21,13 @@
           </div>
           <div class="icons">
             <a href="<%= pilot.instagram %>" target="_blank" title="Instagram">
-              <i class="fab fa-instagram" style="color: white;" id="social" aria-hidden="true"></i>
+              <i class="fab fa-instagram" style="color: white;" id="social-card" aria-hidden="true"></i>
             </a>
             <a href="<%= pilot.twitch %>" target="_blank" title="Twitch">
-              <i class="fab fa-twitch" style="color: white;" id="social" aria-hidden="true"></i>
+              <i class="fab fa-twitch" style="color: white;" id="social-card" aria-hidden="true"></i>
             </a>
             <a href="<%= pilot.youtube %>" target="_blank" title="YouTube">
-              <i class="fab fa-youtube" style="color: white;" id="social" aria-hidden="true"></i>
+              <i class="fab fa-youtube" style="color: white;" id="social-card" aria-hidden="true"></i>
             </a>
           </div>
         </div>
@@ -48,13 +48,13 @@
           </div>
           <div class="icons">
             <a href="<%= pilot.instagram %>" target="_blank" title="Instagram">
-              <i class="fab fa-instagram" style="color: white;" id="social" aria-hidden="true"></i>
+              <i class="fab fa-instagram" style="color: white;" id="social-card" aria-hidden="true"></i>
             </a>
             <a href="<%= pilot.twitch %>" target="_blank" title="Twitch">
-              <i class="fab fa-twitch" style="color: white;" id="social" aria-hidden="true"></i>
+              <i class="fab fa-twitch" style="color: white;" id="social-card" aria-hidden="true"></i>
             </a>
             <a href="<%= pilot.youtube %>" target="_blank" title="YouTube">
-              <i class="fab fa-youtube" style="color: white;" id="social" aria-hidden="true"></i>
+              <i class="fab fa-youtube" style="color: white;" id="social-card" aria-hidden="true"></i>
             </a>
           </div>
         </div>
@@ -75,13 +75,13 @@
           </div>
           <div class="icons">
             <a href="<%= pilot.instagram %>" target="_blank" title="Instagram">
-              <i class="fab fa-instagram" style="color: white;" id="social" aria-hidden="true"></i>
+              <i class="fab fa-instagram" style="color: white;" id="social-card" aria-hidden="true"></i>
             </a>
             <a href="<%= pilot.twitch %>" target="_blank" title="Twitch">
-              <i class="fab fa-twitch" style="color: white;" id="social" aria-hidden="true"></i>
+              <i class="fab fa-twitch" style="color: white;" id="social-card" aria-hidden="true"></i>
             </a>
             <a href="<%= pilot.youtube %>" target="_blank" title="YouTube">
-              <i class="fab fa-youtube" style="color: white;" id="social" aria-hidden="true"></i>
+              <i class="fab fa-youtube" style="color: white;" id="social-card" aria-hidden="true"></i>
             </a>
           </div>
         </div>
@@ -93,7 +93,7 @@
 <%= render 'shared/footer' %>
 
 <style>
-  @import url(https://fonts.googleapis.com/css?family=Lato:100,300,400|Playfair+Display:400,700,400italic|Libre+Baskerville:400,700,400italic|Muli:300,400|Open+Sans:400,300,700|Oswald:400,700|Raleway:400,100,300,700|Montserrat:400,700|Merriweather:400,300,300italic,400italic,700|Bree+Serif|Vollkorn:400italic,400,700|Abril+Fatface|Cardo:400,400italic);
+@import url(https://fonts.googleapis.com/css?family=Lato:100,300,400|Playfair+Display:400,700,400italic|Libre+Baskerville:400,700,400italic|Muli:300,400|Open+Sans:400,300,700|Oswald:400,700|Raleway:400,100,300,700|Montserrat:400,700|Merriweather:400,300,300italic,400italic,700|Bree+Serif|Vollkorn:400italic,400,700|Abril+Fatface|Cardo:400,400italic);
 
 html {
   box-sizing: border-box;
@@ -287,22 +287,22 @@ p{
 
 .decorative-span{
   display: inline-block;
-    font-size: 30px;
-    line-height: 60px;
-    margin: 0 10px;
-    position: relative;
-    vertical-align: middle;
+  font-size: 30px;
+  line-height: 60px;
+  margin: 0 10px;
+  position: relative;
+  vertical-align: middle;
 	color: #fff;
 }
 
 .decorative-span:before, .decorative-span:after{
-    background-color: #fff;
-    bottom: 100%;
-    content: "";
-    height: 2px;
-    left: 0;
-    position: absolute;
-    right: 0;
+  background-color: #fff;
+  bottom: 100%;
+  content: "";
+  height: 2px;
+  left: 0;
+  position: absolute;
+  right: 0;
 }
 
 .decorative-span:after {
@@ -510,7 +510,6 @@ h2 {
 }
 
 .fa {
-  opacity: 0;
   transition: opacity 1s, color 0.3s ease; /* Transição suave para visibilidade e cor */
 }
 
@@ -518,14 +517,9 @@ h2 {
   opacity: 1; /* Mostra os ícones quando o card está em hover */
 }
 
-/* .fa:hover {
-  color: red !important; 
-} */
-
-#social:hover {
+#social-card:hover {
   color: red !important; /* Muda a cor para vermelho no hover */
 }
-
 
 .icons {
   position: absolute;
