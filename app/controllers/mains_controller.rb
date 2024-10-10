@@ -13,23 +13,6 @@ class MainsController < ApplicationController
   SCOPE = Google::Apis::DriveV3::AUTH_DRIVE
 
   # Método de autorização
-  # def authorize
-  #   client_id = Google::Auth::ClientId.new(ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'])
-  #   token_store = Google::Auth::Stores::FileTokenStore.new(file: TOKEN_PATH)
-  #   authorizer = Google::Auth::UserAuthorizer.new(client_id, SCOPE, token_store)
-  #   user_id = "default"
-  #   credentials = authorizer.get_credentials(user_id)
-
-  #   # Se as credenciais não forem encontradas, redirecionar para a página de login do Google
-  #   if credentials.nil?
-  #     url = authorizer.get_authorization_url(base_url: OOB_URI)
-  #     redirect_to url, allow_other_host: true
-  #   end
-
-  #   # Retornar as credenciais para serem usadas no serviço do Google Drive
-  #   credentials
-  # end
-
   def authorize
     client_id = Google::Auth::ClientId.new(ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'])
     token_store = Google::Auth::Stores::FileTokenStore.new(file: TOKEN_PATH)
@@ -61,8 +44,6 @@ class MainsController < ApplicationController
     credentials
   end
 
-
-
   def resultados
     @pilots = Pilot.all # ou algum filtro específico, como Pilot.where(...)
   end
@@ -86,6 +67,8 @@ class MainsController < ApplicationController
   end
 
   def job
+    log_file = File.open("processamento_pilotos_detalhado.log", "a")
+
     # Inicializar o serviço Google Drive
     drive_service = Google::Apis::DriveV3::DriveService.new
     drive_service.client_options.application_name = APPLICATION_NAME
@@ -112,7 +95,8 @@ class MainsController < ApplicationController
 
             # Verifica se o arquivo já foi processado
             if ProcessedFile.exists?(file_id: file_id)
-              puts "O arquivo #{file_name} já foi processado anteriormente, pulando."
+              log_file.puts "Processando arquivo JSON: #{file_name} (ID: #{file_id})"
+              log_file.flush
               next
             end
 
@@ -142,11 +126,13 @@ class MainsController < ApplicationController
               session_type = json_data["sessionType"]
               track_name = json_data["trackName"]
 
-              puts "Sessão: Data=#{session_date}, Hora=#{session_time}, Tipo=#{session_type}, Pista=#{track_name}"
+              log_file.puts "Sessão: Data=#{session_date}, Hora=#{session_time}, Tipo=#{session_type}, Pista=#{track_name}"
+              log_file.flush
 
               # Verifica se o serverName contém as palavras "Challenge" ou "Championship"
               if server_name.match?(/Challenge|Championship/i)
-                puts "Processando como Championship: #{server_name}"
+                log_file.puts "Processando como Championship: #{server_name}"
+                log_file.flush
 
                 # Extrair temporada e ano
                 season_and_year = extract_season_and_year_from_server_name(server_name)
@@ -173,20 +159,19 @@ class MainsController < ApplicationController
                     car_model = CarModel.find_by(car_model: car_model_id)
 
                     if car_model.nil?
-                      puts "CarModel com ID #{car_model_id} não encontrado, pulando."
+                      log_file.puts "CarModel com ID #{car_model_id} não encontrado, pulando."
+                      log_file.flush
                       next
                     end
 
                     # Extrair as voltas
                     laps = json_data["laps"].select { |lap| lap["carId"] == car_id }
 
-                    # Extrair penalidades durante a corrida
-                    penalty = json_data["penalties"]&.find { |p| p["carId"] == car_id }
-                    penalty_reason = penalty ? penalty["reason"] : nil
-                    penalty_type = penalty ? penalty["penalty"] : nil
-                    penalty_value = penalty ? penalty["penaltyValue"] : nil
-                    penalty_violation_in_lap = penalty ? penalty["violationInLap"] : nil
-                    penalty_cleared_in_lap = penalty ? penalty["clearedInLap"] : nil
+                    penalty_reason = json_data["penalties"]&.select { |p| p["carId"] == car_id }.map { |p| p["reason"] }
+                    penalty_type = json_data["penalties"]&.select { |p| p["carId"] == car_id }.map { |p| p["penalty"] }
+                    penalty_value = json_data["penalties"]&.select { |p| p["carId"] == car_id }.map { |p| p["penaltyValue"] }
+                    penalty_violation_in_lap = json_data["penalties"]&.select { |p| p["carId"] == car_id }.map { |p| p["violationInLap"] }
+                    penalty_cleared_in_lap = json_data["penalties"]&.select { |p| p["carId"] == car_id }.map { |p| p["clearedInLap"] }
 
                     # Extrair penalidades pós-corrida
                     post_race_penalty = json_data["post_race_penalties"]&.find { |p| p["carId"] == car_id }
@@ -195,6 +180,10 @@ class MainsController < ApplicationController
                     post_race_penalty_value = post_race_penalty ? post_race_penalty["penaltyValue"] : nil
                     post_race_penalty_violation_in_lap = post_race_penalty ? post_race_penalty["violationInLap"] : nil
                     post_race_penalty_cleared_in_lap = post_race_penalty ? post_race_penalty["clearedInLap"] : nil
+
+                    # Log dos pilotos sendo processados
+                    log_file.puts "Processando piloto: #{driver_first_name} #{driver_last_name}, CarID: #{car_id}, RaceNumber: #{race_number}, CarModelID: #{car_model_id}"
+                    log_file.flush  # Força a escrita imediata no arquiv
 
                     # Criar ou atualizar os dados no BD Championship, adicionando season e year
                     Championship.create!(
@@ -228,13 +217,16 @@ class MainsController < ApplicationController
 
                   # Após processar o arquivo, salvar no banco de dados para evitar duplicação futura
                   ProcessedFile.create!(file_id: file_id)
-                  puts "Arquivo #{file_name} processado e armazenado com sucesso no Championship."
+                  log_file.puts "Arquivo #{file_name} processado e armazenado com sucesso no Championship."
+                  log_file.flush
                 else
-                  puts "O arquivo #{file_name} não contém os dados esperados para Championship, ignorando."
+                  log_file.puts "O arquivo #{file_name} não contém os dados esperados para Championship, ignorando."
+                  log_file.flush
                 end
 
               else
-                puts "Processando como Driver: #{server_name}"
+                log_file.puts "Processando como Driver: #{server_name}"
+                log_file.flush
 
                 # Verifica se os dados de resultados da sessão estão presentes
                 if json_data["sessionResult"] && json_data["sessionResult"]["leaderBoardLines"]
@@ -256,7 +248,8 @@ class MainsController < ApplicationController
                     car_model = CarModel.find_by(car_model: car_model_id)
 
                     if car_model.nil?
-                      puts "CarModel com ID #{car_model_id} não encontrado, pulando."
+                      log_file.puts "CarModel com ID #{car_model_id} não encontrado, pulando."
+                      log_file.flush
                       next
                     end
 
@@ -278,6 +271,10 @@ class MainsController < ApplicationController
                     post_race_penalty_value = post_race_penalty ? post_race_penalty["penaltyValue"] : nil
                     post_race_penalty_violation_in_lap = post_race_penalty ? post_race_penalty["violationInLap"] : nil
                     post_race_penalty_cleared_in_lap = post_race_penalty ? post_race_penalty["clearedInLap"] : nil
+
+                    # Log dos pilotos sendo processados
+                    log_file.puts "Processando piloto: #{driver_first_name} #{driver_last_name}, CarID: #{car_id}, RaceNumber: #{race_number}, CarModelID: #{car_model_id}"
+                    log_file.flush  # Força a escrita imediata no arquiv
 
                     # Criar ou atualizar o piloto com os dados
                     Driver.create!(
@@ -311,9 +308,11 @@ class MainsController < ApplicationController
 
                   # Após processar o arquivo, salvar no banco de dados para evitar duplicação futura
                   ProcessedFile.create!(file_id: file_id)
-                  puts "Arquivo #{file_name} processado e armazenado com sucesso no Driver."
+                  log_file.puts "Arquivo #{file_name} processado e armazenado com sucesso no Driver."
+                  log_file.flush
                 else
-                  puts "O arquivo #{file_name} não contém os dados esperados, ignorando."
+                  log_file.puts "O arquivo #{file_name} não contém os dados esperados, ignorando."
+                  log_file.flush
                 end
               end
 
@@ -322,7 +321,8 @@ class MainsController < ApplicationController
               break if max_files && processed_count >= max_files
 
             rescue => e
-              puts "Erro ao processar o arquivo #{file_name}: #{e.message}"
+              log_file.puts "Erro ao processar o arquivo #{file_name}: #{e.message}"
+              log_file.flush
             end
           end
         end
@@ -331,8 +331,11 @@ class MainsController < ApplicationController
         break if page_token.nil? || (max_files && processed_count >= max_files)
       end
     rescue => e
-      puts "Erro durante o processo de download e processamento: #{e.message}"
+      log_file.puts "Erro durante o processo de download e processamento: #{e.message}"
+      log_file.flush
     end
+
+    log_file.close
   end
 
   def clean_json_content(content)
@@ -362,40 +365,6 @@ class MainsController < ApplicationController
     @sponsors = Sponsor.all
   end
 
-  # Método de callback para lidar com o código de autorização retornado pelo Google
-  # def oauth2callback
-  #   client_id = Google::Auth::ClientId.new(ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'])
-  #   token_store = Google::Auth::Stores::FileTokenStore.new(file: TOKEN_PATH)
-  #   authorizer = Google::Auth::UserAuthorizer.new(client_id, SCOPE, token_store)
-
-  #   user_id = "default"
-
-  #   # Obter o código de autorização da URL de callback
-  #   code = params[:code]
-
-  #   if code.nil?
-  #     # Se não houver código de autorização, exibir uma mensagem de erro
-  #     flash[:error] = "Código de autorização não encontrado"
-  #     redirect_to root_path
-  #   else
-  #     # Trocar o código de autorização por tokens de acesso e refresh
-  #     credentials = authorizer.get_and_store_credentials_from_code(
-  #       user_id: user_id,
-  #       code: code,
-  #       base_url: OOB_URI
-  #     )
-
-  #     if credentials
-  #       # Redireciona para a página principal ou qualquer outra rota após a autorização bem-sucedida
-  #       flash[:notice] = "Autorização bem-sucedida!"
-  #       redirect_to root_path
-  #     else
-  #       flash[:error] = "Erro ao armazenar as credenciais"
-  #       redirect_to root_path
-  #     end
-  #   end
-  # end
-
   def oauth2callback
     client_id = Google::Auth::ClientId.new(ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'])
     token_store = Google::Auth::Stores::FileTokenStore.new(file: TOKEN_PATH)
@@ -423,6 +392,4 @@ class MainsController < ApplicationController
       end
     end
   end
-
-
 end
