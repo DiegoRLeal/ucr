@@ -4,35 +4,35 @@
     <h2><%= t('devise.registrations.edit.edit_account') %></h2>
   </div>
 
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "edit-profile-form" }) do |f| %>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "edit-profile-form", data: { turbo: false } }) do |f| %>
 
     <!-- Campo Nome Completo -->
     <div class="input-group">
-      <%= f.text_field :full_name, placeholder: " ", class: "input-field" %>
+      <%= f.text_field :full_name, placeholder: " ", class: "input-field", autocomplete: "full_name" %>
       <label class="input-label"><%= t('activerecord.attributes.user.full_name') %></label>
     </div>
 
     <!-- Campo Email -->
     <div class="input-group">
-      <%= f.email_field :email, placeholder: " ", class: "input-field" %>
+      <%= f.email_field :email, placeholder: " ", class: "input-field", autocomplete: "email" %>
       <label class="input-label"><%= t('activerecord.attributes.user.email') %></label>
     </div>
 
     <!-- Campo Senha Atual -->
     <div class="input-group">
-      <%= f.password_field :current_password, placeholder: " ", class: "input-field" %>
+      <%= f.password_field :current_password, placeholder: " ", class: "input-field",autocomplete: "current-password" %>
       <label class="input-label"><%= t('devise.registrations.edit.current_password') %></label>
     </div>
 
     <!-- Campo Nova Senha -->
     <div class="input-group">
-      <%= f.password_field :password, placeholder: " ", class: "input-field" %>
+      <%= f.password_field :password, placeholder: " ", class: "input-field", autocomplete: "new-password" %>
       <label class="input-label"><%= t('devise.registrations.edit.new_password') %></label>
     </div>
 
     <!-- Campo Confirmar Nova Senha -->
     <div class="input-group">
-      <%= f.password_field :password_confirmation, placeholder: " ", class: "input-field" %>
+      <%= f.password_field :password_confirmation, placeholder: " ", class: "input-field", autocomplete: "new-password" %>
       <label class="input-label"><%= t('devise.registrations.edit.confirm_new_password') %></label>
     </div>
 
@@ -94,7 +94,7 @@
     background-color: #283e51d4;
     font-family: 'Poppins', sans-serif;
   }
-  
+
   /* Container Principal */
 .edit-profile-form-container {
   max-width: 60%;
