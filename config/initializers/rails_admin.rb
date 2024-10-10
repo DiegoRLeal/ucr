@@ -2,6 +2,10 @@ RailsAdmin.config do |config|
   config.asset_source = :sprockets
 
   config.authenticate_with do
+    I18n.locale = :en  # Força o locale para inglês no Rails Admin
+  end
+
+  config.authenticate_with do
     warden.authenticate! scope: :user
   end
   config.current_user_method(&:current_user)

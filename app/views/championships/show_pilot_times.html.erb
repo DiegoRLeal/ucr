@@ -11,31 +11,13 @@
   </div>
 </h1>
 
-<%# <% if @drivers.any? %>
-  <!-- Botão de aplicar penalidade fora da tabela, com base no primeiro driver -->
-  <%# <div class="btn-wrapper"> %>
-    <%# <%= link_to penalties_championship_path(id: @drivers.first.id), class: 'Btn', method: :get do %>
-      <%# <span id="btn-penal-1" class="text"> %>
-        <%# <i class="fas fa-exclamation-circle"></i> Aplicar Penalidade %>
-      <%# </span> %>
-      <%# <span id="btn-penal-2" class="svgIcon"> %>
-        <%# <svg fill="white" viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg"> %>
-          <%# <path d="M192 0C121 0 64 57 64 128v64H24c-13.25 0-24 10.75-24 24v272c0 13.25 10.75 24 24 24h336c13.25 0 24-10.75 24-24V216c0-13.25-10.75-24-24-24h-40v-64c0-71-57-128-128-128zm-48 128c0-26.51 21.49-48 48-48s48 21.49 48 48v64H144v-64zM48 448V224h288v224H48z"/> %>
-        <%# </svg> %>
-      <%# </span> %>
-    <%# <% end %>
-  <%# </div> %>
-<%# <% else %>
-  <%# <p>Nenhum piloto disponível para aplicar penalidades.</p> %>
-<%# <% end %>
-
 <div class="table-responsive container-lg py-4">
   <table class="table table-custom table-hover align-middle text-center">
     <thead>
       <tr>
         <th>Posição</th>
         <th><%= t('show_pilot_times.piloto').html_safe %></th>
-        <th class="car-marca"><%= t('show_pilot_times.marca').html_safe %></th> <!-- Coluna para a logo do carro -->
+        <th class="car-marca"><%= t('show_pilot_times.marca').html_safe %></th>
         <th><%= t('show_pilot_times.carro').html_safe %></th>
         <th><%= t('show_pilot_times.melhor_volta').html_safe %></th>
         <th><%= t('show_pilot_times.volta_media').html_safe %></th>
@@ -46,7 +28,7 @@
         <th><%= t('show_pilot_times.penalidades').html_safe %></th>
         <th><%= t('show_pilot_times.pontos').html_safe %></th>
         <th><%= t('show_pilot_times.acoes').html_safe %></th>
-        <th><%= t('show_pilot_times.aplicar_penalidade').html_safe %></th> <!-- Nova coluna para o botão de penalidade -->
+        <th><%= t('show_pilot_times.aplicar_penalidade').html_safe %></th>
       </tr>
     </thead>
     <tbody>
@@ -71,16 +53,9 @@
           <td><%= calculate_gap(driver, index > 0 ? @drivers[index - 1] : nil) %></td>
           <td><%= calculate_consistency(driver.laps) %> %</td>
 
-<td>
-  <%= driver.total_penalties %>
-</td>
-
+          <td><%= driver.total_penalties %></td>
 
           <td><%= calculate_points(index + 1, driver.penalty_points || "0") %></td>
-
-
-
-
 
           <td class="btn">
             <%= link_to show_lap_times_championships_path(track_name: params[:track_name], first_name: driver.driver_first_name, last_name: driver.driver_last_name, race_number: driver.race_number, session_date: driver.session_date, session_time: driver.session_time), class: 'Btn', method: :get do %>
@@ -113,8 +88,6 @@
   </table>
 </div>
 
-
-
 <button class="button" onclick="history.back()">
   <div class="button-box">
     <span class="button-elem">
@@ -133,7 +106,6 @@
     </span>
   </div>
 </button>
-
 
 <style>
 .btn-wrapper {
@@ -484,7 +456,7 @@ section{
 
 <script>
   $(window).on("load resize ", function() {
-  var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
-  $('.tbl-header').css({'padding-right':scrollWidth});
-}).resize();
+    var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
+    $('.tbl-header').css({'padding-right':scrollWidth});
+  }).resize();
 </script>
