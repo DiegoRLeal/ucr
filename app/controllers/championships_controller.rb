@@ -85,9 +85,31 @@ class ChampionshipsController < ApplicationController
     end
   end
 
+  # def apply_penalties
+  #   championship = Championship.find(params[:id])
+  # end
+
   def apply_penalties
     championship = Championship.find(params[:id])
+
+    # Adiciona novas penalidades via parâmetros (penalty_points vindo do formulário)
+    if params[:championship][:penalty_points].present?
+      new_penalty_points = params[:championship][:penalty_points].map(&:to_i)
+
+      # Atualiza o campo penalty_points removendo nil e somando as novas penalidades
+      championship.penalty_points ||= []
+      championship.penalty_points = (championship.penalty_points.compact + new_penalty_points).reject(&:nil?)
+    end
+
+    if championship.save
+      flash[:success] = "Penalidades aplicadas com sucesso!"
+    else
+      flash[:error] = "Erro ao aplicar penalidades."
+    end
+
+    redirect_to penalties_championship_path(championship)
   end
+
 
   def new
     @championship = Championship.new

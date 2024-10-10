@@ -36,7 +36,11 @@
     </tbody>
   </table>
 
-  <h4>Total de Pontos Subtraídos: <span id="total-points"><%= penalty_points.sum %></span></h4>
+  <%# <h4>Total de Pontos Subtraídos: <span id="total-points"><%= penalty_points.sum</span></h4> %>
+  <h4>Total de Pontos Subtraídos: <span id="total-points">
+  <%= penalty_points.compact.sum %>
+</span></h4>
+
 
   <!-- Botão para adicionar nova linha de penalidade -->
   <%= link_to 'Adicionar Penalidade', '#', id: 'add-penalty', class: 'btn btn-success' %>
@@ -47,62 +51,74 @@
 
 
 <script>
-  function initializePenalties() {
-  console.log('Inicializando eventos de penalidades...');
-
-  function recalculateTotalPoints() {
-    let total = 0;
-    document.querySelectorAll('.penalty-points-field').forEach(field => {
-      const value = parseInt(field.value);
-      if (!isNaN(value) && value !== 0) {
-        total += value;
-      }
-    });
-    const totalPointsElement = document.getElementById('total-points');
-    if (totalPointsElement) {
-      totalPointsElement.textContent = total;
-    } else {
-      console.log('Elemento total-points não encontrado');
-    }
-  }
-
-  // Adiciona evento para recalcular os pontos quando valores mudam
-  document.addEventListener('input', function (e) {
-    if (e.target && e.target.matches('.penalty-points-field')) {
-      recalculateTotalPoints();
+function recalculateTotalPoints() {
+  let total = 0;
+  document.querySelectorAll('.penalty-points-field').forEach(field => {
+    const value = parseInt(field.value);
+    if (!isNaN(value) && value !== 0) {
+      total += value;
     }
   });
+  const totalPointsElement = document.getElementById('total-points');
+  if (totalPointsElement) {
+    totalPointsElement.textContent = total;
+  } else {
+    console.log('Elemento total-points não encontrado');
+  }
+}
+
+function handleInputChange(e) {
+  if (e.target && e.target.matches('.penalty-points-field')) {
+    recalculateTotalPoints();
+  }
+}
+
+function handleAddPenaltyClick(e) {
+  e.preventDefault();
+  console.log('Botão Adicionar Penalidade clicado');
+  const newPenaltyRow = `
+    <tr class="penalty-row">
+      <td><input type="text" name="championship[penalty_reason][]" value="" /></td>
+      <td><input type="text" name="championship[penalty_type][]" value="" /></td>
+      <td><input type="number" name="championship[penalty_value][]" value="0" /></td>
+      <td><input type="number" name="championship[penalty_violation_in_lap][]" value="0" /></td>
+      <td><input type="number" name="championship[penalty_cleared_in_lap][]" value="0" /></td>
+      <td><input type="number" name="championship[penalty_points][]" value="0" class="penalty-points-field" /></td>
+      <td><a href="#" class="remove-penalty btn btn-danger">Remover</a></td>
+    </tr>`;
+  document.getElementById('penalty-fields').insertAdjacentHTML('beforeend', newPenaltyRow);
+  recalculateTotalPoints();
+}
+
+function handleRemovePenaltyClick(e) {
+  if (e.target && e.target.matches('.remove-penalty')) {
+    e.preventDefault();
+    e.target.closest('.penalty-row').remove();
+    recalculateTotalPoints();
+  }
+}
+
+function initializePenalties() {
+  console.log('Inicializando eventos de penalidades...');
+
+  // Certifique-se de que o evento de input só seja adicionado uma vez
+  document.removeEventListener('input', handleInputChange);
+  document.addEventListener('input', handleInputChange);
 
   const addPenaltyButton = document.getElementById('add-penalty');
   if (addPenaltyButton) {
-    addPenaltyButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      console.log('Botão Adicionar Penalidade clicado');
-      const newPenaltyRow = `
-        <tr class="penalty-row">
-          <td><input type="text" name="championship[penalty_reason][]" value="" /></td>
-          <td><input type="text" name="championship[penalty_type][]" value="" /></td>
-          <td><input type="number" name="championship[penalty_value][]" value="0" /></td>
-          <td><input type="number" name="championship[penalty_violation_in_lap][]" value="0" /></td>
-          <td><input type="number" name="championship[penalty_cleared_in_lap][]" value="0" /></td>
-          <td><input type="number" name="championship[penalty_points][]" value="0" class="penalty-points-field" /></td>
-          <td><a href="#" class="remove-penalty btn btn-danger">Remover</a></td>
-        </tr>`;
-      document.getElementById('penalty-fields').insertAdjacentHTML('beforeend', newPenaltyRow);
-      recalculateTotalPoints();
-    });
+    // Certifique-se de que o evento de clique só seja adicionado uma vez
+    if (!addPenaltyButton.dataset.eventAdded) {
+      addPenaltyButton.addEventListener('click', handleAddPenaltyClick);
+      addPenaltyButton.dataset.eventAdded = true;  // Marcar que o evento foi adicionado
+    }
   } else {
     console.log('Botão Adicionar Penalidade não encontrado');
   }
 
   // Remover penalidade
-  document.addEventListener('click', function (e) {
-    if (e.target && e.target.matches('.remove-penalty')) {
-      e.preventDefault();
-      e.target.closest('.penalty-row').remove();
-      recalculateTotalPoints();
-    }
-  });
+  document.removeEventListener('click', handleRemovePenaltyClick);
+  document.addEventListener('click', handleRemovePenaltyClick);
 }
 
 // Inicializa quando a página for carregada normalmente
@@ -110,4 +126,5 @@ window.addEventListener('pageshow', initializePenalties);
 
 // Garante que o Turbo também inicialize corretamente
 document.addEventListener('turbo:load', initializePenalties);
+
 </script>

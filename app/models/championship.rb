@@ -16,13 +16,7 @@ class Championship < ApplicationRecord
   end
 
   def total_penalties
-    # Conta apenas razões de penalidade válidas
-    reason_count = penalty_reason.is_a?(Array) ? penalty_reason.reject(&:blank?).size : 0
-
-    # Conta apenas pontos de penalidade válidos
-    points_count = penalty_points.is_a?(Array) ? penalty_points.reject { |p| p.blank? || p.to_i == 0 }.size : 0
-
-    # Retorna o maior valor entre os dois (razões ou pontos de penalidade)
-    [reason_count, points_count].max
+    # Verifica se penalty_points é um array e conta o número de elementos, incluindo nil
+    penalty_points.is_a?(Array) ? penalty_points.length : 0
   end
 end
