@@ -19,4 +19,17 @@ class Championship < ApplicationRecord
     # Verifica se penalty_points é um array e conta o número de elementos, incluindo nil
     penalty_points.is_a?(Array) ? penalty_points.length : 0
   end
+
+  def translated_cup_category
+    case cup_category
+    when 0
+      "PRO"
+    when 3
+      "SILVER"
+    when 2
+      "AM"
+    else
+      ""  # Caso o valor não seja 0, 3, ou 2
+    end
+  end
 end

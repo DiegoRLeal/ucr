@@ -38,9 +38,8 @@
 
   <%# <h4>Total de Pontos Subtraídos: <span id="total-points"><%= penalty_points.sum</span></h4> %>
   <h4>Total de Pontos Subtraídos: <span id="total-points">
-  <%= penalty_points.compact.sum %>
-</span></h4>
-
+    <%= penalty_points.compact.sum %>
+  </span></h4>
 
   <!-- Botão para adicionar nova linha de penalidade -->
   <%= link_to 'Adicionar Penalidade', '#', id: 'add-penalty', class: 'btn btn-success' %>
@@ -48,7 +47,6 @@
   <!-- Botão de submit -->
   <%= f.submit 'Salvar Penalidades', class: 'btn btn-primary' %>
 <% end %>
-
 
 <script>
 function recalculateTotalPoints() {

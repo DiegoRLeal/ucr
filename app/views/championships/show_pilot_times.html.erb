@@ -11,12 +11,20 @@
   </div>
 </h1>
 
+<div class="tabs">
+  <button class="tab-link active" data-category="all">Geral</button>
+  <button class="tab-link" data-category="Pro">Pro</button>
+  <button class="tab-link" data-category="Silver">Silver</button>
+  <button class="tab-link" data-category="Am">Am</button>
+</div>
+
 <div class="table-responsive container-lg py-4">
   <table class="table table-custom table-hover align-middle text-center">
     <thead>
       <tr>
         <th>Posição</th>
         <th><%= t('show_pilot_times.piloto').html_safe %></th>
+        <th>Categoria</th>
         <th class="car-marca"><%= t('show_pilot_times.marca').html_safe %></th>
         <th><%= t('show_pilot_times.carro').html_safe %></th>
         <th><%= t('show_pilot_times.melhor_volta').html_safe %></th>
@@ -28,14 +36,17 @@
         <th><%= t('show_pilot_times.penalidades').html_safe %></th>
         <th><%= t('show_pilot_times.pontos').html_safe %></th>
         <th><%= t('show_pilot_times.acoes').html_safe %></th>
-        <th><%= t('show_pilot_times.aplicar_penalidade').html_safe %></th>
+        <% if current_user.admin? %>
+          <th><%= t('show_pilot_times.aplicar_penalidade').html_safe %></th>
+        <% end %>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="drivers-table">
       <% @drivers.sort_by { |driver| [-driver.lap_count.to_i, driver.total_time.to_i] }.each_with_index do |driver, index| %>
-        <tr>
-          <td><%= index + 1 %></td>
+        <tr class="driver-row <%= driver.translated_cup_category.downcase %>">
+          <td class="position-cell"><%= index + 1 %></td> <!-- Coluna da posição -->
           <td><%= driver.driver_first_name %> <%= driver.driver_last_name %> # <%= driver.race_number %></td>
+          <td><%= driver.translated_cup_category %></td>
           <td>
             <img src="<%= car_image_path(driver.car_model.car_model) %>" alt="<%= driver.car_model.car_name %>" class="logo-car">
           </td>
@@ -52,11 +63,9 @@
           </td>
           <td><%= calculate_gap(driver, index > 0 ? @drivers[index - 1] : nil) %></td>
           <td><%= calculate_consistency(driver.laps) %> %</td>
-
           <td><%= driver.total_penalties %></td>
-
-          <td><%= calculate_points(index + 1, driver.penalty_points || "0") %></td>
-
+          <td class="points-cell"><%= calculate_points(index + 1, driver.penalty_points || "0") %></td> <!-- Adicionei a classe "points-cell" -->
+          <td class="penalty-points-cell" data-penalty-points="<%= driver.penalty_points.to_json %>" style="display:none;"></td>
           <td class="btn">
             <%= link_to show_lap_times_championships_path(track_name: params[:track_name], first_name: driver.driver_first_name, last_name: driver.driver_last_name, race_number: driver.race_number, session_date: driver.session_date, session_time: driver.session_time), class: 'Btn', method: :get do %>
               <span class="text">
@@ -69,19 +78,20 @@
               </span>
             <% end %>
           </td>
-          <!-- Botão de aplicar penalidade para o piloto -->
-          <td>
-            <%= link_to penalties_championship_path(id: driver.id), class: 'Btn', method: :get do %>
-              <span id="btn-penal-1" class="text">
-                <i class="fas fa-exclamation-circle"></i> Aplicar Penalidade
-              </span>
-              <span id="btn-penal-2" class="svgIcon">
-                <svg fill="white" viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M192 0C121 0 64 57 64 128v64H24c-13.25 0-24 10.75-24 24v272c0 13.25 10.75 24 24 24h336c13.25 0 24-10.75 24-24V216c0-13.25-10.75-24-24-24h-40v-64c0-71-57-128-128-128zm-48 128c0-26.51 21.49-48 48-48s48 21.49 48 48v64H144v-64zM48 448V224h288v224H48z"/>
-                </svg>
-              </span>
-            <% end %>
-          </td>
+          <% if current_user.admin? %>
+            <td>
+              <%= link_to penalties_championship_path(id: driver.id), class: 'Btn', method: :get do %>
+                <span id="btn-penal-1" class="text">
+                  <i class="fas fa-exclamation-circle"></i> Aplicar Penalidade
+                </span>
+                <span id="btn-penal-2" class="svgIcon">
+                  <svg fill="white" viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M192 0C121 0 64 57 64 128v64H24c-13.25 0-24 10.75-24 24v272c0 13.25 10.75 24 24 24h336c13.25 0 24-10.75 24-24V216c0-13.25-10.75-24-24-24h-40v-64c0-71-57-128-128-128zm-48 128c0-26.51 21.49-48 48-48s48 21.49 48 48v64H144v-64zM48 448V224h288v224H48z"/>
+                  </svg>
+                </span>
+              <% end %>
+            </td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>
@@ -106,6 +116,104 @@
     </span>
   </div>
 </button>
+
+
+<style>
+  .tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.tab-link {
+  margin: 0 10px;
+  padding: 10px 20px;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.tab-link.active {
+  background-color: #007bff;
+  color: white;
+  border: 1px solid #007bff;
+}
+
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  const tabLinks = document.querySelectorAll('.tab-link');
+  const driverRows = document.querySelectorAll('.driver-row');
+
+  tabLinks.forEach(tab => {
+    tab.addEventListener('click', function() {
+      // Remove 'active' de todas as abas
+      tabLinks.forEach(link => link.classList.remove('active'));
+      // Adiciona 'active' na aba clicada
+      this.classList.add('active');
+
+      const category = this.getAttribute('data-category');
+
+      // Recalcula e exibe posições corretas para a categoria filtrada
+      let visibleDrivers = [];
+      let position = 1; // Reseta a posição para 1
+
+      driverRows.forEach(row => {
+        if (category === 'all') {
+          row.style.display = ''; // Mostra todas
+          row.querySelector('.position-cell').textContent = position++; // Atualiza a posição de todos
+          visibleDrivers.push(row);
+        } else if (row.classList.contains(category.toLowerCase())) {
+          row.style.display = ''; // Mostra apenas a categoria selecionada
+          row.querySelector('.position-cell').textContent = position++; // Atualiza a posição dentro da categoria
+          visibleDrivers.push(row);
+        } else {
+          row.style.display = 'none'; // Esconde outras categorias
+        }
+      });
+
+      // Recalcula os pontos com base nas novas posições dentro da categoria
+      visibleDrivers.forEach((row, index) => {
+        const position = index + 1; // A posição dentro da categoria começa de 1
+        const penaltyPoints = JSON.parse(row.querySelector('.penalty-points-cell').dataset.penaltyPoints);
+        const totalPoints = calculatePoints(position, penaltyPoints);
+
+        row.querySelector('.points-cell').textContent = totalPoints; // Atualiza os pontos visíveis na tabela
+      });
+    });
+  });
+
+  function calculatePoints(position, penaltyPoints = [0]) {
+    const pointsTable = {
+      1: 40,
+      2: 37,
+      3: 34,
+      4: 31,
+      5: 28,
+      6: 26,
+      7: 24,
+      8: 22,
+      9: 20,
+      10: 18,
+      11: 17,
+      12: 16,
+      13: 15,
+      14: 14,
+      15: 13
+    };
+
+    let totalPoints = pointsTable[position] || 0;
+    let penaltyTotal = Array.isArray(penaltyPoints) ? penaltyPoints.filter(p => p !== null).reduce((sum, p) => sum + parseInt(p, 10), 0) : 0;
+
+    totalPoints -= penaltyTotal;
+    return Math.max(totalPoints, 0); // Garantir que os pontos não sejam negativos
+  }
+});
+
+</script>
+
 
 <style>
 .btn-wrapper {

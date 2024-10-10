@@ -32,11 +32,11 @@ class ChampionshipsController < ApplicationController
 
     race_results = race(@track_name, @session_date, @session_time)
 
-    # Incluindo championships.total_time e penalty_points na consulta para serem usados na view
+    # Incluindo championships.total_time, penalty_points e cup_category na consulta para serem usados na view
     @drivers = Championship.joins('LEFT JOIN car_models ON car_models.car_model = championships.car_model')
                            .where(track_name: @track_name, session_date: @session_date, session_time: @session_time)
-                           .select('championships.id, championships.car_model, championships.driver_first_name, championships.driver_last_name, championships.laps, MIN(best_lap::integer) AS best_lap, MAX(championships.race_number) AS race_number, MAX(championships.lap_count) AS lap_count, car_models.car_name, championships.car_id, championships.total_time, championships.session_date, championships.session_time, championships.penalty_reason, championships.penalty_type, championships.penalty_value, championships.penalty_points, championships.points') # Adicionando penalty_points
-                           .group('championships.id, championships.car_model, championships.driver_first_name, championships.driver_last_name, championships.laps, car_models.car_name, championships.car_id, championships.total_time, championships.session_date, championships.session_time, championships.penalty_reason, championships.penalty_type, championships.penalty_value, championships.penalty_points, championships.points') # Adicionando penalty_points no group
+                           .select('championships.id, championships.car_model, championships.driver_first_name, championships.driver_last_name, championships.laps, MIN(best_lap::integer) AS best_lap, MAX(championships.race_number) AS race_number, MAX(championships.lap_count) AS lap_count, car_models.car_name, championships.car_id, championships.total_time, championships.session_date, championships.session_time, championships.penalty_reason, championships.penalty_type, championships.penalty_value, championships.penalty_points, championships.points, championships.cup_category') # Adicionando cup_category
+                           .group('championships.id, championships.car_model, championships.driver_first_name, championships.driver_last_name, championships.laps, car_models.car_name, championships.car_id, championships.total_time, championships.session_date, championships.session_time, championships.penalty_reason, championships.penalty_type, championships.penalty_value, championships.penalty_points, championships.points, championships.cup_category') # Adicionando cup_category no group
                            .order('MAX(championships.lap_count) DESC, MIN(best_lap::integer) ASC, MAX(championships.total_time) ASC')
   end
 
@@ -85,10 +85,6 @@ class ChampionshipsController < ApplicationController
     end
   end
 
-  # def apply_penalties
-  #   championship = Championship.find(params[:id])
-  # end
-
   def apply_penalties
     championship = Championship.find(params[:id])
 
@@ -109,7 +105,6 @@ class ChampionshipsController < ApplicationController
 
     redirect_to penalties_championship_path(championship)
   end
-
 
   def new
     @championship = Championship.new

@@ -154,6 +154,7 @@ class MainsController < ApplicationController
                     best_lap = entry["timing"]["bestLap"]
                     total_time = entry["timing"]["totalTime"]
                     lap_count = entry["timing"]["lapCount"]
+                    cup_category = car["cupCategory"]
 
                     # Buscar o modelo do carro no banco de dados (car_model é integer agora)
                     car_model = CarModel.find_by(car_model: car_model_id)
@@ -199,6 +200,7 @@ class MainsController < ApplicationController
                       session_time: session_time,
                       session_type: session_type,
                       track_name: track_name,
+                      cup_category: cup_category,
                       laps: laps,
                       season: season,   # Adiciona a temporada identificada
                       year: year,       # Adiciona o ano identificado
