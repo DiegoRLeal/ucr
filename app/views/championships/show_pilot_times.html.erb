@@ -143,18 +143,18 @@
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-  const tabLinks = document.querySelectorAll('.tab-link');
-  const driverRows = document.querySelectorAll('.driver-row');
+document.addEventListener('turbo:load', function() {  // ou 'DOMContentLoaded'
+  document.body.addEventListener('click', function(event) {
+    if (event.target.classList.contains('tab-link')) {
+      const tabLinks = document.querySelectorAll('.tab-link');
+      const driverRows = document.querySelectorAll('.driver-row');
 
-  tabLinks.forEach(tab => {
-    tab.addEventListener('click', function() {
       // Remove 'active' de todas as abas
       tabLinks.forEach(link => link.classList.remove('active'));
       // Adiciona 'active' na aba clicada
-      this.classList.add('active');
+      event.target.classList.add('active');
 
-      const category = this.getAttribute('data-category');
+      const category = event.target.getAttribute('data-category');
 
       // Recalcula e exibe posições corretas para a categoria filtrada
       let visibleDrivers = [];
@@ -182,7 +182,7 @@
 
         row.querySelector('.points-cell').textContent = totalPoints; // Atualiza os pontos visíveis na tabela
       });
-    });
+    }
   });
 
   function calculatePoints(position, penaltyPoints = [0]) {
@@ -211,7 +211,6 @@
     return Math.max(totalPoints, 0); // Garantir que os pontos não sejam negativos
   }
 });
-
 </script>
 
 
