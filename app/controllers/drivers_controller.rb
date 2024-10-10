@@ -18,10 +18,11 @@ class DriversController < ApplicationController
 
   def track_sessions
     # Seleciona o nome da pista, data e hora da sessão, número de pilotos
-    @track_sessions = Driver.select('track_name, session_date, session_time, COUNT(*) as pilots_count')
-                            .where(track_name: params[:track_name])
-                            .group('track_name, session_date, session_time')  # Agrupa também por hora da sessão
-                            .order('session_date DESC, session_time DESC')  # Ordena por data e hora em ordem decrescente
+    @track_sessions = Driver.select("track_name, session_date, session_time, COUNT(*) as pilots_count")
+                        .where(track_name: params[:track_name])
+                        .group('track_name, session_date, session_time')
+                        .to_a.sort_by { |session| [session.session_date, session.session_time.strftime('%H:%M:%S')] }
+                        .reverse
   end
 
   def show_pilot_times
