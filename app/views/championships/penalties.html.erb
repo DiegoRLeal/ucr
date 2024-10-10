@@ -22,14 +22,14 @@
 
       <% penalty_reasons.each_with_index do |reason, index| %>
         <tr class="penalty-row">
-          <td><%= f.text_field "penalty_reason[]", value: reason %></td>
-          <td><%= f.text_field "penalty_type[]", value: penalty_types[index] %></td>
-          <td><%= f.number_field "penalty_value[]", value: penalty_values[index] %></td>
-          <td><%= f.number_field "penalty_violation_in_lap[]", value: penalty_violation_in_laps[index] %></td>
-          <td><%= f.number_field "penalty_cleared_in_lap[]", value: penalty_cleared_in_laps[index] %></td>
-          <td><%= f.number_field "penalty_points[]", value: penalty_points[index], class: 'penalty-points-field' %></td>
+          <td><input id="penalty_reason_<%= index %>" type="text" name="championship[penalty_reason][]" value="<%= reason %>" /></td>
+          <td><input id="penalty_type_<%= index %>" type="text" name="championship[penalty_type][]" value="<%= penalty_types[index] %>" /></td>
+          <td><input id="penalty_value_<%= index %>" type="number" name="championship[penalty_value][]" value="<%= penalty_values[index] %>" /></td>
+          <td><input id="penalty_violation_in_lap_<%= index %>" type="number" name="championship[penalty_violation_in_lap][]" value="<%= penalty_violation_in_laps[index] %>" /></td>
+          <td><input id="penalty_cleared_in_lap_<%= index %>" type="number" name="championship[penalty_cleared_in_lap][]" value="<%= penalty_cleared_in_laps[index] %>" /></td>
+          <td><input id="penalty_points_<%= index %>" class="penalty-points-field" type="number" name="championship[penalty_points][]" value="<%= penalty_points[index] %>" /></td>
           <td>
-            <%= link_to 'Remover', '#', class: 'remove-penalty btn btn-danger', data: { index: index } %>
+            <a class="remove-penalty btn btn-danger" data-index="<%= index %>" href="#">Remover</a>
           </td>
         </tr>
       <% end %>
@@ -45,28 +45,39 @@
   <%= f.submit 'Salvar Penalidades', class: 'btn btn-primary' %>
 <% end %>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    function recalculateTotalPoints() {
-      let total = 0;
-      document.querySelectorAll('.penalty-points-field').forEach(field => {
-        const value = parseInt(field.value);
-        if (!isNaN(value) && value !== 0) {
-          total += value;
-        }
-      });
-      document.getElementById('total-points').textContent = total;
-    }
 
-    // Adiciona evento para recalcular os pontos quando valores mudam
-    document.addEventListener('input', function (e) {
-      if (e.target && e.target.matches('.penalty-points-field')) {
-        recalculateTotalPoints();
+<script>
+  function initializePenalties() {
+  console.log('Inicializando eventos de penalidades...');
+
+  function recalculateTotalPoints() {
+    let total = 0;
+    document.querySelectorAll('.penalty-points-field').forEach(field => {
+      const value = parseInt(field.value);
+      if (!isNaN(value) && value !== 0) {
+        total += value;
       }
     });
+    const totalPointsElement = document.getElementById('total-points');
+    if (totalPointsElement) {
+      totalPointsElement.textContent = total;
+    } else {
+      console.log('Elemento total-points não encontrado');
+    }
+  }
 
-    document.getElementById('add-penalty').addEventListener('click', (e) => {
+  // Adiciona evento para recalcular os pontos quando valores mudam
+  document.addEventListener('input', function (e) {
+    if (e.target && e.target.matches('.penalty-points-field')) {
+      recalculateTotalPoints();
+    }
+  });
+
+  const addPenaltyButton = document.getElementById('add-penalty');
+  if (addPenaltyButton) {
+    addPenaltyButton.addEventListener('click', (e) => {
       e.preventDefault();
+      console.log('Botão Adicionar Penalidade clicado');
       const newPenaltyRow = `
         <tr class="penalty-row">
           <td><input type="text" name="championship[penalty_reason][]" value="" /></td>
@@ -80,13 +91,25 @@
       document.getElementById('penalty-fields').insertAdjacentHTML('beforeend', newPenaltyRow);
       recalculateTotalPoints();
     });
+  } else {
+    console.log('Botão Adicionar Penalidade não encontrado');
+  }
 
-    document.addEventListener('click', function (e) {
-      if (e.target && e.target.matches('.remove-penalty')) {
-        e.preventDefault();
-        e.target.closest('.penalty-row').remove();
-        recalculateTotalPoints();
-      }
-    });
+  // Remover penalidade
+  document.addEventListener('click', function (e) {
+    if (e.target && e.target.matches('.remove-penalty')) {
+      e.preventDefault();
+      e.target.closest('.penalty-row').remove();
+      recalculateTotalPoints();
+    }
   });
+}
+
+// Inicializa quando a página for carregada normalmente
+window.addEventListener('pageshow', initializePenalties);
+
+// Garante que o Turbo também inicialize corretamente
+document.addEventListener('turbo:load', initializePenalties);
+
+
 </script>

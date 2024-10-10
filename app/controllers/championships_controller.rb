@@ -97,11 +97,18 @@ class ChampionshipsController < ApplicationController
   end
 
   def update
-    puts params[:championship] # Adiciona esta linha para inspecionar os parâmetros no log
-    if @championship.update(championship_params)
-      redirect_to show_pilot_times_championships_path(session_date: @championship.session_date, session_time: @championship.session_time, track_name: @championship.track_name), notice: 'Campeonato atualizado com sucesso.'
+    if params[:championship].present?
+      puts params[:championship] # Isso ajuda a verificar os parâmetros no log
+
+      if @championship.update(championship_params)
+        redirect_to show_pilot_times_championships_path(session_date: @championship.session_date, session_time: @championship.session_time, track_name: @championship.track_name), notice: 'Campeonato atualizado com sucesso.'
+      else
+        render :edit
+      end
     else
-      render :edit
+      # Se não houver parâmetros de campeonato, remove todas as penalidades
+      @championship.update(penalty_reason: [], penalty_type: [], penalty_value: [], penalty_violation_in_lap: [], penalty_cleared_in_lap: [], penalty_points: [])
+      redirect_to show_pilot_times_championships_path(session_date: @championship.session_date, session_time: @championship.session_time, track_name: @championship.track_name), notice: 'Todas as penalidades foram removidas.'
     end
   end
 
@@ -126,5 +133,4 @@ class ChampionshipsController < ApplicationController
       penalty_points: []
     )
   end
-
 end

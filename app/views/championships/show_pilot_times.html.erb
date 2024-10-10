@@ -71,12 +71,9 @@
           <td><%= calculate_gap(driver, index > 0 ? @drivers[index - 1] : nil) %></td>
           <td><%= calculate_consistency(driver.laps) %> %</td>
 
-        <td>
-         <% reason_count = driver.penalty_reason.is_a?(Array) ? driver.penalty_reason.reject(&:blank?).size : driver.penalty_reason.to_s.split(',').reject(&:blank?).size %>
-<% penalty_points_count = driver.penalty_points.is_a?(Array) ? driver.penalty_points.reject { |p| p.blank? || p.to_i == 0 }.size : driver.penalty_points.to_s.split(',').reject { |p| p.blank? || p.to_i == 0 }.size %>
-
-
-        </td>
+<td>
+  <%= driver.total_penalties %>
+</td>
 
 
           <td><%= calculate_points(index + 1, driver.penalty_points || "0") %></td>

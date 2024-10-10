@@ -30,7 +30,7 @@ module DriversHelper
   end
 
   def calculate_points(position, penalty_points = [0])
-    puts "------------------Posição: #{position}, Penalty Points: #{penalty_points}"
+    puts "------------------Posição: #{position}, Penalty Points: #{penalty_points.inspect}" # Mostra os penalty_points com mais detalhes
 
     # Tabela de pontos para cada posição
     points_table = {
@@ -55,9 +55,9 @@ module DriversHelper
     total_points = points_table[position] || 0
 
     # Se penalty_points for um array, soma os valores
-    penalty_total = penalty_points.is_a?(Array) ? penalty_points.sum : 0
+    penalty_total = penalty_points.is_a?(Array) ? penalty_points.reject(&:blank?).map(&:to_i).sum : 0
 
-    puts "--------------------Total de penalidades calculadas: #{penalty_total}"
+    puts "--------------------Total de penalidades calculadas: #{penalty_total}" # Mostra o total de penalidades calculadas
 
     # Subtrai os pontos de penalidade do total
     total_points -= penalty_total
@@ -65,12 +65,10 @@ module DriversHelper
     # Garante que os pontos não sejam negativos
     final_points = [total_points, 0].max
 
-    puts "--------------------Total de pontos finais: #{final_points}"
+    puts "--------------------Total de pontos finais: #{final_points}" # Mostra os pontos finais após subtração
 
     final_points
   end
-
-
 
    # Define o método calculate_avg_lap
   def calculate_avg_lap(driver_laps)
